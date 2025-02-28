@@ -1,4 +1,6 @@
-﻿namespace Finwiz.Server.Data.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Finwiz.Server.Data.Models
 {
     public class AccountPayment
     {
@@ -15,5 +17,8 @@
         public DateOnly? DueDate { get; set; }
 
         public required bool IsPaid { get; set; }
+
+        [ForeignKey("Account")]
+        public Guid AccountId { get; set; }
     }
 }

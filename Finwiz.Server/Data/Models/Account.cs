@@ -28,5 +28,7 @@
 
         public double? APY {  get; set; }
 
+        // Navigation property
+        public virtual ICollection<AccountPayment> Payments { get; set; } = new List<AccountPayment>();
     }
 }
