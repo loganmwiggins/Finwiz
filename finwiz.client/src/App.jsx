@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Nav from './components/Nav';
 import Overview from './pages/Overview';
@@ -11,6 +13,15 @@ function App() {
     return (
         <BrowserRouter>
             <div>
+                {/* Toast Container for toast alerts */}
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    // theme={localStorage.getItem("theme") === "light" ? "light" : "dark"}
+                    closeOnClick
+                    newestOnTop
+                />
+
                 <Nav />
 
                 <div className="app-content">

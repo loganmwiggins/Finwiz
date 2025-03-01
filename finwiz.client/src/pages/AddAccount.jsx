@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { API_BASE_URL } from '../utils/BaseUrl';
+import { showToast } from '../utils/Toast';
 import '../stylesheets/pages/AddAccount.css';
 
 function AddAccount() {
@@ -26,7 +27,7 @@ function AddAccount() {
     // Handle input change
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        console.log("CHANGED:", name, value);
+        // console.log("CHANGED:", name, value);
 
         setAccountData(prevState => ({
             ...prevState,
@@ -39,7 +40,7 @@ function AddAccount() {
         e.preventDefault(); // Prevent page reload
 
         try {
-            console.log("SENDING DATA:", accountData);
+            // console.log("SENDING DATA:", accountData);
 
             const response = await fetch(`${API_BASE_URL}/api/Account/Create`, {
                 method: 'POST',
@@ -52,14 +53,17 @@ function AddAccount() {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Account created successfully!");
+                showToast("Account created successfully!", "success");
                 navigate("/overview");
-            } else {
-                alert("Error: " + (data.message || "Failed to create account"));
+            } 
+            else {
+                console.error("Error: " + (data.message || "Failed to create account"));
+                showToast("Failed to create account.", "error");
             }
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("Error:", error);
-            alert("Failed to create account. Please try again.");
+            showToast("Failed to create account. Please try again.", "error", "(catch)");
         }
     };
 

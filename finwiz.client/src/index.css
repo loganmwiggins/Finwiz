@@ -96,3 +96,9 @@ input:focus, select:focus {
 .checkbox {
     max-width: fit-content;
 }
+
+/* Overriding default Toastify styling */
+.Toastify__toast-theme--light, .Toastify__toast-theme--dark { text-align: left; }
+.Toastify__toast-theme--light { color: #111 !important; }
+.Toastify__toast-theme--dark { color: #fff !important; }
+.Toastify__toast-icon { margin-right: 1rem !important; }
