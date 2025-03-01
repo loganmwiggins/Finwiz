@@ -20,5 +20,8 @@ namespace Finwiz.Server.Data.Models
 
         [ForeignKey("Account")]
         public Guid AccountId { get; set; }
+
+        // Navigation property
+        public virtual Account Account { get; set; } = null;
     }
 }

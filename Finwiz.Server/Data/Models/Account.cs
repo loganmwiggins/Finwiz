@@ -8,7 +8,7 @@
 
         public required string Provider { get; set; }
 
-        public required string Type { get; set; }   // Convert to enum: Credit, Savings
+        public required string Type { get; set; }   // Consider converting to an enum: Credit, Savings
 
         public double? CreditLimit { get; set; }
 
@@ -23,6 +23,8 @@
         public double? AnnualFee { get; set; }
 
         public DateOnly? FeeDate { get; set; }
+
+        public string? ImagePath { get; set; }
 
         public string? Notes { get; set; }
 
