@@ -28,6 +28,11 @@ html {
     box-sizing: border-box;
 }
 
+button {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+}
+
 .app-content {
     display: flex;
     flex-direction: column;
