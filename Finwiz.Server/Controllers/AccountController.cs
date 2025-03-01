@@ -1,6 +1,7 @@
 ﻿using Finwiz.Server.Data;
 using Finwiz.Server.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static Finwiz.Server.Data.DTOs.AccountDTOs;
 
 namespace Finwiz.Server.Controllers
@@ -26,7 +27,20 @@ namespace Finwiz.Server.Controllers
             return Ok(account);
         }
 
-
+        // Get All Accounts
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAllAccounts()
+        {
+            try
+            {
+                var accounts = await _db.Accounts.ToListAsync();
+                return Ok(accounts);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while fetching accounts.", error = ex.Message });
+            }
+        }
 
         // Create Account
         [HttpPost("Create")]
