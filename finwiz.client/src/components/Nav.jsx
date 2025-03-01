@@ -41,10 +41,18 @@ function Nav() {
         setAccountDropdownOpen((prev) => !prev)
     }
 
+    // Handle navigation to other components
+    const handleNavigateOverview = () => {
+        navigate("/overview");
+    }
+
     return(
         <div className="nav-ctnr">
             <div className="main-row">
-                <p className="header">Finwiz</p>
+                <div className="header" onClick={handleNavigateOverview}>
+                    <img src="/assets/icons/witch-hat.svg" draggable="false" />
+                    <p>Finwiz</p>
+                </div>
                 <div className="menu-ctnr">
                     <motion.button
                         type="button"
@@ -88,7 +96,7 @@ function Nav() {
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.2, ease: "easeOut" }}
                         >
-                            <button type="button">All Accounts (Overview)</button>
+                            <button type="button" onClick={handleNavigateOverview}>All Accounts (Overview)</button>
                             <button type="button">Account 1</button>
                             <button type="button">Account 2</button>
                             <button type="button">Account 3</button>

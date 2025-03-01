@@ -19,8 +19,19 @@
     }
 
     .header {
-        font-size: 1.25rem;
-        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: .75rem;
+        cursor: pointer;
+
+        img {
+            width: 1.75rem;
+            filter: invert(62%) sepia(90%) saturate(400%) hue-rotate(90deg);
+        }
+        p {
+            font-size: 1.35rem;
+            font-weight: 600;
+        }
     }
 
     .menu-ctnr {
@@ -89,10 +100,9 @@
 
     .account-dropdown {
         position: absolute;
-        top: 6.95rem;
+        top: 7.1rem;
         background: var(--bg-primary);
         border: 1px solid var(--border-primary);
-        /* padding: 1rem; */
         display: flex;
         flex-direction: column;
 
