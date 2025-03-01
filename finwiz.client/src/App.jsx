@@ -8,35 +8,38 @@ import Overview from './pages/Overview';
 import Account from './pages/Account';
 import AddAccount from './pages/AddAccount';
 import './App.css';
+import { AccountsProvider } from './context/AccountsContext';
 
 function App() {
     return (
-        <BrowserRouter>
-            <div>
-                {/* Toast Container for toast alerts */}
-                <ToastContainer
-                    position="top-right"
-                    autoClose={3000}
-                    // theme={localStorage.getItem("theme") === "light" ? "light" : "dark"}
-                    closeOnClick
-                    newestOnTop
-                />
+        <AccountsProvider>
+            <BrowserRouter>
+                <div>
+                    {/* Toast Container for toast alerts */}
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={3000}
+                        // theme={localStorage.getItem("theme") === "light" ? "light" : "dark"}
+                        closeOnClick
+                        newestOnTop
+                    />
 
-                <Nav />
+                    <Nav />
 
-                <div className="app-content">
-                    <Routes>
-                        <Route path="/" element={<Overview />} />
-                        <Route path="/overview" element={<Overview />} />
-                        <Route path="/account/:accountId?" element={<Account />} />
-                        <Route path="/add-account" element={<AddAccount />} />
+                    <div className="app-content">
+                        <Routes>
+                            <Route path="/" element={<Overview />} />
+                            <Route path="/overview" element={<Overview />} />
+                            <Route path="/account/:accountId?" element={<Account />} />
+                            <Route path="/add-account" element={<AddAccount />} />
 
-                        {/* Catch-all route for unknown paths */}
-                        <Route path="*" element={<Navigate to="/dashboard" />} />
-                    </Routes>
+                            {/* Catch-all route for unknown paths */}
+                            <Route path="*" element={<Navigate to="/dashboard" />} />
+                        </Routes>
+                    </div>
                 </div>
-            </div>
-        </BrowserRouter>
+            </BrowserRouter>
+        </AccountsProvider>
     );
 }
 
