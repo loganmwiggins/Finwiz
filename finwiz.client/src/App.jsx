@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 import Nav from './components/Nav';
-import Home from './pages/Home';
-import Account from './pages/Account';
+import Overview from './pages/Overview';
+import Dashboard from './pages/Dashboard';
 import './App.css';
 
 function App() {
@@ -12,11 +12,16 @@ function App() {
             <div>
                 <Nav />
 
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/account/:accountI" element={<Account />} />
-                </Routes>
+                <div className="app-content">
+                    <Routes>
+                        <Route path="/" element={<Overview />} />
+                        <Route path="/overview" element={<Overview />} />
+                        <Route path="/dashboard/:accountId?" element={<Dashboard />} />
+
+                        {/* Catch-all route for unknown paths */}
+                        <Route path="*" element={<Navigate to="/dashboard" />} />
+                    </Routes>
+                </div>
             </div>
         </BrowserRouter>
     );
