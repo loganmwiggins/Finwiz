@@ -1,21 +1,29 @@
-.nav-ctnr {
+.nav {
     display: flex;
     flex-direction: column;
     width: 100%;
     border-bottom: 1px solid var(--border-primary);
-    margin-bottom: 1rem;
 
     .main-row, .secondary-row {
         display: flex;
         align-items: center;
+        justify-content: center;
         width: 100%;
+    }
+
+    .nav-ctnr {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: 1280px;
     }
     
     /* MAIN ROW */
     .main-row {
         padding: 1rem 0;
-        justify-content: space-between;
         border-bottom: 1px solid var(--border-primary);
+
+        .nav-ctnr { justify-content: space-between; }
     }
 
     .header {

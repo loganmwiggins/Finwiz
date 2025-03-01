@@ -69,8 +69,10 @@ function AddAccount() {
 
     return (
     <>
-        <h1>Account Details</h1>
-        <br />
+        <div className="page-header">
+            <h1>Account Details</h1>
+        </div>
+        
         <form onSubmit={handleSubmit} className="account-form">
             <div className="inputs-ctnr">
                 <div className="input-row">

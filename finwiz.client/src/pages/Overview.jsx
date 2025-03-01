@@ -6,19 +6,35 @@ import '../stylesheets/pages/Overview.css';
 function Overview() {
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
 
-    if (accountsLoading) return <p>Loading accounts...</p>;
+    if (accountsLoading) {
+        return (
+            <div className="loading-ctnr">
+                <div className="loading-spinner"></div>
+                <p>Loading accounts...</p> 
+            </div>
+        ); 
+    }
     if (accountsError) return <p>{accountsError}</p>;
 
     return (
     <>
-        <h1>Overview</h1>
+        <div className="page-header">
+            <h1>Overview</h1>
+        </div>
 
-        {accounts.map(account => (
-            <div key={account.id}>
-                <p>{account.provider}</p>
-                <h2>{account.name}</h2>
+        <div className="accounts-widget">
+            <h2>Accounts</h2>
+            <div className="accounts-ctnr">
+                {accounts.map(account => (
+                    <div key={account.id} className="account-card">
+                        <p className="provider">{account.provider}</p>
+                        <p className="name">{account.name}</p>
+                    </div>
+                ))}
             </div>
-        ))}
+        </div>
+
+        
     </>
     )
 }

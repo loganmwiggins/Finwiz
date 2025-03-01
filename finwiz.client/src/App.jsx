@@ -27,15 +27,17 @@ function App() {
                     <Nav />
 
                     <div className="app-content">
-                        <Routes>
-                            <Route path="/" element={<Overview />} />
-                            <Route path="/overview" element={<Overview />} />
-                            <Route path="/account/:accountId?" element={<Account />} />
-                            <Route path="/add-account" element={<AddAccount />} />
+                        <div className="app-ctnr">
+                            <Routes>
+                                <Route path="/" element={<Overview />} />
+                                <Route path="/overview" element={<Overview />} />
+                                <Route path="/account/:accountId?" element={<Account />} />
+                                <Route path="/add-account" element={<AddAccount />} />
 
-                            {/* Catch-all route for unknown paths */}
-                            <Route path="*" element={<Navigate to="/dashboard" />} />
-                        </Routes>
+                                {/* Catch-all route for unknown paths */}
+                                <Route path="*" element={<Navigate to="/dashboard" />} />
+                            </Routes>
+                        </div>
                     </div>
                 </div>
             </BrowserRouter>
