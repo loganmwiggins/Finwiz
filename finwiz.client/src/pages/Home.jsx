@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 
 function Home() {
-    return(
-        <>
-        </>
+    return (
+    <>
+        <h1>Home</h1>
+    </>
     );
 
 }
