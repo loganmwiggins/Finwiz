@@ -42,9 +42,8 @@ function Nav() {
     }
 
     // Handle navigation to other components
-    const handleNavigateOverview = () => {
-        navigate("/overview");
-    }
+    const handleNavigateOverview = () => navigate("/overview");
+    const handleNavigateAddAccount = () => navigate("/add-account");
 
     return(
         <div className="nav-ctnr">
@@ -71,7 +70,7 @@ function Nav() {
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2, ease: "easeOut" }}
                             >
-                                <button type="button">Add Account</button>
+                                <button type="button" onClick={handleNavigateAddAccount}>Add Account</button>
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -108,7 +107,7 @@ function Nav() {
                 <div className="account-directory">
                     <button type="button">Home</button>
                     <button type="button">Statements & Activity</button>
-                    <button type="button">Payments</button>
+                    <button type="button">Edit Details</button>
                 </div>
             </div>
         </div>

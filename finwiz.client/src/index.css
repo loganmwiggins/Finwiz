@@ -1,10 +1,15 @@
 :root {
     --bg-primary: #fff;
-    --bg-2: rgb(235, 235, 235);
+    --bg-2: rgb(250, 250, 250);
+    --bg-3: rgb(245, 245, 245);
+    --bg-4: rgb(235, 235, 235);
 
     --text-primary: #111;
+    --text-2: #333;
+    --text-3: #555;
 
     --border-primary: rgb(235, 235, 235);
+    --border-input: rgb(204, 204, 204);
 
     --accent: #1fa846;
 }
@@ -28,14 +33,66 @@ html {
     box-sizing: border-box;
 }
 
-button {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    font-size: 1rem;
-}
-
 .app-content {
     display: flex;
     flex-direction: column;
     align-items: start;
     width: 100%;
+    /* background: var(--bg-2); */
+}
+
+/* Buttons */
+button {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-radius: 2rem;
+    padding: .5rem 1rem;
+}
+
+.btn-accent {
+    background: var(--accent);
+    color: white;
+}
+
+/* Forms */
+form input, input, select {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    padding: .75rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-input);
+    border-radius: .25rem;
+    text-overflow: ellipsis;
+}
+input:focus, select:focus {
+    outline: 1px solid var(--accent);
+    border-color: var(--accent);
+}
+
+.input-row {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    gap: .75rem;
+}
+
+.input-w-label {
+    /* flex: 1; */
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: .25rem;
+}
+
+.checkbox {
+    max-width: fit-content;
 }

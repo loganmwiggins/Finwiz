@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import Nav from './components/Nav';
 import Overview from './pages/Overview';
 import Account from './pages/Account';
+import AddAccount from './pages/AddAccount';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                         <Route path="/" element={<Overview />} />
                         <Route path="/overview" element={<Overview />} />
                         <Route path="/account/:accountId?" element={<Account />} />
+                        <Route path="/add-account" element={<AddAccount />} />
 
                         {/* Catch-all route for unknown paths */}
                         <Route path="*" element={<Navigate to="/dashboard" />} />

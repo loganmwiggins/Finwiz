@@ -69,7 +69,7 @@
             padding: .5rem 1rem;
             cursor: pointer;
         }
-        button:hover { background: var(--bg-2); }
+        button:hover { background: var(--bg-4); }
 
         button:last-child { border: none; }
     }
@@ -95,7 +95,7 @@
         img { width: 1rem; }
     }
     .account-btn:hover {
-        background: var(--bg-2);
+        background: var(--bg-4);
     }
 
     .account-dropdown {
@@ -115,7 +115,7 @@
             cursor: pointer;
         }
         button:hover {
-            background: var(--bg-2);
+            background: var(--bg-4);
         }
         button:last-child { border: none; }
     }

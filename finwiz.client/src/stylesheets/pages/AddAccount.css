@@ -1,0 +1,23 @@
+.account-form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+
+    .input-w-label {
+        flex: 1;
+        input, select { width: 100%; }
+    }
+    .inputs-ctnr {
+        display: flex;
+        align-items: center;
+        flex-flow: wrap;
+        gap: .75rem;
+    }
+    label {
+        text-transform: uppercase;
+        font-size: .75rem;
+        color: var(--text-3);
+    }
+    /* input { flex: 1; } */
+}

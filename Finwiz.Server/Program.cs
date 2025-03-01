@@ -47,7 +47,7 @@ namespace Finwiz.Server
 
             app.UseHttpsRedirection();
 
-            app.UseCors();
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
 

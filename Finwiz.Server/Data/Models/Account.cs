@@ -8,21 +8,21 @@
 
         public required string Provider { get; set; }
 
-        public required string Type { get; set; }   // Consider converting to an enum: Credit, Savings
+        public required AccountType Type { get; set; }
 
         public double? CreditLimit { get; set; }
 
-        public DateOnly? StatementDate { get; set; }
+        public DateTime? StatementDate { get; set; }
 
-        public DateOnly? PaymentDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
-        public DateOnly? DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public required bool IsAutopayOn { get; set; } = true;
 
         public double? AnnualFee { get; set; }
 
-        public DateOnly? FeeDate { get; set; }
+        public DateTime? FeeDate { get; set; }
 
         public string? ImagePath { get; set; }
 
@@ -32,5 +32,12 @@
 
         // Navigation property
         public virtual ICollection<AccountPayment> Payments { get; set; } = new List<AccountPayment>();
+    }
+
+
+    public enum AccountType
+    {
+        Credit,
+        Savings
     }
 }

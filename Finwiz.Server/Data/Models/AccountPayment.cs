@@ -8,13 +8,13 @@ namespace Finwiz.Server.Data.Models
 
         public required double Amount { get; set; }
 
-        public required DateOnly StatementStart { get; set; }
+        public required DateTime StatementStart { get; set; }
 
-        public required DateOnly StatementEnd { get; set; }
+        public required DateTime StatementEnd { get; set; }
 
-        public required DateOnly PaymentDate { get; set; }
+        public required DateTime PaymentDate { get; set; }
 
-        public DateOnly? DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public required bool IsPaid { get; set; }
 
