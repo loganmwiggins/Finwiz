@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountsContext } from '../context/AccountsContext';
+import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { cardTypes } from '../utils/CardTypes';
 import { formatCurrency } from '../utils/CurrencyFormatter';
 import '../stylesheets/pages/Account.css';
@@ -10,15 +11,15 @@ function Account() {
     const { accountId } = useParams();
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
 
-    const [account, setAccount] = useState(null);
+    const [currentAccount, setCurrentAccount] = useState(null);
 
-    // Set account when accounts are loaded and accountId is available
+    // Retrieve current account
     useEffect(() => {
-        if (accounts.length > 0 && accountId) {
-            const foundAccount = accounts.find(acc => acc.id === accountId);
-            setAccount(foundAccount || null);
+        if (!accountsLoading && accounts.length > 0) {
+            if (accountId) setCurrentAccount(getCurrentAccount(accounts, accountId));
+            else setCurrentAccount(null);
         }
-    }, [accounts, accountId]);
+    }, [accounts, accountId, accountsLoading]);
 
     // AccountsContext returns
     if (accountsLoading) {
@@ -33,25 +34,25 @@ function Account() {
 
     return (
     <div className="page-ctnr Account">
-        {account ? (
+        {currentAccount ? (
             <div className="widget card-details-widget">
                 <div className="card-details-head">
-                    {account.imagePath ? (
-                        <img src={account.imagePath} draggable="false" />
+                    {currentAccount.imagePath ? (
+                        <img src={currentAccount.imagePath} draggable="false" />
                     ) : (
                         <img src="/assets/images/example-card.webp" draggable="false" />
                     )}
                     <div className="card-text">
-                        <p className="card-name">{account.provider} {account.name}</p>
-                        <p className="card-type">{cardTypes[account.type]} Account</p>
+                        <p className="card-name">{currentAccount.provider} {currentAccount.name}</p>
+                        <p className="card-type">{cardTypes[currentAccount.type]} Account</p>
                     </div>
                 </div>
                 <div className="stats-ctnr">
                     <div className="stat">
                         <p>Credit Limit</p>
                         <h1>
-                            {account.creditLimit ? (
-                                `${formatCurrency(account.creditLimit, false)}`
+                            {currentAccount.creditLimit ? (
+                                `${formatCurrency(currentAccount.creditLimit, false)}`
                             ) : (
                                 `N/A`
                             )}

@@ -73,31 +73,57 @@ function AccountDetails() {
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent page reload
 
+        const endpoint = currentAccount
+            ? `${API_BASE_URL}/api/Account/Update/${currentAccount.id}` 
+            : `${API_BASE_URL}/api/Account/Create`;
+
+        const method = currentAccount ? 'PUT' : 'POST';
+
+        // Create sanitizedData by checking each value in accountData
+        // Replace any "" values with null
+        const sanitizedData = Object.keys(accountData).reduce((acc, key) => {
+            acc[key] = accountData[key] === "" ? null : accountData[key];
+            return acc;
+        }, {});
+
         try {
             // console.log("SENDING DATA:", accountData);
 
-            const response = await fetch(`${API_BASE_URL}/api/Account/Create`, {
-                method: 'POST',
+            const response = await fetch(endpoint, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(accountData)
+                body: JSON.stringify(sanitizedData)
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                showToast("Account created successfully!", "success");
-                navigate("/overview");
+                if (currentAccount) {
+                    showToast("Account updated successfully!", "success");
+                    navigate(`/account/${accountId}`);
+                    // navigate("/overview");
+                }
+                else {
+                    showToast("Account created successfully!", "success");
+                    navigate("/overview");
+                }
             } 
             else {
-                console.error("Error: " + (data.message || "Failed to create account"));
-                showToast("Failed to create account.", "error");
+                if (currentAccount) {
+                    console.error("Error: " + (data.message || "Failed to update account"));
+                    showToast("Failed to update account.", "error");
+                }
+                else {
+                    console.error("Error: " + (data.message || "Failed to create account"));
+                    showToast("Failed to create account.", "error");
+                }
             }
         } 
         catch (error) {
             console.error("Error:", error);
-            showToast("Failed to create account. Please try again.", "error", "(catch)");
+            showToast("An error occurred. Please try again.", "error");
         }
     };
 
@@ -115,7 +141,7 @@ function AccountDetails() {
     return (
     <>
         <div className="page-header">
-            <h1>Account Details</h1>
+            <h1>{currentAccount ? "Account Details" : "New Account"}</h1>
         </div>
         
         <form onSubmit={handleSubmit} className="account-form">

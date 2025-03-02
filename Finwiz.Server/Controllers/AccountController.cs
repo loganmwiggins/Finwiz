@@ -73,5 +73,46 @@ namespace Finwiz.Server.Controllers
 
             return CreatedAtAction(nameof(GetAccountById), new { id = newAccount.Id }, newAccount);
         }
+
+        // Update Account
+        [HttpPut("Update/{accountId}")]
+        public async Task<IActionResult> UpdateAccount(Guid accountId, [FromBody] CreateAccountDTO updatedAccount)
+        {
+            if (updatedAccount == null)
+            {
+                return BadRequest("Invalid account data.");
+            }
+
+            var account = await _db.Accounts.FindAsync(accountId);
+            if (account == null)
+            {
+                return NotFound("Account not found.");
+            }
+
+            // Update fields
+            account.Type = updatedAccount.Type;
+            account.Name = updatedAccount.Name;
+            account.Provider = updatedAccount.Provider;
+            account.CreditLimit = updatedAccount.CreditLimit;
+            account.StatementDate = updatedAccount.StatementDate;
+            account.PaymentDate = updatedAccount.PaymentDate;
+            account.DueDate = updatedAccount.DueDate;
+            account.IsAutopayOn = updatedAccount.IsAutopayOn;
+            account.AnnualFee = updatedAccount.AnnualFee;
+            account.FeeDate = updatedAccount.FeeDate;
+            account.ImagePath = updatedAccount.ImagePath;
+            account.Notes = updatedAccount.Notes;
+            account.APY = updatedAccount.APY;
+
+            try
+            {
+                await _db.SaveChangesAsync();
+                return Ok(new { message = "Account updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error updating account: {ex.Message}");
+            }
+        }
     }
 }
