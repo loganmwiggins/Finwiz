@@ -1,16 +1,28 @@
 import { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { AccountsContext } from '../context/AccountsContext';
+import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import '../stylesheets/components/Nav.css';
 
 function Nav() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { accountId } = useParams();
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
 
+    const [currentAccount, setCurrentAccount] = useState(null);
     const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
     const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
+
+    // Retrieve current account
+    useEffect(() => {
+        if (!accountsLoading && accounts.length > 0) {
+            if (accountId) setCurrentAccount(getCurrentAccount(accounts, accountId));
+            else setCurrentAccount(null);
+        }
+    }, [accounts, accountId, accountsLoading]);
 
     // Handle click outside of menu dropdown
     useEffect(() => {
@@ -46,8 +58,9 @@ function Nav() {
 
     // Handle navigation to other components
     const handleNavigateOverview = () => navigate("/overview");
+    const handleNavigateHome = () => navigate(`/account/${accountId}`);
     const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
-    const handleNavigateAddAccount = () => navigate("/add-account");
+    const handleNavigateDetails = () => navigate(`/details/${accountId}`);
 
     // AccountsContext returns
     if (accountsLoading) {
@@ -86,8 +99,7 @@ function Nav() {
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.2, ease: "easeOut" }}
                                 >
-                                    <button type="button" onClick={handleNavigateAddAccount}>Add Account</button>
-                                    <button type="button">F*ck Yourself</button>
+                                    <button type="button">Dark Mode</button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -102,7 +114,14 @@ function Nav() {
                         className="account-btn"
                         onClick={toggleAccountDropdown}
                     >
-                        <p>Choose an Account</p>
+                        {/* <p>{console.log(currentAccount)}</p> */}
+
+                        {currentAccount ? (
+                            <p>{currentAccount.provider} {currentAccount.name}</p>
+                        ) : (
+                            <p>All Accounts</p>
+                        )}
+                        
                         <img src="/assets/icons/angle-small-down.svg" draggable="false" />
                     </button>
                     <AnimatePresence>
@@ -125,11 +144,33 @@ function Nav() {
                     </AnimatePresence>
 
                     {/* Account directory */}
-                    <div className="account-directory">
-                        <button type="button">Home</button>
-                        <button type="button">Statements & Activity</button>
-                        <button type="button">Edit Details</button>
-                    </div>
+                    <AnimatePresence>
+                        {accountId && (
+                            <motion.div 
+                                className="account-directory"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.5, ease: "easeOut" }}
+                            >
+                                <button
+                                    type="button"
+                                    className={location.pathname.includes("/account/") ? "active-btn" : ""}
+                                    onClick={handleNavigateHome}
+                                >
+                                    Home
+                                </button>
+                                <button type="button">Statements & Activity</button>
+                                <button
+                                    type="button"
+                                    className={location.pathname.includes("/details") ? "active-btn" : ""}
+                                    onClick={handleNavigateDetails}
+                                >
+                                    Edit Details
+                                </button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>

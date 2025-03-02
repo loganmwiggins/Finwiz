@@ -3,43 +3,37 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-route
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { AccountsProvider } from './context/AccountsContext';
+import Layout from './components/Layout';
 import Nav from './components/Nav';
 import Overview from './pages/Overview';
 import Account from './pages/Account';
-import AddAccount from './pages/AddAccount';
+import AccountDetails from './pages/AccountDetails';
 import './App.css';
-import { AccountsProvider } from './context/AccountsContext';
 
 function App() {
     return (
         <AccountsProvider>
             <BrowserRouter>
-                <div>
-                    {/* Toast Container for toast alerts */}
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={3000}
-                        // theme={localStorage.getItem("theme") === "light" ? "light" : "dark"}
-                        closeOnClick
-                        newestOnTop
-                    />
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    closeOnClick
+                    newestOnTop
+                />
 
-                    <Nav />
+                <Routes>
+                    {/* Routes inside Layout will have Nav */}
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<Overview />} />
+                        <Route path="/overview" element={<Overview />} />
+                        <Route path="/account/:accountId" element={<Account />} />
+                        <Route path="/details/:accountId?" element={<AccountDetails />} />
+                    </Route>
 
-                    <div className="app-content">
-                        <div className="app-ctnr">
-                            <Routes>
-                                <Route path="/" element={<Overview />} />
-                                <Route path="/overview" element={<Overview />} />
-                                <Route path="/account/:accountId" element={<Account />} />
-                                <Route path="/add-account" element={<AddAccount />} />
-
-                                {/* Catch-all route for unknown paths */}
-                                <Route path="*" element={<Navigate to="/" />} />
-                            </Routes>
-                        </div>
-                    </div>
-                </div>
+                    {/* Catch-all route for unknown paths */}
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
             </BrowserRouter>
         </AccountsProvider>
     );

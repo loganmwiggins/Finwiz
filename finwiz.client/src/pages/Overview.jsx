@@ -9,6 +9,7 @@ function Overview() {
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
 
     const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
+    const handleNavigateAddAccount = () => navigate("/details");
 
     // console.log(accounts);
 
@@ -29,7 +30,12 @@ function Overview() {
         </div>
 
         <div className="accounts-widget">
-            <h2>Accounts</h2>
+            <div className="widget-head">
+                <h2>Accounts</h2>
+                <button type="button" onClick={handleNavigateAddAccount}>
+                    <img src="/assets/icons/add.svg" draggable="false" />
+                </button>
+            </div>
             <div className="accounts-ctnr">
                 {accounts.map(account => (
                     <div key={account.id} className="account-card" onClick={() => handleNavigateAccount(account.id)}>

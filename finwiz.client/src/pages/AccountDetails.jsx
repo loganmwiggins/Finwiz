@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import { AccountsContext } from '../context/AccountsContext';
+import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { showToast } from '../utils/Toast';
-import '../stylesheets/pages/AddAccount.css';
+import '../stylesheets/pages/AccountDetails.css';
 
-function AddAccount() {
+function AccountDetails() {
     const navigate = useNavigate();
+    const { accountId } = useParams();
+    const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
 
+    const [currentAccount, setCurrentAccount] = useState(null);
     const [accountData, setAccountData] = useState({
         Type: 0,  // Default to "Credit"
         Name: null,
@@ -23,6 +28,35 @@ function AddAccount() {
         Notes: null,
         APY: null
     });
+
+    // Retrieve current account
+    useEffect(() => {
+        if (!accountsLoading && accounts.length > 0) {
+            if (accountId) setCurrentAccount(getCurrentAccount(accounts, accountId));
+            else setCurrentAccount(null);
+        }
+    }, [accounts, accountId, accountsLoading]);
+
+    // Populate form if editing an existing account
+    useEffect(() => {
+        if (currentAccount) {
+            setAccountData({
+                Type: currentAccount.type,
+                Name: currentAccount.name || null,
+                Provider: currentAccount.provider || null,
+                CreditLimit: currentAccount.creditLimit || null,
+                StatementDate: currentAccount.statementDate || null,
+                PaymentDate: currentAccount.paymentDate || null,
+                DueDate: currentAccount.dueDate || null,
+                IsAutopayOn: currentAccount.isAutopayOn || false,
+                AnnualFee: currentAccount.annualFee || null,
+                FeeDate: currentAccount.feeDate || null,
+                ImagePath: currentAccount.imagePath || null,
+                Notes: currentAccount.notes || null,
+                APY: currentAccount.apy || null
+            });
+        }
+    }, [currentAccount]);
 
     // Handle input change
     const handleChange = (e) => {
@@ -66,6 +100,17 @@ function AddAccount() {
             showToast("Failed to create account. Please try again.", "error", "(catch)");
         }
     };
+
+    // AccountsContext returns
+    if (accountsLoading) {
+        return (
+            <div className="loading-ctnr">
+                <div className="loading-spinner"></div>
+                <p>Loading accounts...</p> 
+            </div>
+        ); 
+    }
+    if (accountsError) return <p>{accountsError}</p>;
 
     return (
     <>
@@ -247,4 +292,4 @@ function AddAccount() {
     )
 }
 
-export default AddAccount;
+export default AccountDetails;
