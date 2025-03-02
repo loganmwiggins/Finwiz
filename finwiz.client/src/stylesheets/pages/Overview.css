@@ -13,6 +13,7 @@
 .accounts-ctnr {
     display: flex;
     flex-flow: wrap;
+    gap: 1rem;
 }
 
 .account-card {
@@ -24,6 +25,9 @@
     padding: .5rem;
     cursor: pointer;
 
+    img {
+        width: 6rem;
+    }
     .provider {
         text-transform: uppercase;
         color: var(--text-4);

@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { AccountsContext } from '../context/AccountsContext';
 import '../stylesheets/components/Nav.css';
 
 function Nav() {
     const navigate = useNavigate();
+    const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
+
     const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
     const [accountDropdownOpen, setAccountDropdownOpen] = useState(false);
 
@@ -43,7 +46,19 @@ function Nav() {
 
     // Handle navigation to other components
     const handleNavigateOverview = () => navigate("/overview");
+    const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
     const handleNavigateAddAccount = () => navigate("/add-account");
+
+    // AccountsContext returns
+    if (accountsLoading) {
+        return (
+            <div className="loading-ctnr">
+                <div className="loading-spinner"></div>
+                <p>Loading accounts...</p> 
+            </div>
+        ); 
+    }
+    if (accountsError) return <p>{accountsError}</p>;
 
     return(
         <div className="nav">
@@ -72,6 +87,7 @@ function Nav() {
                                     transition={{ duration: 0.2, ease: "easeOut" }}
                                 >
                                     <button type="button" onClick={handleNavigateAddAccount}>Add Account</button>
+                                    <button type="button">F*ck Yourself</button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -86,7 +102,7 @@ function Nav() {
                         className="account-btn"
                         onClick={toggleAccountDropdown}
                     >
-                        <p>American Express Gold Card</p>
+                        <p>Choose an Account</p>
                         <img src="/assets/icons/angle-small-down.svg" draggable="false" />
                     </button>
                     <AnimatePresence>
@@ -98,10 +114,12 @@ function Nav() {
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.2, ease: "easeOut" }}
                             >
-                                <button type="button" onClick={handleNavigateOverview}>All Accounts (Overview)</button>
-                                <button type="button">Account 1</button>
-                                <button type="button">Account 2</button>
-                                <button type="button">Account 3</button>
+                                <button type="button" onClick={handleNavigateOverview}>All Accounts</button>
+                                {accounts.map(account => (
+                                    <button type="button" key={account.id} onClick={() => handleNavigateAccount(account.id)}>
+                                        {account.provider} {account.name}
+                                    </button>
+                                ))}
                             </motion.div>
                         )}
                     </AnimatePresence>

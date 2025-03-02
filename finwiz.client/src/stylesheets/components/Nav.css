@@ -60,12 +60,13 @@
 
     .menu-dropdown {
         position: absolute;
-        top: 1.5rem;
+        top: 2rem;
         right: 0;
         min-width: 10rem;
         background: var(--bg-primary);
         border: 1px solid var(--border-primary);
         border-radius: .25rem;
+        box-shadow: var(--shadow-select);
         display: flex;
         flex-direction: column;
 
@@ -113,6 +114,7 @@
         border: 1px solid var(--border-primary);
         display: flex;
         flex-direction: column;
+        box-shadow: 0 .25rem .5rem var(--shadow-1);
 
         button {
             display: flex;

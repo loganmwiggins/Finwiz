@@ -15,6 +15,12 @@
     --border-spinner: rgba(0, 0, 0, .2);
     --border-spinner-top: rgb(0, 0, 0);
 
+    --shadow-modal: 0 0 .5rem rgb(215, 215, 215);
+    --shadow-select: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.1);
+    --shadow-1: rgba(0, 0, 0, .15);
+    --shadow-2: rgba(0, 0, 0, .25);
+    --shadow-3: rgba(0, 0, 0, .5);
+
     --accent: #1fa846;
 }
 
@@ -54,8 +60,27 @@ html {
     align-items: start;
 }
 
+.page-ctnr {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
 .page-header {
     margin-bottom: 1rem;
+}
+
+.widget {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    width: 100%;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: .5rem;
+    padding: 1rem;
 }
 
 /* Buttons */

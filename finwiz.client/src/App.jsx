@@ -31,11 +31,11 @@ function App() {
                             <Routes>
                                 <Route path="/" element={<Overview />} />
                                 <Route path="/overview" element={<Overview />} />
-                                <Route path="/account/:accountId?" element={<Account />} />
+                                <Route path="/account/:accountId" element={<Account />} />
                                 <Route path="/add-account" element={<AddAccount />} />
 
                                 {/* Catch-all route for unknown paths */}
-                                <Route path="*" element={<Navigate to="/dashboard" />} />
+                                <Route path="*" element={<Navigate to="/" />} />
                             </Routes>
                         </div>
                     </div>
