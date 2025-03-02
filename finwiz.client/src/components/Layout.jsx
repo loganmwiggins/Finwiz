@@ -3,7 +3,7 @@ import Nav from './Nav';
 
 const Layout = () => {
     return (
-        <div>
+        <div className="layout-wrapper">
             <Nav />
             
             <div className="app-content">
