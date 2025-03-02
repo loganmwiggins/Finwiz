@@ -18,11 +18,11 @@
 
 .account-card {
     display: flex;
-    align-items: start;
-    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
     border: 1px solid var(--border-primary);
     border-radius: .5rem;
-    padding: .5rem;
+    padding: .5rem 1rem;
     cursor: pointer;
 
     img {
@@ -33,6 +33,10 @@
         color: var(--text-4);
     }
     .name {
-
+        font-size: 1.25rem;
     }
+}
+
+.card-text {
+    text-align: left;
 }

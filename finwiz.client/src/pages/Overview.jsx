@@ -33,9 +33,16 @@ function Overview() {
             <div className="accounts-ctnr">
                 {accounts.map(account => (
                     <div key={account.id} className="account-card" onClick={() => handleNavigateAccount(account.id)}>
-                        <img src={account.imagePath} draggable="false" />
-                        <p className="provider">{account.provider}</p>
-                        <p className="name">{account.name}</p>
+                        {account.imagePath ? (
+                            <img src={account.imagePath} draggable="false" />
+                        ) : (
+                            <img src="/assets/images/example-card.webp" draggable="false" />
+                        )}
+                        
+                        <div className="card-text">
+                            <p className="provider">{account.provider}</p>
+                            <p className="name">{account.name}</p>
+                        </div>
                     </div>
                 ))}
             </div>

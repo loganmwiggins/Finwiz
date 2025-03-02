@@ -36,7 +36,11 @@ function Account() {
         {account ? (
             <div className="widget card-details-widget">
                 <div className="card-details-head">
-                    <img src={account.imagePath} draggable="false" />
+                    {account.imagePath ? (
+                        <img src={account.imagePath} draggable="false" />
+                    ) : (
+                        <img src="/assets/images/example-card.webp" draggable="false" />
+                    )}
                     <div className="card-text">
                         <p className="card-name">{account.provider} {account.name}</p>
                         <p className="card-type">{cardTypes[account.type]} Account</p>
