@@ -114,8 +114,6 @@ function Nav() {
                         className="account-btn"
                         onClick={toggleAccountDropdown}
                     >
-                        {/* <p>{console.log(currentAccount)}</p> */}
-
                         {currentAccount ? (
                             <p>{currentAccount.provider} {currentAccount.name}</p>
                         ) : (

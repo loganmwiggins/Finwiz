@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
+import { formatDateToInput } from '../utils/DateFormatter';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { showToast } from '../utils/Toast';
 import '../stylesheets/pages/AccountDetails.css';
@@ -10,23 +11,23 @@ import '../stylesheets/pages/AccountDetails.css';
 function AccountDetails() {
     const navigate = useNavigate();
     const { accountId } = useParams();
-    const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
+    const { accounts, accountsLoading, accountsError, setAccounts } = useContext(AccountsContext);
 
     const [currentAccount, setCurrentAccount] = useState(null);
     const [accountData, setAccountData] = useState({
-        Type: 0,  // Default to "Credit"
-        Name: null,
-        Provider: null,
-        CreditLimit: null,
-        StatementDate: null,
-        PaymentDate: null,
-        DueDate: null,
-        IsAutopayOn: false,
-        AnnualFee: null,
-        FeeDate: null,
-        ImagePath: null,
-        Notes: null,
-        APY: null
+        type: 0,  // Default to "Credit"
+        name: null,
+        provider: null,
+        creditLimit: null,
+        statementDate: null,
+        paymentDate: null,
+        dueDate: null,
+        isAutopayOn: false,
+        annualFee: null,
+        feeDate: null,
+        imagePath: null,
+        notes: null,
+        apy: null
     });
 
     // Retrieve current account
@@ -41,19 +42,19 @@ function AccountDetails() {
     useEffect(() => {
         if (currentAccount) {
             setAccountData({
-                Type: currentAccount.type,
-                Name: currentAccount.name || null,
-                Provider: currentAccount.provider || null,
-                CreditLimit: currentAccount.creditLimit || null,
-                StatementDate: currentAccount.statementDate || null,
-                PaymentDate: currentAccount.paymentDate || null,
-                DueDate: currentAccount.dueDate || null,
-                IsAutopayOn: currentAccount.isAutopayOn || false,
-                AnnualFee: currentAccount.annualFee || null,
-                FeeDate: currentAccount.feeDate || null,
-                ImagePath: currentAccount.imagePath || null,
-                Notes: currentAccount.notes || null,
-                APY: currentAccount.apy || null
+                type: currentAccount.type,
+                name: currentAccount.name || null,
+                provider: currentAccount.provider || null,
+                creditLimit: currentAccount.creditLimit || null,
+                statementDate: formatDateToInput(currentAccount.statementDate) || null,
+                paymentDate: formatDateToInput(currentAccount.paymentDate) || null,
+                dueDate: formatDateToInput(currentAccount.dueDate) || null,
+                isAutopayOn: currentAccount.isAutopayOn || false,
+                annualFee: currentAccount.annualFee || null,
+                feeDate: formatDateToInput(currentAccount.feeDate) || null,
+                imagePath: currentAccount.imagePath || null,
+                notes: currentAccount.notes || null,
+                apy: currentAccount.apy || null
             });
         }
     }, [currentAccount]);
@@ -61,7 +62,6 @@ function AccountDetails() {
     // Handle input change
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        // console.log("CHANGED:", name, value);
 
         setAccountData(prevState => ({
             ...prevState,
@@ -87,7 +87,7 @@ function AccountDetails() {
         }, {});
 
         try {
-            // console.log("SENDING DATA:", accountData);
+            // console.log("SENDING DATA:", sanitizedData);
 
             const response = await fetch(endpoint, {
                 method: method,
@@ -102,8 +102,15 @@ function AccountDetails() {
             if (response.ok) {
                 if (currentAccount) {
                     showToast("Account updated successfully!", "success");
+
+                    // Update the context state with the updated account (NOT WORKING)
+                    setAccounts((prevAccounts) => 
+                        prevAccounts.map((account) => 
+                            account.id === currentAccount.id ? { ...account, ...sanitizedData } : account
+                        )
+                    );
+                    
                     navigate(`/account/${accountId}`);
-                    // navigate("/overview");
                 }
                 else {
                     showToast("Account created successfully!", "success");
@@ -151,8 +158,8 @@ function AccountDetails() {
                     <div className="input-w-label">
                         <label>Type *</label>
                         <select
-                            name="Type" 
-                            value={accountData.Type} 
+                            name="type" 
+                            value={accountData.type} 
                             onChange={handleChange}
                         >
                             <option value={0}>Credit</option>
@@ -164,9 +171,9 @@ function AccountDetails() {
                         <label>Name *</label>
                         <input
                             type="text"
-                            name="Name"
+                            name="name"
                             placeholder="(e.g., Gold Card)"
-                            value={accountData.Name}
+                            value={accountData.name}
                             onChange={handleChange}
                             required
                         />
@@ -176,9 +183,9 @@ function AccountDetails() {
                         <label>Provider *</label>
                         <input
                             type="text"
-                            name="Provider"
+                            name="provider"
                             placeholder="(e.g., American Express)"
-                            value={accountData.Provider}
+                            value={accountData.provider}
                             onChange={handleChange} required
                         />
                     </div>
@@ -187,21 +194,21 @@ function AccountDetails() {
                         <label>Image URL</label>
                         <input
                             type="text"
-                            name="ImagePath"
+                            name="imagePath"
                             placeholder="URL"
-                            value={accountData.ImagePath}
+                            value={accountData.imagePath}
                             onChange={handleChange}
                         />
                     </div>
                     {/* Credit Limit */}
-                    {accountData.Type == 0 && (
+                    {accountData.type == 0 && (
                         <div className="input-w-label">
                             <label>Credit Limit</label>
                             <input
                                 type="number"
-                                name="CreditLimit"
+                                name="creditLimit"
                                 placeholder="$"
-                                value={accountData.CreditLimit}
+                                value={accountData.creditLimit}
                                 onChange={handleChange}
                             />
                         </div>
@@ -210,13 +217,13 @@ function AccountDetails() {
 
                 <div className="input-row">
                     {/* Statement Date */}
-                    {accountData.Type == 0 && (
+                    {accountData.type == 0 && (
                         <div className="input-w-label">
                             <label>Statement Date</label>
                             <input
                                 type="date"
-                                name="StatementDate"
-                                value={accountData.StatementDate}
+                                name="statementDate"
+                                value={accountData.statementDate}
                                 onChange={handleChange}
                             />
                         </div>
@@ -226,59 +233,59 @@ function AccountDetails() {
                         <label>Payment Date</label>
                         <input
                             type="date"
-                            name="PaymentDate"
-                            value={accountData.PaymentDate}
+                            name="paymentDate"
+                            value={accountData.paymentDate}
                             onChange={handleChange}
                         />
                     </div>
                     {/* Due Date */}
-                    {accountData.Type == 0 && (
+                    {accountData.type == 0 && (
                         <div className="input-w-label">
                             <label>Due Date</label>
                             <input
                                 type="date"
-                                name="DueDate"
-                                value={accountData.DueDate}
+                                name="dueDate"
+                                value={accountData.dueDate}
                                 onChange={handleChange}
                             />
                         </div>
                     )}
                     {/* Annual Fee */}
-                    {accountData.Type == 0 && (
+                    {accountData.type == 0 && (
                         <div className="input-w-label">
                             <label>Annual Fee</label>
                             <input
                                 type="number"
-                                name="AnnualFee"
+                                name="annualFee"
                                 placeholder="$"
-                                value={accountData.AnnualFee}
+                                value={accountData.annualFee}
                                 onChange={handleChange}
                             />
                         </div>
                     )}
                     
                     {/* Fee Date */}
-                    {accountData.Type == 0 && (
+                    {accountData.type == 0 && (
                         <div className="input-w-label">
                             <label>Fee Date</label>
                             <input
                                 type="date"
-                                name="FeeDate"
-                                value={accountData.FeeDate}
+                                name="feeDate"
+                                value={accountData.feeDate}
                                 onChange={handleChange}
                             />
                         </div>
                     )}
                     
                     {/* APY */}
-                    {accountData.Type == 1 && (
+                    {accountData.type == 1 && (
                         <div className="input-w-label">
                             <label>APY</label>
                             <input
                                 type="number"
-                                name="APY"
-                                placeholder="APY"
-                                value={accountData.APY}
+                                name="apy"
+                                placeholder="Annual Percentage Yield"
+                                value={accountData.apy}
                                 onChange={handleChange}
                             />
                         </div>
@@ -291,9 +298,9 @@ function AccountDetails() {
                         <label>Notes</label>
                         <input 
                             type="text"
-                            name="Notes"
+                            name="notes"
                             placeholder="(e.g., 'Use for groceries and restaurants')"
-                            value={accountData.Notes}
+                            value={accountData.notes}
                             onChange={handleChange}
                         />
                     </div>
@@ -303,8 +310,8 @@ function AccountDetails() {
                         <input 
                             type="checkbox" 
                             className="checkbox"
-                            name="IsAutopayOn" 
-                            checked={accountData.IsAutopayOn} 
+                            name="isAutopayOn" 
+                            checked={accountData.isAutopayOn} 
                             onChange={handleChange} 
                         />
                     </div>

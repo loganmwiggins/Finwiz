@@ -11,8 +11,6 @@ function Overview() {
     const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
     const handleNavigateAddAccount = () => navigate("/details");
 
-    // console.log(accounts);
-
     if (accountsLoading) {
         return (
             <div className="loading-ctnr">

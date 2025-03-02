@@ -29,7 +29,7 @@ export const AccountsProvider = ({ children }) => {
     }, []); // This will run only once when the component mounts
 
     return (
-        <AccountsContext.Provider value={{ accounts, accountsLoading, accountsError }}>
+        <AccountsContext.Provider value={{ accounts, accountsLoading, accountsError, setAccounts }}>
             {children}
         </AccountsContext.Provider>
     );
