@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 1rem;
+    gap: 1.5rem;
 
     .input-w-label {
         flex: 1;
@@ -19,5 +19,10 @@
         font-size: .75rem;
         color: var(--text-3);
     }
-    /* input { flex: 1; } */
+
+    .btn-row {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+    }
 }

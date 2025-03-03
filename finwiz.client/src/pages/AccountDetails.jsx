@@ -59,6 +59,12 @@ function AccountDetails() {
         }
     }, [currentAccount]);
 
+    // Handle cancel button
+    const handleCancel = () => {
+        showToast("Changes were not saved.", "warning");
+        navigate(`/account/${accountId}`)
+    }
+
     // Handle input change
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -146,182 +152,185 @@ function AccountDetails() {
     if (accountsError) return <p>{accountsError}</p>;
 
     return (
-    <>
-        <div className="page-header">
-            <h1>{currentAccount ? "Account Details" : "New Account"}</h1>
+    <div className="page-ctnr AccountDetails">
+        <div className="widget">
+            <h2>{currentAccount ? "Account Details" : "New Account"}</h2>
+
+            <form onSubmit={handleSubmit} className="account-form">
+                <div className="inputs-ctnr">
+                    <div className="input-row">
+                        {/* Type */}
+                        <div className="input-w-label">
+                            <label>Type *</label>
+                            <select
+                                name="type" 
+                                value={accountData.type} 
+                                onChange={handleChange}
+                            >
+                                <option value={0}>Credit</option>
+                                <option value={1}>Savings</option>
+                            </select>
+                        </div>
+                        {/* Name */}
+                        <div className="input-w-label">
+                            <label>Name *</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="(e.g., Gold Card)"
+                                value={accountData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        {/* Provider */}
+                        <div className="input-w-label">
+                            <label>Provider *</label>
+                            <input
+                                type="text"
+                                name="provider"
+                                placeholder="(e.g., American Express)"
+                                value={accountData.provider}
+                                onChange={handleChange} required
+                            />
+                        </div>
+                        {/* Image URL */}
+                        <div className="input-w-label">
+                            <label>Image URL</label>
+                            <input
+                                type="text"
+                                name="imagePath"
+                                placeholder="URL"
+                                value={accountData.imagePath}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        {/* Credit Limit */}
+                        {accountData.type == 0 && (
+                            <div className="input-w-label">
+                                <label>Credit Limit</label>
+                                <input
+                                    type="number"
+                                    name="creditLimit"
+                                    placeholder="$"
+                                    value={accountData.creditLimit}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        )} 
+                    </div>
+
+                    <div className="input-row">
+                        {/* Statement Date */}
+                        {accountData.type == 0 && (
+                            <div className="input-w-label">
+                                <label>Statement Date</label>
+                                <input
+                                    type="date"
+                                    name="statementDate"
+                                    value={accountData.statementDate}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        )}
+                        {/* Payment Date */}
+                        <div className="input-w-label">
+                            <label>Payment Date</label>
+                            <input
+                                type="date"
+                                name="paymentDate"
+                                value={accountData.paymentDate}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        {/* Due Date */}
+                        {accountData.type == 0 && (
+                            <div className="input-w-label">
+                                <label>Due Date</label>
+                                <input
+                                    type="date"
+                                    name="dueDate"
+                                    value={accountData.dueDate}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        )}
+                        {/* Annual Fee */}
+                        {accountData.type == 0 && (
+                            <div className="input-w-label">
+                                <label>Annual Fee</label>
+                                <input
+                                    type="number"
+                                    name="annualFee"
+                                    placeholder="$"
+                                    value={accountData.annualFee}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        )}
+                        
+                        {/* Fee Date */}
+                        {accountData.type == 0 && (
+                            <div className="input-w-label">
+                                <label>Fee Date</label>
+                                <input
+                                    type="date"
+                                    name="feeDate"
+                                    value={accountData.feeDate}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        )}
+                        
+                        {/* APY */}
+                        {accountData.type == 1 && (
+                            <div className="input-w-label">
+                                <label>APY</label>
+                                <input
+                                    type="number"
+                                    name="apy"
+                                    placeholder="Annual Percentage Yield"
+                                    value={accountData.apy}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="input-row">
+                        {/* Notes */}
+                        <div className="input-w-label">
+                            <label>Notes</label>
+                            <input 
+                                type="text"
+                                name="notes"
+                                placeholder="(e.g., 'Use for groceries and restaurants')"
+                                value={accountData.notes}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        {/* Autopay? */}
+                        <div className="input-w-label checkbox">
+                            <label>Autopay? *</label>
+                            <input 
+                                type="checkbox" 
+                                className="checkbox"
+                                name="isAutopayOn" 
+                                checked={accountData.isAutopayOn} 
+                                onChange={handleChange} 
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Submit button */}
+                <div className="btn-row">
+                    <button type="button" className="btn btn-outline" onClick={handleCancel}>Cancel</button>
+                    <button type="submit" className="btn btn-accent">Save</button>
+                </div>
+            </form>
         </div>
-        
-        <form onSubmit={handleSubmit} className="account-form">
-            <div className="inputs-ctnr">
-                <div className="input-row">
-                    {/* Type */}
-                    <div className="input-w-label">
-                        <label>Type *</label>
-                        <select
-                            name="type" 
-                            value={accountData.type} 
-                            onChange={handleChange}
-                        >
-                            <option value={0}>Credit</option>
-                            <option value={1}>Savings</option>
-                        </select>
-                    </div>
-                    {/* Name */}
-                    <div className="input-w-label">
-                        <label>Name *</label>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="(e.g., Gold Card)"
-                            value={accountData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    {/* Provider */}
-                    <div className="input-w-label">
-                        <label>Provider *</label>
-                        <input
-                            type="text"
-                            name="provider"
-                            placeholder="(e.g., American Express)"
-                            value={accountData.provider}
-                            onChange={handleChange} required
-                        />
-                    </div>
-                    {/* Image URL */}
-                    <div className="input-w-label">
-                        <label>Image URL</label>
-                        <input
-                            type="text"
-                            name="imagePath"
-                            placeholder="URL"
-                            value={accountData.imagePath}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/* Credit Limit */}
-                    {accountData.type == 0 && (
-                        <div className="input-w-label">
-                            <label>Credit Limit</label>
-                            <input
-                                type="number"
-                                name="creditLimit"
-                                placeholder="$"
-                                value={accountData.creditLimit}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    )} 
-                </div>
-
-                <div className="input-row">
-                    {/* Statement Date */}
-                    {accountData.type == 0 && (
-                        <div className="input-w-label">
-                            <label>Statement Date</label>
-                            <input
-                                type="date"
-                                name="statementDate"
-                                value={accountData.statementDate}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    )}
-                    {/* Payment Date */}
-                    <div className="input-w-label">
-                        <label>Payment Date</label>
-                        <input
-                            type="date"
-                            name="paymentDate"
-                            value={accountData.paymentDate}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/* Due Date */}
-                    {accountData.type == 0 && (
-                        <div className="input-w-label">
-                            <label>Due Date</label>
-                            <input
-                                type="date"
-                                name="dueDate"
-                                value={accountData.dueDate}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    )}
-                    {/* Annual Fee */}
-                    {accountData.type == 0 && (
-                        <div className="input-w-label">
-                            <label>Annual Fee</label>
-                            <input
-                                type="number"
-                                name="annualFee"
-                                placeholder="$"
-                                value={accountData.annualFee}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    )}
-                    
-                    {/* Fee Date */}
-                    {accountData.type == 0 && (
-                        <div className="input-w-label">
-                            <label>Fee Date</label>
-                            <input
-                                type="date"
-                                name="feeDate"
-                                value={accountData.feeDate}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    )}
-                    
-                    {/* APY */}
-                    {accountData.type == 1 && (
-                        <div className="input-w-label">
-                            <label>APY</label>
-                            <input
-                                type="number"
-                                name="apy"
-                                placeholder="Annual Percentage Yield"
-                                value={accountData.apy}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    )}
-                </div>
-
-                <div className="input-row">
-                    {/* Notes */}
-                    <div className="input-w-label">
-                        <label>Notes</label>
-                        <input 
-                            type="text"
-                            name="notes"
-                            placeholder="(e.g., 'Use for groceries and restaurants')"
-                            value={accountData.notes}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    {/* Autopay? */}
-                    <div className="input-w-label checkbox">
-                        <label>Autopay? *</label>
-                        <input 
-                            type="checkbox" 
-                            className="checkbox"
-                            name="isAutopayOn" 
-                            checked={accountData.isAutopayOn} 
-                            onChange={handleChange} 
-                        />
-                    </div>
-                </div>
-            </div>
-
-            {/* Submit button */}
-            <button type="submit" className="btn btn-accent">Save</button>
-        </form>
-    </>
+    </div>
     )
 }
 

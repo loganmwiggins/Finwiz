@@ -22,6 +22,7 @@
     --shadow-3: rgba(0, 0, 0, .5);
 
     --accent: #1fa846;
+    --accent-dark: #1b913c;
 }
 
 html, body, #root { height: 100%; }
@@ -110,7 +111,20 @@ button {
 
 .btn-accent {
     background: var(--accent);
+    border: 1px solid var(--accent);
     color: white;
+}
+.btn-accent:hover {
+    background: var(--accent-dark);
+}
+
+.btn-outline {
+    border: 1px solid var(--text-4);
+    color: var(--text-4);
+}
+.btn-outline:hover {
+    border: 1px solid var(--text-2);
+    color: var(--text-2);
 }
 
 /* Forms */
