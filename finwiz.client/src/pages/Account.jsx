@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
@@ -60,11 +60,11 @@ function Account() {
                     </div>
                     <div className="stat">
                         <p>Latest Statement</p>
-                        <h1>$2,070.82</h1>
+                        <h1>-</h1>
                     </div>
                     <div className="stat">
                         <p>Next Payment Due on</p>
-                        <h1>March 13</h1>
+                        <h1>-</h1>
                     </div>
                 </div>
             </div>

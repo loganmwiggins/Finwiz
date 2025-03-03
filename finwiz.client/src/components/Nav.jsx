@@ -60,6 +60,7 @@ function Nav() {
     const handleNavigateOverview = () => navigate("/overview");
     const handleNavigateHome = () => navigate(`/account/${accountId}`);
     const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
+    const handleNavigateStatements = () => navigate(`/statements/${accountId}`);
     const handleNavigateDetails = () => navigate(`/details/${accountId}`);
 
     // AccountsContext returns
@@ -158,7 +159,13 @@ function Nav() {
                                 >
                                     Home
                                 </button>
-                                <button type="button">Statements & Activity</button>
+                                <button
+                                    type="button"
+                                    className={location.pathname.includes("/statements") ? "active-btn" : ""}
+                                    onClick={handleNavigateStatements}
+                                >
+                                    Statements & Activity
+                                </button>
                                 <button
                                     type="button"
                                     className={location.pathname.includes("/details") ? "active-btn" : ""}

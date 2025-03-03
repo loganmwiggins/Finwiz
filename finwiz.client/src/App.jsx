@@ -5,9 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { AccountsProvider } from './context/AccountsContext';
 import Layout from './components/Layout';
-import Nav from './components/Nav';
 import Overview from './pages/Overview';
 import Account from './pages/Account';
+import Statements from './pages/Statements';
 import AccountDetails from './pages/AccountDetails';
 import './App.css';
 
@@ -28,6 +28,7 @@ function App() {
                         <Route path="/" element={<Overview />} />
                         <Route path="/overview" element={<Overview />} />
                         <Route path="/account/:accountId" element={<Account />} />
+                        <Route path="/statements/:accountId" element={<Statements />} />
                         <Route path="/details/:accountId?" element={<AccountDetails />} />
                     </Route>
 
