@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -9,6 +8,7 @@ import Overview from './pages/Overview';
 import Account from './pages/Account';
 import Statements from './pages/Statements';
 import AccountDetails from './pages/AccountDetails';
+import StatementDetails from './pages/StatementDetails';
 import './App.css';
 
 function App() {
@@ -30,6 +30,7 @@ function App() {
                         <Route path="/account/:accountId" element={<Account />} />
                         <Route path="/statements/:accountId" element={<Statements />} />
                         <Route path="/details/:accountId?" element={<AccountDetails />} />
+                        <Route path="/statement-details/:accountId/:statementId?" element={<StatementDetails />} />
                     </Route>
 
                     {/* Catch-all route for unknown paths */}

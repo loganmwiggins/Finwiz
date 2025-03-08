@@ -8,9 +8,9 @@ namespace Finwiz.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class StatementController(ILogger<AccountController> logger, AppDbContext dbContext) : Controller
+    public class StatementController(ILogger<StatementController> logger, AppDbContext dbContext) : Controller
     {
-        private readonly ILogger<AccountController> _logger;
+        private readonly ILogger<StatementController> _logger;
         private readonly AppDbContext _db = dbContext;
 
         // Get all statements for certain account

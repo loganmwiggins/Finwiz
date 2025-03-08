@@ -343,7 +343,7 @@ function AccountDetails() {
                     </div>
                 </div>
 
-                {/* Submit button */}
+                {/* Buttons */}
                 <div className="btn-row">
                     <button type="button" className="btn btn-outline" onClick={handleCancel}>Cancel</button>
                     <button type="submit" className="btn btn-accent">Save</button>

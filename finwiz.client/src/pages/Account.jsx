@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { cardTypes } from '../utils/CardTypes';
+import { formatDate } from '../utils/DateFormatter';
 import { formatCurrency } from '../utils/CurrencyFormatter';
 import '../stylesheets/pages/Account.css';
 
@@ -71,7 +72,13 @@ function Account() {
                     </div>
                     <div className="stat">
                         <p>Next Payment Due on</p>
-                        <h1>-</h1>
+                        <h1>
+                            {currentAccount.paymentDate ? (
+                                `${formatDate(currentAccount.paymentDate, false)}`
+                            ) : (
+                                `N/A`
+                            )}
+                        </h1>
                     </div>
                 </div>
             </div>
