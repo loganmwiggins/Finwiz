@@ -69,6 +69,23 @@ function AccountDetails() {
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
+        if (name === "type") {
+            setAccountData({
+                name: "",
+                provider: "",
+                creditLimit: "",
+                statementDate: "",
+                paymentDate: "",
+                dueDate: "",
+                isAutopayOn: false,
+                annualFee: "",
+                feeDate: "",
+                imagePath: "",
+                notes: "",
+                apy: ""
+            });
+        }
+
         setAccountData(prevState => ({
             ...prevState,
             [name]: type === "checkbox" ? checked : value
@@ -87,10 +104,12 @@ function AccountDetails() {
 
         // Create sanitizedData by checking each value in accountData
         // Replace any "" values with null
-        const sanitizedData = Object.keys(accountData).reduce((acc, key) => {
+        let sanitizedData = Object.keys(accountData).reduce((acc, key) => {
             acc[key] = accountData[key] === "" ? null : accountData[key];
             return acc;
         }, {});
+
+        sanitizedData.type = Number(sanitizedData.type);
 
         try {
             // console.log("SENDING DATA:", sanitizedData);
@@ -171,27 +190,28 @@ function AccountDetails() {
                                 <option value={1}>Savings</option>
                             </select>
                         </div>
-                        {/* Name */}
-                        <div className="input-w-label">
-                            <label>Name *</label>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="(e.g., Gold Card)"
-                                value={accountData.name}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
                         {/* Provider */}
                         <div className="input-w-label">
                             <label>Provider *</label>
                             <input
                                 type="text"
                                 name="provider"
-                                placeholder="(e.g., American Express)"
+                                placeholder="(e.g., Chase, Discover, Amex)" // FIX: Change placeholders based on account type
                                 value={accountData.provider}
-                                onChange={handleChange} required
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        {/* Name */}
+                        <div className="input-w-label">
+                            <label>Name *</label>
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="(e.g., Freedom Unlimited, Gold Card)"
+                                value={accountData.name}
+                                onChange={handleChange}
+                                required
                             />
                         </div>
                         {/* Image URL */}

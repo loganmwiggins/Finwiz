@@ -2,7 +2,7 @@
 
 namespace Finwiz.Server.Data.Models
 {
-    public class AccountPayment
+    public class Statement
     {
         public Guid Id { get; set; }
 

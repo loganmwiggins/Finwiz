@@ -37,14 +37,21 @@ function Account() {
         {currentAccount ? (
             <div className="widget card-details-widget">
                 <div className="card-details-head">
-                    {currentAccount.imagePath ? (
-                        <img src={currentAccount.imagePath} draggable="false" />
-                    ) : (
-                        <img src="/assets/images/example-card.webp" draggable="false" />
-                    )}
-                    <div className="card-text">
-                        <p className="card-name">{currentAccount.provider} {currentAccount.name}</p>
-                        <p className="card-type">{cardTypes[currentAccount.type]} Account</p>
+                    <div className="head-left">
+                        {currentAccount.imagePath ? (
+                            <img src={currentAccount.imagePath} draggable="false" />
+                        ) : (
+                            <img src="/assets/images/example-card.webp" draggable="false" />
+                        )}
+
+                        <div className="card-text">
+                            <p className="card-name">{currentAccount.provider} {currentAccount.name}</p>
+                            <p className="card-type">{cardTypes[currentAccount.type]} Account</p>
+                        </div>
+                    </div>
+                    <div className="head-right">
+                        <p className="annual-fee">{formatCurrency(currentAccount.annualFee, false)}/year</p>
+                        <p>Next Due on {currentAccount.feeDate && (``)}</p>
                     </div>
                 </div>
                 <div className="stats-ctnr">

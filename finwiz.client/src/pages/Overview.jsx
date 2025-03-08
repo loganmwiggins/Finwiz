@@ -34,22 +34,27 @@ function Overview() {
                     <img src="/assets/icons/add.svg" draggable="false" />
                 </button>
             </div>
-            <div className="accounts-ctnr">
-                {accounts.map(account => (
-                    <div key={account.id} className="account-card" onClick={() => handleNavigateAccount(account.id)}>
-                        {account.imagePath ? (
-                            <img src={account.imagePath} draggable="false" />
-                        ) : (
-                            <img src="/assets/images/example-card.webp" draggable="false" />
-                        )}
-                        
-                        <div className="card-text">
-                            <p className="provider">{account.provider}</p>
-                            <p className="name">{account.name}</p>
+            {accounts.length > 0 ? (
+                <div className="accounts-ctnr">
+                    {accounts.map(account => (
+                        <div key={account.id} className="account-card" onClick={() => handleNavigateAccount(account.id)}>
+                            {account.imagePath ? (
+                                <img src={account.imagePath} draggable="false" />
+                            ) : (
+                                <img src="/assets/images/example-card.webp" draggable="false" />
+                            )}
+                            
+                            <div className="card-text">
+                                <p className="provider">{account.provider}</p>
+                                <p className="name">{account.name}</p>
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            ) : (
+                <p>No accounts yet.</p>
+            )}
+            
         </div>
 
         

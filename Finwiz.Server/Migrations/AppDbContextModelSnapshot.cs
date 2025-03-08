@@ -74,7 +74,7 @@ namespace Finwiz.Server.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("Finwiz.Server.Data.Models.AccountPayment", b =>
+            modelBuilder.Entity("Finwiz.Server.Data.Models.Statement", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,13 +105,13 @@ namespace Finwiz.Server.Migrations
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("AccountPayments");
+                    b.ToTable("Statements");
                 });
 
-            modelBuilder.Entity("Finwiz.Server.Data.Models.AccountPayment", b =>
+            modelBuilder.Entity("Finwiz.Server.Data.Models.Statement", b =>
                 {
                     b.HasOne("Finwiz.Server.Data.Models.Account", "Account")
-                        .WithMany("Payments")
+                        .WithMany("Statements")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -121,7 +121,7 @@ namespace Finwiz.Server.Migrations
 
             modelBuilder.Entity("Finwiz.Server.Data.Models.Account", b =>
                 {
-                    b.Navigation("Payments");
+                    b.Navigation("Statements");
                 });
 #pragma warning restore 612, 618
         }

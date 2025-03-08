@@ -18,14 +18,14 @@ namespace Finwiz.Server.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Provider = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     CreditLimit = table.Column<double>(type: "float", nullable: true),
-                    StatementDate = table.Column<DateOnly>(type: "date", nullable: true),
-                    PaymentDate = table.Column<DateOnly>(type: "date", nullable: true),
-                    DueDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    StatementDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsAutopayOn = table.Column<bool>(type: "bit", nullable: false),
                     AnnualFee = table.Column<double>(type: "float", nullable: true),
-                    FeeDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    FeeDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     APY = table.Column<double>(type: "float", nullable: true)
@@ -36,23 +36,23 @@ namespace Finwiz.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccountPayments",
+                name: "Statements",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
-                    StatementStart = table.Column<DateOnly>(type: "date", nullable: false),
-                    StatementEnd = table.Column<DateOnly>(type: "date", nullable: false),
-                    PaymentDate = table.Column<DateOnly>(type: "date", nullable: false),
-                    DueDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    StatementStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StatementEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsPaid = table.Column<bool>(type: "bit", nullable: false),
                     AccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountPayments", x => x.Id);
+                    table.PrimaryKey("PK_Statements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AccountPayments_Accounts_AccountId",
+                        name: "FK_Statements_Accounts_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Accounts",
                         principalColumn: "Id",
@@ -60,8 +60,8 @@ namespace Finwiz.Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccountPayments_AccountId",
-                table: "AccountPayments",
+                name: "IX_Statements_AccountId",
+                table: "Statements",
                 column: "AccountId");
         }
 
@@ -69,7 +69,7 @@ namespace Finwiz.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccountPayments");
+                name: "Statements");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
