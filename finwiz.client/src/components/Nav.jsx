@@ -125,7 +125,11 @@ function Nav() {
                     >
                         {currentAccount ? (
                             <div className="card-option">
-                                <img src={currentAccount.imagePath} draggable="false" />
+                                {currentAccount.imagePath ? (
+                                    <img src={currentAccount.imagePath} draggable="false" />
+                                ) : (
+                                    <img src="/assets/images/example-card.webp" draggable="false" />
+                                )}
                                 <p>{currentAccount.provider} {currentAccount.name}</p>
                             </div>
                         ) : (
@@ -157,7 +161,11 @@ function Nav() {
                                         key={acc.id} 
                                         onClick={() => handleNavigateAccount(acc.id)}
                                     >
-                                        <img src={acc.imagePath} draggable="false" />
+                                        {acc.imagePath ? (
+                                            <img src={acc.imagePath} draggable="false" />
+                                        ) : (
+                                            <img src="/assets/images/example-card.webp" draggable="false" />
+                                        )}
                                         <p>{acc.provider} {acc.name}</p>
                                     </button>
                                 ))}

@@ -6,7 +6,7 @@
         flex-direction: column;
         align-items: start;
         gap: 1.5rem;
-        background: rgba(31, 168, 70, .1);
+        background: var(--accent-light);
         border: 1px solid var(--accent);
         border-radius: .5rem;
         padding: 1rem;
@@ -73,7 +73,7 @@
         text-align: left;
     }
 
-    table tbody tr:hover { background: rgba(31, 168, 70, .1); }
+    table tbody tr:hover { background: var(--accent-light); }
 
     .td-btn {
         display: flex;

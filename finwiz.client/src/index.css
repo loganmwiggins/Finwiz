@@ -22,11 +22,13 @@
 
     --shadow-modal: 0 0 .5rem rgb(215, 215, 215);
     --shadow-select: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 11px rgba(0, 0, 0, 0.1);
-    --shadow-1: rgba(0, 0, 0, .15);
-    --shadow-2: rgba(0, 0, 0, .25);
-    --shadow-3: rgba(0, 0, 0, .5);
+    --shadow-1: rgba(0, 0, 0, .05);
+    --shadow-2: rgba(0, 0, 0, .15);
+    --shadow-3: rgba(0, 0, 0, .25);
+    --shadow-4: rgba(0, 0, 0, .5);
 
     --accent: #1fa846;
+    --accent-light: rgba(31, 168, 70, .1);
     --accent-dark: #1b913c;
     --black: #111;
 
@@ -57,9 +59,10 @@
 
     --shadow-modal: 0 0 .5rem rgb(40, 40, 40);
     --shadow-select: 0 0 0 1px rgba(255, 255, 255, .1), 0 4px 11px rgba(255, 255, 255, .1);
-    --shadow-1: rgba(255, 255, 255, .15);
-    --shadow-2: rgba(255, 255, 255, .25);
-    --shadow-3: rgba(255, 255, 255, .5);
+    --shadow-1: rgba(255, 255, 255, .05);
+    --shadow-2: rgba(255, 255, 255, .15);
+    --shadow-3: rgba(255, 255, 255, .25);
+    --shadow-4: rgba(255, 255, 255, .5);
 
     --black: #000;
 
@@ -254,6 +257,13 @@ input:focus, select:focus {
 .widget-row {
     width: 100%;
     display: flex;
+    gap: 1rem;
+}
+
+.widget-col {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
 }
 

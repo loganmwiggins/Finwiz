@@ -248,7 +248,12 @@ function Statements() {
     return (
     <div className="page-ctnr Statements">
         {/* STATEMENT HISTORY WIDGET */}
-        <div className="widget">
+        <motion.div 
+            className="widget"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+        >
             <div className="widget-head">
                 <h3>Statement History</h3>
                 <AnimatePresence>
@@ -463,21 +468,31 @@ function Statements() {
             ) : (
                 <p>No statements yet.</p>
             )}
-        </div>
+        </motion.div>
 
         {statementList && statementList.length > 0 && (
             <div className="widget-row">
-                <div className="widget">
+                <motion.div 
+                    className="widget"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                >
                     <div className="widget-head">
                         <h3>Monthly Spending Trend</h3>
                     </div>
                     <Line data={processMonthlySpendingTrend()} />
-                </div>
-                <div className="widget">
+                </motion.div>
+                <motion.div 
+                    className="widget"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                >
                     <div className="widget-head">
                         <h3>Widget</h3>
                     </div>
-                </div>
+                </motion.div>
             </div>
             
         )}

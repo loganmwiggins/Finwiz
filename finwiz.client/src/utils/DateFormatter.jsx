@@ -12,3 +12,16 @@ export const formatDate = (dateTimeStr, showYear = true) => {
 
     return date.toLocaleDateString('en-US', options);
 }
+
+export const findDaysUntil = (targetDate) => {
+    const currentDate = new Date();
+    const target = new Date(targetDate);
+
+    // Calculate the difference in milliseconds
+    const diffInMs = target - currentDate;
+
+    // Convert milliseconds to days
+    const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+    return diffInDays;
+}

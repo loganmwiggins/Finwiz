@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
@@ -172,8 +173,13 @@ function AccountDetails() {
 
     return (
     <div className="page-ctnr AccountDetails">
-        <div className="widget">
-            <h2>{currentAccount ? "Account Details" : "New Account"}</h2>
+        <motion.div 
+            className="widget"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+        >
+            <h3>{currentAccount ? "Account Details" : "New Account"}</h3>
 
             <form onSubmit={handleSubmit} className="account-form">
                 <div className="inputs-ctnr">
@@ -349,7 +355,7 @@ function AccountDetails() {
                     <button type="submit" className="btn btn-accent">Save</button>
                 </div>
             </form>
-        </div>
+        </motion.div>
     </div>
     )
 }
