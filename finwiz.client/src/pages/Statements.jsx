@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Line } from 'react-chartjs-2';
+import 'chart.js/auto'; // Required for Chart.js v3+
 
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
@@ -63,6 +65,39 @@ function Statements() {
 
         fetchStatements();
     }, [currentAccount]);
+
+    // Process data for Chart.js
+    const processMonthlySpendingTrend = () => {
+        if (!statementList.length) return { labels: [], datasets: [] };
+
+        const monthlyTotals = {};
+        statementList.forEach(statement => {
+            const date = new Date(statement.statementEnd);
+            const monthYear = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+
+            if (!monthlyTotals[monthYear]) monthlyTotals[monthYear] = 0;
+            monthlyTotals[monthYear] += statement.amount;
+        });
+
+        const labels = Object.keys(monthlyTotals).sort(
+            (a, b) => new Date(a) - new Date(b)
+        );
+        const dataValues = labels.map(label => monthlyTotals[label]);
+
+        return {
+            labels,
+            datasets: [
+                {
+                    label: 'Monthly Spending',
+                    data: dataValues,
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                    fill: true,
+                    tension: 0.1,
+                },
+            ],
+        };
+    };
 
     const handleChangeCreate = (e) => {
         const { name, value, type, checked } = e.target;
@@ -213,6 +248,7 @@ function Statements() {
     
     return (
     <div className="page-ctnr Statements">
+        {/* STATEMENT HISTORY WIDGET */}
         <div className="widget">
             <div className="widget-head">
                 <h2>Statement History</h2>
@@ -229,7 +265,7 @@ function Statements() {
                             transition={{ duration: 0.3 }}
                             whileTap={{ scale: 0.9 }}
                         >
-                            + New
+                            <span>+ New</span>
                         </motion.button>
                     )}
                 </AnimatePresence>
@@ -428,6 +464,13 @@ function Statements() {
             ) : (
                 <p>No statements yet.</p>
             )}
+        </div>
+
+        <div className="widget">
+            <div className="widget-head">
+                <h2>Monthly Spending Trend</h2>
+            </div>
+            <Line data={processMonthlySpendingTrend()} />
         </div>
     </div>
     )
