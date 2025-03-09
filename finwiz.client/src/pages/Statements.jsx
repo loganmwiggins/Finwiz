@@ -7,7 +7,7 @@ import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { showToast } from '../utils/Toast';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { formatCurrency } from '../utils/CurrencyFormatter';
-import { formatDate } from '../utils/DateFormatter';
+import { formatDate, formatDateToInput } from '../utils/DateFormatter';
 import '../stylesheets/pages/Statements.css';
 
 function Statements() {
@@ -19,6 +19,7 @@ function Statements() {
     const [statementList, setStatementList] = useState(null);
     const [isAdding, setIsAdding] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [editValues, setEditValues] = useState({});
 
     const [newStatementData, setNewStatementData] = useState({
         statementStart: null,
@@ -63,8 +64,6 @@ function Statements() {
         fetchStatements();
     }, [currentAccount]);
 
-    const handleNavigateAddStatement = () => navigate(`/statement-details`);
-
     const handleChangeCreate = (e) => {
         const { name, value, type, checked } = e.target;
 
@@ -74,6 +73,7 @@ function Statements() {
         }));
     }
 
+    // CREATE
     const handleSubmitCreate = async (e) => {
         e.preventDefault(); // Prevent page reload
 
@@ -128,6 +128,55 @@ function Statements() {
         }
     }
 
+    // UPDATE
+    const handleEditClick = (statement) => {
+        setIsEditing(statement.id);
+        setEditValues({ ...statement }); // Initialize with current values
+    };
+    
+    const handleChangeEdit = (e) => {
+        const { name, value, type, checked } = e.target;
+        
+        setEditValues((prev) => ({
+            ...prev,
+            [name]: type === "checkbox" ? checked : value, // Handle checkboxes properly
+        }));
+    };
+    
+    const handleSubmitEdit = async () => {
+        if (!editValues) return;
+    
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/Statement/Update/${editValues.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(editValues),
+            });
+    
+            if (!response.ok) {
+                showToast("Failed to update statement", "error");
+                throw new Error("Failed to update statement");
+            }
+            else {
+                showToast("Statement updated successfully", "success");
+            }
+    
+            // Update the UI after a successful edit
+            setStatementList((prev) =>
+                prev.map((s) => (s.id === editValues.id ? { ...s, ...editValues } : s))
+            );
+    
+            setIsEditing(null); // Exit edit mode
+        } 
+        catch (error) {
+            showToast("Error updating statement. Please try again later.", "error");
+            console.error("Error updating statement:", error);
+        }
+    };
+
+    // DELETE
     const handleDeleteStatement = async (statementId) => {
         if (!window.confirm("Are you sure you want to delete this statement?")) return;
     
@@ -293,20 +342,85 @@ function Statements() {
                     <tbody>
                         {statementList.map((s, index) => (
                             <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>{formatDate(s.statementStart)} - {formatDate(s.statementEnd)}</td>
-                                <td>{formatDate(s.paymentDate)}</td>
-                                <td>{formatDate(s.dueDate)}</td>
-                                <td>{formatCurrency(s.amount)}</td>
-                                <td>{s.isPaid ? "Yes" : "No"}</td>
-                                <td className="td-btn">
-                                    <button type="button">
-                                        <img src="/assets/icons/pencil.svg" draggable="false" />
-                                    </button>
-                                    <button type="button" onClick={() => handleDeleteStatement(s.id)}>
-                                        <img src="/assets/icons/trash.svg" draggable="false" />
-                                    </button>
-                                </td>
+                                {isEditing === s.id ? (
+                                    <>
+                                        <td></td>
+                                        <td>
+                                            <input 
+                                                type="date" 
+                                                name="statementStart" 
+                                                value={editValues.statementStart ? formatDateToInput(editValues.statementStart) : ""} 
+                                                onChange={handleChangeEdit} 
+                                            /> &nbsp;&nbsp;→&nbsp;&nbsp;
+                                            <input 
+                                                type="date" 
+                                                name="statementEnd" 
+                                                value={editValues.statementEnd ? formatDateToInput(editValues.statementEnd) : ""} 
+                                                onChange={handleChangeEdit} 
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                type="date" 
+                                                name="paymentDate" 
+                                                value={editValues.paymentDate ? formatDateToInput(editValues.paymentDate) : ""} 
+                                                onChange={handleChangeEdit} 
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                type="date" 
+                                                name="dueDate" 
+                                                value={editValues.dueDate ? formatDateToInput(editValues.dueDate) : ""} 
+                                                onChange={handleChangeEdit} 
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                type="number" 
+                                                name="amount" 
+                                                value={editValues.amount} 
+                                                onChange={handleChangeEdit} 
+                                            />
+                                        </td>
+                                        <td>
+                                            <input 
+                                                type="checkbox" 
+                                                name="isPaid" 
+                                                checked={editValues.isPaid} 
+                                                onChange={(e) => 
+                                                    setEditValues((prev) => ({ ...prev, isPaid: e.target.checked }))
+                                                }
+                                            />
+                                        </td>
+                                        <td className="td-btn">
+                                            
+                                            <button type="button" onClick={() => setIsEditing(null)}>
+                                                <img src="/assets/icons/cancel.svg" draggable="false" />
+                                            </button>
+                                            <button type="button" onClick={handleSubmitEdit}>
+                                                <img src="/assets/icons/save.svg" draggable="false" />
+                                            </button>
+                                        </td>
+                                    </>
+                                ) : (
+                                    <>
+                                        <td>{statementList.length - index}</td>
+                                        <td>{formatDate(s.statementStart)} → {formatDate(s.statementEnd)}</td>
+                                        <td>{formatDate(s.paymentDate)}</td>
+                                        <td>{formatDate(s.dueDate)}</td>
+                                        <td>{formatCurrency(s.amount)}</td>
+                                        <td>{s.isPaid ? "Yes" : "No"}</td>
+                                        <td className="td-btn">
+                                            <button type="button" onClick={() => handleEditClick(s)}>
+                                                <img src="/assets/icons/pencil.svg" draggable="false" />
+                                            </button>
+                                            <button type="button" onClick={() => handleDeleteStatement(s.id)}>
+                                                <img src="/assets/icons/trash.svg" draggable="false" />
+                                            </button>
+                                        </td>
+                                    </>
+                                )}
                             </tr>
                         ))}
                     </tbody>

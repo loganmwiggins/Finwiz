@@ -47,7 +47,6 @@
 
     /* Table header */
     table thead {
-        /* background-color: var(--bg-4); */
         background: var(--text-primary);
         color: white;
     }
@@ -100,5 +99,9 @@
         button:hover {
             opacity: 1;
         }
+    }
+
+    td input, select {
+        padding: .25rem .75rem;
     }
 }
