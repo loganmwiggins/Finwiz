@@ -42,12 +42,13 @@
         overflow: hidden;
         font-family: Arial, sans-serif;
         font-size: 14px;
-        background: #fff;
+        background: var(--bg-1);
+        color: var(--text-1);
     }
 
     /* Table header */
     table thead {
-        background: var(--text-primary);
+        background: var(--black);
         color: white;
     }
 
@@ -58,26 +59,21 @@
 
     /* Table rows */
     table tbody tr {
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid var(--border-2);
         transition: background 0.2s ease-in-out;
     }
 
     /* Alternate row styling */
-    table tbody tr:nth-child(even) {
-        background-color: #f8f9fa;
-    }
+    table tbody tr:nth-child(even) { background: var(--bg-2); }
 
     /* Table cells */
     table tbody td {
         padding: .75rem;
-        color: #333;
+        color: var(--text-2);
         text-align: left;
     }
 
-    /* Hover effect on rows */
-    table tbody tr:hover {
-        background: rgba(31, 168, 70, .1);
-    }
+    table tbody tr:hover { background: rgba(31, 168, 70, .1); }
 
     .td-btn {
         display: flex;

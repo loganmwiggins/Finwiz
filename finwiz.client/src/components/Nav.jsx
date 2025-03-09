@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { AccountsContext } from '../context/AccountsContext';
+import { useTheme } from '../context/ThemeContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import '../stylesheets/components/Nav.css';
 
@@ -11,6 +12,7 @@ function Nav() {
     const location = useLocation();
     const { accountId } = useParams();
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
+    const { theme, setTheme } = useTheme();
 
     const [currentAccount, setCurrentAccount] = useState(null);
     const [menuDropdownOpen, setMenuDropdownOpen] = useState(false);
@@ -34,7 +36,7 @@ function Nav() {
 
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
-    })
+    });
 
     // Handle click outside of account dropdown
     useEffect(() => {
@@ -46,7 +48,7 @@ function Nav() {
 
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
-    })
+    });
 
     const toggleMenuDropdown = () => {
         setMenuDropdownOpen((prev) => !prev)
@@ -54,6 +56,10 @@ function Nav() {
 
     const toggleAccountDropdown = () => {
         setAccountDropdownOpen((prev) => !prev)
+    }
+
+    const handleThemeChange = () => {
+        setTheme(theme === "light" ? "dark" : "light");
     }
 
     // Handle navigation to other components
@@ -89,7 +95,7 @@ function Nav() {
                             onClick={toggleMenuDropdown}
                             whileTap={{scale: 0.9}}
                         >
-                            <img src="/assets/icons/menu-burger.svg" draggable="false" />
+                            <img src="/assets/icons/menu-burger.svg" className="icon-dynamic" draggable="false" />
                         </motion.button>
                         <AnimatePresence>
                             {menuDropdownOpen && (
@@ -100,7 +106,9 @@ function Nav() {
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.2, ease: "easeOut" }}
                                 >
-                                    <button type="button">Dark Mode</button>
+                                    <button type="button" onClick={handleThemeChange}>
+                                        {theme === "light" ? "Dark Mode" : "Light Mode"}
+                                    </button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
@@ -124,7 +132,13 @@ function Nav() {
                             <p>All Accounts</p>
                         )}
                         
-                        <img src="/assets/icons/angle-small-down.svg" draggable="false" />
+                        <motion.img
+                            src="/assets/icons/angle-small-down.svg"
+                            className="icon-dynamic"
+                            draggable="false"
+                            animate={{ rotate: accountDropdownOpen ? 180 : 0 }}
+                            transition={{ duration: 0.2, ease: "easeInOut" }}
+                        />
                     </button>
                     <AnimatePresence>
                         {accountDropdownOpen && (

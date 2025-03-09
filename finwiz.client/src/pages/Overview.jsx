@@ -25,7 +25,7 @@ function Overview() {
     return (
     <>
         <div className="page-header">
-            <h1>Overview</h1>
+            <h1>Welcome, Logan</h1>
         </div>
 
         <motion.div 
@@ -35,7 +35,7 @@ function Overview() {
             transition={{ duration: 0.6 }}
         >
             <div className="widget-head">
-                <h2>My Accounts</h2>
+                <h2>Accounts</h2>
                 <button type="button" className="btn btn-accent" onClick={handleNavigateAddAccount}>
                     {/* <img src="/assets/icons/add.svg" draggable="false" /> */}
                     + New

@@ -4,8 +4,8 @@
     align-items: start;
     gap: 1rem;
     width: 100%;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-primary);
+    background: var(--bg-1);
+    border: 1px solid var(--border-1);
     border-radius: .5rem;
     padding: 1rem;
 }
@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    border: 1px solid var(--border-primary);
+    border: 1px solid var(--border-1);
     border-radius: .5rem;
     padding: .5rem 1rem;
     cursor: pointer;

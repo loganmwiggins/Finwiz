@@ -352,8 +352,8 @@ function Statements() {
                         
                         {/* Buttons */}
                         <div className="btn-row">
-                            <button type="button" className="btn btn-outline" onClick={() => setIsAdding(false)}>Cancel</button>
-                            <button type="submit" className="btn btn-accent">Save</button>
+                            <button type="button" className="btn btn-outline icon-dynamic" onClick={() => setIsAdding(false)}>Cancel</button>
+                            <button type="submit" className="btn btn-accent icon-dynamic">Save</button>
                         </div>
                     </motion.form>
                 )}
@@ -448,10 +448,10 @@ function Statements() {
                                         <td>{s.isPaid ? "Yes" : "No"}</td>
                                         <td className="td-btn">
                                             <button type="button" onClick={() => handleEditClick(s)}>
-                                                <img src="/assets/icons/pencil.svg" draggable="false" />
+                                                <img src="/assets/icons/pencil.svg" className="icon-dynamic" draggable="false" />
                                             </button>
                                             <button type="button" onClick={() => handleDeleteStatement(s.id)}>
-                                                <img src="/assets/icons/trash.svg" draggable="false" />
+                                                <img src="/assets/icons/trash.svg" className="icon-dynamic" draggable="false" />
                                             </button>
                                         </td>
                                     </>
