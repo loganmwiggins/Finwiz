@@ -124,9 +124,7 @@
             padding: 1rem;
             cursor: pointer;
         }
-        button:hover {
-            background: var(--bg-4);
-        }
+        button:hover { background: var(--bg-4); }
         button:last-child { border: none; }
     }
 
@@ -143,7 +141,7 @@
             transition: all .2s ease-in-out;
         }
         button:hover {
-            color: var(--accent);
+            color: var(--accent-dark);
             transition: all .2s ease-in-out;
         }
     }

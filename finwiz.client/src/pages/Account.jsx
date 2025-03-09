@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
+import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
 import { formatDate } from '../utils/DateFormatter';
 import { formatCurrency } from '../utils/CurrencyFormatter';
@@ -13,6 +15,7 @@ function Account() {
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
 
     const [currentAccount, setCurrentAccount] = useState(null);
+    const [latestStatement, setLatestStatement] = useState(null);
 
     // Retrieve current account
     useEffect(() => {
@@ -21,6 +24,27 @@ function Account() {
             else setCurrentAccount(null);
         }
     }, [accounts, accountId, accountsLoading]);
+
+    // Retrieve latest statement
+    useEffect(() => {
+        const fetchLatestStatement = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/Statement/Latest/${accountId}`);
+                
+                if (!response.ok) showToast("Error fetching latest statement", "error");
+
+                const data = await response.json();
+
+                setLatestStatement(data);
+            }
+            catch (error) {
+                console.error("(catch) Error fetching latest statement:", error);
+                showToast("An error occurred. Please try again later.", "error");
+            }
+        }
+
+        fetchLatestStatement();
+    }, [currentAccount, accountsLoading]);
 
     // AccountsContext returns
     if (accountsLoading) {
@@ -36,7 +60,12 @@ function Account() {
     return (
     <div className="page-ctnr Account">
         {currentAccount ? (
-            <div className="widget card-details-widget">
+            <motion.div 
+                className="widget card-details-widget"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+            >
                 <div className="card-details-head">
                     <div className="head-left">
                         {currentAccount.imagePath ? (
@@ -52,7 +81,7 @@ function Account() {
                     </div>
                     <div className="head-right">
                         <p className="annual-fee">{formatCurrency(currentAccount.annualFee, false)}/year</p>
-                        <p>Next Due on {currentAccount.feeDate && (``)}</p>
+                        <p>Next Due on {currentAccount.feeDate && (formatDate(currentAccount.feeDate, false))}</p>
                     </div>
                 </div>
                 <div className="stats-ctnr">
@@ -66,12 +95,15 @@ function Account() {
                             )}
                         </h1>
                     </div>
+                    {latestStatement && (
+                        <div className="stat">
+                            <p>Latest Statement</p>
+                            <h1>{formatCurrency(latestStatement.amount)}</h1>
+                        </div>
+                    )}
+                    
                     <div className="stat">
-                        <p>Latest Statement</p>
-                        <h1>-</h1>
-                    </div>
-                    <div className="stat">
-                        <p>Next Payment Due on</p>
+                        <p>Next Payment on</p>
                         <h1>
                             {currentAccount.paymentDate ? (
                                 `${formatDate(currentAccount.paymentDate, false)}`
@@ -80,8 +112,18 @@ function Account() {
                             )}
                         </h1>
                     </div>
+                    <div className="stat">
+                        <p>Due on</p>
+                        <h1>
+                            {currentAccount.dueDate ? (
+                                `${formatDate(currentAccount.dueDate, false)}`
+                            ) : (
+                                `N/A`
+                            )}
+                        </h1>
+                    </div>
                 </div>
-            </div>
+            </motion.div>
         ) : (
             <p>Account not found.</p>
         )}

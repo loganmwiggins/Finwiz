@@ -19,9 +19,25 @@ namespace Finwiz.Server.Controllers
         {
             var statements = await _db.Statements
                 .Where(s => s.AccountId == accountId)
+                .OrderByDescending(s => s.StatementStart)
                 .ToListAsync();
 
             return Ok(statements);
+        }
+
+        // Get latest statement for certain account
+        [HttpGet("Latest/{accountId}")]
+        public async Task<IActionResult> GetLatestStatement(Guid accountId)
+        {
+            var latestStatement = await _db.Statements
+                .Where(s => s.AccountId == accountId)
+                .OrderByDescending(s => s.StatementStart)
+                .FirstOrDefaultAsync(); // Get the most recent statement
+
+            if (latestStatement == null)
+                return Ok(null);
+
+            return Ok(latestStatement);
         }
 
         // Create statement

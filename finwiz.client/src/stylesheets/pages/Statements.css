@@ -1,11 +1,4 @@
 .Statements {
-    .widget-head {
-        width: 100%;
-        justify-content: space-between;
-
-        /* button { border-radius: .5rem !important; } */
-    }
-
     .statement-form {
         width: 100%;
         display: flex;
@@ -44,7 +37,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        border-radius: 8px;
+        border-radius: .5rem;
         overflow: hidden;
         font-family: Arial, sans-serif;
         font-size: 14px;
@@ -53,13 +46,14 @@
 
     /* Table header */
     table thead {
-        background-color: var(--bg-4);
-        /* color: white; */
+        /* background-color: var(--bg-4); */
+        background: var(--text-primary);
+        color: white;
     }
 
     table thead th {
         text-align: left;
-        padding: 12px;
+        padding: .75rem;
     }
 
     /* Table rows */
@@ -75,14 +69,14 @@
 
     /* Table cells */
     table tbody td {
-        padding: 12px;
+        padding: .75rem;
         color: #333;
         text-align: left;
     }
 
     /* Hover effect on rows */
     table tbody tr:hover {
-        background-color: #e9ecef;
+        background: rgba(31, 168, 70, .1);
     }
 
 

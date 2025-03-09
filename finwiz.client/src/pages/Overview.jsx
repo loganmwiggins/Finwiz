@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import { AccountsContext } from '../context/AccountsContext';
 import '../stylesheets/pages/Overview.css';
@@ -27,11 +28,18 @@ function Overview() {
             <h1>Overview</h1>
         </div>
 
-        <div className="accounts-widget">
+        <motion.div 
+            className="accounts-widget"
+
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+        >
             <div className="widget-head">
                 <h2>Accounts</h2>
-                <button type="button" onClick={handleNavigateAddAccount}>
-                    <img src="/assets/icons/add.svg" draggable="false" />
+                <button type="button" className="btn btn-accent" onClick={handleNavigateAddAccount}>
+                    {/* <img src="/assets/icons/add.svg" draggable="false" /> */}
+                    + New
                 </button>
             </div>
             {accounts.length > 0 ? (
@@ -55,7 +63,7 @@ function Overview() {
                 <p>No accounts yet.</p>
             )}
             
-        </div>
+        </motion.div>
 
         
     </>

@@ -56,7 +56,7 @@ function Statements() {
             }
             catch (error) {
                 console.error("(catch) Error fetching statements:", error);
-                showToast("An error occurred", "error");
+                showToast("An error occurred. Please try again later.", "error");
             }
         }
 
@@ -114,7 +114,7 @@ function Statements() {
                     amount: null,
                     isPaid: false
                 });
-                
+
                 setIsAdding(false);
             } 
             else {
@@ -146,7 +146,7 @@ function Statements() {
                 <h2>Statement History</h2>
                 <AnimatePresence>
                     {!isAdding && (
-                        <motion.abbrbutton 
+                        <motion.button 
                             type="button" 
                             className="btn btn-accent"
                             onClick={() => setIsAdding(true)}
@@ -155,9 +155,10 @@ function Statements() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 20 }}
                             transition={{ duration: 0.3 }}
+                            whileTap={{ scale: 0.9 }}
                         >
-                            Add
-                        </motion.abbrbutton>
+                            + New
+                        </motion.button>
                     )}
                 </AnimatePresence>
             </div>
