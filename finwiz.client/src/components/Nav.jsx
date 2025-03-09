@@ -136,15 +136,15 @@ function Nav() {
                                 transition={{ duration: 0.2, ease: "easeOut" }}
                             >
                                 <button type="button" onClick={handleNavigateOverview}>All Accounts</button>
-                                {accounts.map(account => (
+                                {accounts.map(acc => (
                                     <button
                                         type="button" 
                                         className="card-option" 
-                                        key={account.id} 
-                                        onClick={() => handleNavigateAccount(account.id)}
+                                        key={acc.id} 
+                                        onClick={() => handleNavigateAccount(acc.id)}
                                     >
-                                        <img src={currentAccount.imagePath} draggable="false" />
-                                        <p>{currentAccount.provider} {currentAccount.name}</p>
+                                        <img src={acc.imagePath} draggable="false" />
+                                        <p>{acc.provider} {acc.name}</p>
                                     </button>
                                 ))}
                             </motion.div>
@@ -153,7 +153,7 @@ function Nav() {
 
                     {/* Account directory */}
                     <AnimatePresence>
-                        {accountId && (
+                        {accountId ? (
                             <motion.div 
                                 className="account-directory"
                                 initial={{ opacity: 0, x: -20 }}
@@ -181,6 +181,21 @@ function Nav() {
                                     onClick={handleNavigateDetails}
                                 >
                                     Edit Details
+                                </button>
+                            </motion.div>
+                        ) : (
+                            <motion.div 
+                                className="account-directory"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                transition={{ duration: 0.5, ease: "easeOut" }}
+                            >
+                                <button
+                                    type="button"
+                                    className={location.pathname.includes("/overview") ? "active-btn" : ""}
+                                >
+                                    Overview
                                 </button>
                             </motion.div>
                         )}

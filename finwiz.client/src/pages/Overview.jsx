@@ -30,13 +30,12 @@ function Overview() {
 
         <motion.div 
             className="accounts-widget"
-
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
         >
             <div className="widget-head">
-                <h2>Accounts</h2>
+                <h2>My Accounts</h2>
                 <button type="button" className="btn btn-accent" onClick={handleNavigateAddAccount}>
                     {/* <img src="/assets/icons/add.svg" draggable="false" /> */}
                     + New

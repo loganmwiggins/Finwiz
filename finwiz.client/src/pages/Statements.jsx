@@ -250,7 +250,7 @@ function Statements() {
         {/* STATEMENT HISTORY WIDGET */}
         <div className="widget">
             <div className="widget-head">
-                <h2>Statement History</h2>
+                <h3>Statement History</h3>
                 <AnimatePresence>
                     {!isAdding && (
                         <motion.button 
@@ -466,12 +466,20 @@ function Statements() {
         </div>
 
         {statementList && statementList.length > 0 && (
-            <div className="widget">
-                <div className="widget-head">
-                    <h2>Monthly Spending Trend</h2>
+            <div className="widget-row">
+                <div className="widget">
+                    <div className="widget-head">
+                        <h3>Monthly Spending Trend</h3>
+                    </div>
+                    <Line data={processMonthlySpendingTrend()} />
                 </div>
-                <Line data={processMonthlySpendingTrend()} />
+                <div className="widget">
+                    <div className="widget-head">
+                        <h3>Widget</h3>
+                    </div>
+                </div>
             </div>
+            
         )}
     </div>
     )
