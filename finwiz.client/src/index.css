@@ -208,3 +208,8 @@ input:focus, select:focus {
         img { width: 1.25rem; }
     } */
 }
+
+.widget-row {
+    display: flex;
+    gap: 1rem;
+}

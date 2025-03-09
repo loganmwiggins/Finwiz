@@ -103,9 +103,7 @@
 
         img { width: 1rem; }
     }
-    .account-btn:hover {
-        background: var(--bg-4);
-    }
+    .account-btn:hover { background: var(--bg-4); }
 
     .account-dropdown {
         position: absolute;
@@ -126,6 +124,16 @@
         }
         button:hover { background: var(--bg-4); }
         button:last-child { border: none; }
+    }
+
+    .card-option {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        img {
+            width: 2rem;
+        }
     }
 
     .account-directory {

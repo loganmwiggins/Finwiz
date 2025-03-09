@@ -116,7 +116,10 @@ function Nav() {
                         onClick={toggleAccountDropdown}
                     >
                         {currentAccount ? (
-                            <p>{currentAccount.provider} {currentAccount.name}</p>
+                            <div className="card-option">
+                                <img src={currentAccount.imagePath} draggable="false" />
+                                <p>{currentAccount.provider} {currentAccount.name}</p>
+                            </div>
                         ) : (
                             <p>All Accounts</p>
                         )}
@@ -134,8 +137,14 @@ function Nav() {
                             >
                                 <button type="button" onClick={handleNavigateOverview}>All Accounts</button>
                                 {accounts.map(account => (
-                                    <button type="button" key={account.id} onClick={() => handleNavigateAccount(account.id)}>
-                                        {account.provider} {account.name}
+                                    <button
+                                        type="button" 
+                                        className="card-option" 
+                                        key={account.id} 
+                                        onClick={() => handleNavigateAccount(account.id)}
+                                    >
+                                        <img src={currentAccount.imagePath} draggable="false" />
+                                        <p>{currentAccount.provider} {currentAccount.name}</p>
                                     </button>
                                 ))}
                             </motion.div>

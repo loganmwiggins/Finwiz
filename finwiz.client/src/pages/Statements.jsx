@@ -49,7 +49,6 @@ function Statements() {
                 if (!response.ok) showToast("Error fetching statements", "error");
 
                 const data = await response.json();
-                console.log(data);
 
                 if (!data || data.length === 0) {
                     setStatementList([]);
@@ -466,12 +465,14 @@ function Statements() {
             )}
         </div>
 
-        <div className="widget">
-            <div className="widget-head">
-                <h2>Monthly Spending Trend</h2>
+        {statementList && statementList.length > 0 && (
+            <div className="widget">
+                <div className="widget-head">
+                    <h2>Monthly Spending Trend</h2>
+                </div>
+                <Line data={processMonthlySpendingTrend()} />
             </div>
-            <Line data={processMonthlySpendingTrend()} />
-        </div>
+        )}
     </div>
     )
 }
