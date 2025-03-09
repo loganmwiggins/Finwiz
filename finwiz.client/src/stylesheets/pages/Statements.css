@@ -1,3 +1,4 @@
+
 .Statements {
     .statement-form {
         width: 100%;
@@ -79,5 +80,25 @@
         background: rgba(31, 168, 70, .1);
     }
 
+    .td-btn {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        gap: .5rem;
 
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: .75;
+
+            img { width: 1.15rem; }
+        }
+        button:hover {
+            opacity: 1;
+        }
+    }
 }

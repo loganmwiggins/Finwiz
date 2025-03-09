@@ -128,6 +128,29 @@ function Statements() {
         }
     }
 
+    const handleDeleteStatement = async (statementId) => {
+        if (!window.confirm("Are you sure you want to delete this statement?")) return;
+    
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/Statement/${statementId}`, {
+                method: "DELETE"
+            });
+    
+            if (response.ok) {
+                showToast("Statement deleted successfully!", "success");
+    
+                // Update the statement list by removing the deleted statement
+                setStatementList(prevList => prevList.filter(s => s.id !== statementId));
+            } 
+            else {
+                showToast("Failed to delete statement", "error");
+            }
+        } catch (error) {
+            console.error("Error deleting statement:", error);
+            showToast("An error occurred. Please try again.", "error");
+        }
+    };
+
     // AccountsContext returns
     if (accountsLoading) {
         return (
@@ -276,8 +299,13 @@ function Statements() {
                                 <td>{formatDate(s.dueDate)}</td>
                                 <td>{formatCurrency(s.amount)}</td>
                                 <td>{s.isPaid ? "Yes" : "No"}</td>
-                                <td>
-                                    <button>x</button>
+                                <td className="td-btn">
+                                    <button type="button">
+                                        <img src="/assets/icons/pencil.svg" draggable="false" />
+                                    </button>
+                                    <button type="button" onClick={() => handleDeleteStatement(s.id)}>
+                                        <img src="/assets/icons/trash.svg" draggable="false" />
+                                    </button>
                                 </td>
                             </tr>
                         ))}

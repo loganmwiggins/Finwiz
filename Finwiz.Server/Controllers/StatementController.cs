@@ -70,5 +70,19 @@ namespace Finwiz.Server.Controllers
                 newStatement
             );
         }
+
+        // Delete statement
+        [HttpDelete("{statementId}")]
+        public async Task<IActionResult> DeleteStatement(Guid statementId)
+        {
+            var statement = await _db.Statements.FindAsync(statementId);
+            if (statement == null)
+                return NotFound("Statement not found.");
+
+            _db.Statements.Remove(statement);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
