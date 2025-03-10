@@ -35,6 +35,12 @@
         font-weight: 600;
     }
 }
+.account-card:hover {
+    img {
+        width: 8rem;
+        transition: all .2s ease-in-out;
+    }
+}
 
 .card-head {
     width: 100%;
@@ -49,7 +55,10 @@
         text-align: left;
     }
     .card-head-right { text-align: right; }
-    img { width: 6rem; }
+    img {
+        width: 6rem;
+        transition: all .2s ease-in-out;
+    }
 }
 
 .card-details {

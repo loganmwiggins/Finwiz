@@ -35,6 +35,7 @@
         }
     }
 
+    /* Table styles */
     table {
         width: 100%;
         border-collapse: collapse;
@@ -46,7 +47,6 @@
         color: var(--text-1);
     }
 
-    /* Table header */
     table thead {
         background: var(--black);
         color: white;
@@ -57,16 +57,13 @@
         padding: .75rem;
     }
 
-    /* Table rows */
     table tbody tr {
         border-bottom: 1px solid var(--border-2);
         transition: background 0.2s ease-in-out;
     }
 
-    /* Alternate row styling */
     table tbody tr:nth-child(even) { background: var(--bg-2); }
 
-    /* Table cells */
     table tbody td {
         padding: .75rem;
         color: var(--text-2);
@@ -97,7 +94,12 @@
         }
     }
 
-    td input, select {
-        padding: .25rem .75rem;
+    td input, select { padding: .25rem .75rem; }
+
+    /* Statistics widget */
+    .stat-row {
+        width: 100%;
+        display: flex;
+        align-items: center;
     }
 }

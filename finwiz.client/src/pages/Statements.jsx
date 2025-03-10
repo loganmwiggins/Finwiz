@@ -364,8 +364,6 @@ function Statements() {
                 )}
             </AnimatePresence>
             
-            
-
             {statementList && statementList.length > 0 ? (
                 <table>
                     <thead>
@@ -490,7 +488,11 @@ function Statements() {
                     transition={{ duration: 0.6, delay: 0.4 }}
                 >
                     <div className="widget-head">
-                        <h3>Widget</h3>
+                        <h3>Stats</h3>
+                    </div>
+                    <div className="stat-row">
+                        <div>Average Monthly Spend</div>
+                        <div>$1,897.32</div>
                     </div>
                 </motion.div>
             </div>

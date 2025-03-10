@@ -1,0 +1,36 @@
+button {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    color: var(--text-1);
+    cursor: pointer;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    background: none;
+    border: none;
+    border-radius: 2rem;
+    padding: .25rem 1rem;
+    cursor: pointer;
+
+    img { width: 1rem; }
+}
+
+.btn-accent {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: white;
+}
+.btn-accent:hover { background: var(--accent-dark); }
+
+.btn-outline {
+    border: 1px solid var(--text-4);
+    color: var(--text-4);
+}
+.btn-outline:hover {
+    border: 1px solid var(--text-2);
+    color: var(--text-2);
+}
