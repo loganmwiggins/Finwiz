@@ -58,6 +58,20 @@ html {
 
 .page-header { margin-bottom: 1rem; }
 
+.icon-dynamic { filter: var(--filter-icon); }
+
+.p-2 { color: var(--text-2); }
+.p-3 { color: var(--text-3); }
+.p-4 { color: var(--text-4); }
+.p-5 { color: var(--text-5); }
+
+.p-action {
+    font-style: italic;
+    cursor: pointer;
+}
+.p-action:hover { font-weight: 600; }
+
+
 /* Loading spinner */
 .loading-ctnr {
     display: flex;
@@ -77,14 +91,4 @@ html {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
-}
-
-.icon-dynamic { filter: var(--filter-icon); }
-
-.p-action {
-    font-style: italic;
-    cursor: pointer;
-}
-.p-action:hover {
-    font-weight: 600;
 }

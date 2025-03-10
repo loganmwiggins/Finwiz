@@ -69,6 +69,7 @@
         box-shadow: var(--shadow-select);
         display: flex;
         flex-direction: column;
+        z-index: 100;
 
         button {
             display: flex;
@@ -79,7 +80,6 @@
             cursor: pointer;
         }
         button:hover { background: var(--bg-4); }
-
         button:last-child { border: none; }
     }
     
@@ -113,6 +113,7 @@
         display: flex;
         flex-direction: column;
         box-shadow: 0 .25rem .5rem var(--shadow-2);
+        z-index: 100;
 
         button {
             display: flex;

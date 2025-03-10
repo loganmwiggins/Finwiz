@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // Required for Chart.js v3+
 
@@ -21,6 +21,7 @@ function Account() {
     const [latestStatement, setLatestStatement] = useState(null);
     const [averageSpend, setAverageSpend] = useState(null);
     const [totalSpend, setTotalSpend] = useState(null);
+    const [showNotes, setShowNotes] = useState(false);
 
     // Fetch current account
     useEffect(() => {
@@ -85,6 +86,18 @@ function Account() {
             setTotalSpend(getTotalStatementAmount(statementList));
         }
     }, [currentAccount, statementList]);
+
+    // Handle account notes pop-up
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest(".card-type")) {
+                setShowNotes(false);
+            }
+        }
+    
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
 
     // Process data for Chart.js
     const processMonthlySpendingTrend = () => {
@@ -151,12 +164,41 @@ function Account() {
 
                             <div className="card-text">
                                 <p className="card-name">{currentAccount.provider} {currentAccount.name}</p>
-                                <p className="card-type">{cardTypes[currentAccount.type]} Account</p>
+                                <div className="card-type">
+                                    <span>{cardTypes[currentAccount.type]} Account</span>
+                                    {currentAccount.notes && (
+                                        <img 
+                                            src="/assets/icons/comment-info.svg" 
+                                            draggable="false" 
+                                            onClick={() => setShowNotes(!showNotes)}
+                                        />
+                                    )}
+                                    <AnimatePresence>
+                                        {showNotes && (
+                                            <motion.div
+                                                className="notes"
+                                                initial={{ opacity: 0, y: -10}}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                transition={{ duration: 0.2, ease: "easeOut" }}
+                                            >
+                                                {currentAccount.notes}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
                             </div>
                         </div>
+                        
                         <div className="head-right">
-                            <p className="annual-fee">{formatCurrency(currentAccount.annualFee, false)}/year</p>
-                            <p>Next Due on {currentAccount.feeDate && (formatDate(currentAccount.feeDate, false))}</p>
+                            {currentAccount.annualFee ? (
+                                <>
+                                    <p className="annual-fee">{formatCurrency(currentAccount.annualFee, false)}/year</p>
+                                    <p className="p-4">on {currentAccount.feeDate && (formatDate(currentAccount.feeDate, false))}</p>
+                                </>
+                            ) : currentAccount.type !== 1 ? 
+                                (<p className="p-5">No annual fee</p>) : ("")
+                            }
                         </div>
                     </div>
                     <div className="acc-info-ctnr">
@@ -197,6 +239,7 @@ function Account() {
                         )}
                     </div>
                 </motion.div>
+
                 {statementList && statementList.length > 0 && (
                     <div className="widget-row">
                         <motion.div 
@@ -220,16 +263,16 @@ function Account() {
                                 <h3>Stats</h3>
                             </div>
                             <div className="widget-body">
+                                {totalSpend && (
+                                    <div className="stat-row">
+                                        <div>Total Lifetime Spend <span className="p-4">({statementList.length} statements)</span></div>
+                                        <div className="stat">{formatCurrency(totalSpend)}</div>
+                                    </div>
+                                )}
                                 {averageSpend && (
                                     <div className="stat-row">
                                         <div>Average Monthly Spend</div>
                                         <div className="stat">{formatCurrency(averageSpend)}</div>
-                                    </div>
-                                )}
-                                {totalSpend && (
-                                    <div className="stat-row">
-                                        <div>Total Lifetime Spend <span style={{color: 'var(--text-4)'}}>({statementList.length} statements)</span></div>
-                                        <div className="stat">{formatCurrency(totalSpend)}</div>
                                     </div>
                                 )}
                             </div>

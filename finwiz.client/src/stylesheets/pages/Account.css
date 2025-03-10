@@ -22,12 +22,8 @@
     }
 
     .annual-fee {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: var(--accent);
-        color: #fff;
-        border-radius: 1rem;
+        color: var(--accent);
+        font-weight: 600;
     }
 
     .card-text {
@@ -36,7 +32,32 @@
         align-items: start;
 
         .card-name { font-size: 1.25rem; }
-        .card-type { color: var(--text-3); }
+        .card-type {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            color: var(--text-3);
+
+            img {
+                width: 1rem;
+                opacity: .6;
+                cursor: pointer;
+            }
+        }
+        .notes {
+            position: absolute;
+            top: 1.75rem;
+            padding: .5rem 1rem;
+            background: var(--bg-1);
+            border-radius: .5rem;
+            color: var(--text-3);
+            font-size: .85rem;
+            min-width: 10rem;
+            box-shadow: 0 0 .15rem var(--shadow-4);
+            z-index: 10;
+            cursor: default;
+        }
     }
 
     .acc-info-ctnr {
