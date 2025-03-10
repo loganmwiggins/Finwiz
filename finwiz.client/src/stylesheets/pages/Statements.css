@@ -95,11 +95,4 @@
     }
 
     td input, select { padding: .25rem .75rem; }
-
-    /* Statistics widget */
-    .stat-row {
-        width: 100%;
-        display: flex;
-        align-items: center;
-    }
 }

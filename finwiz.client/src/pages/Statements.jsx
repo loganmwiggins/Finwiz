@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto'; // Required for Chart.js v3+
@@ -13,7 +13,6 @@ import { formatDate, formatDateToInput } from '../utils/DateFormatter';
 import '../stylesheets/pages/Statements.css';
 
 function Statements() {
-    const navigate = useNavigate();
     const { accountId } = useParams();
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
 
@@ -468,7 +467,7 @@ function Statements() {
             )}
         </motion.div>
 
-        {statementList && statementList.length > 0 && (
+        {/* {statementList && statementList.length > 0 && (
             <div className="widget-row">
                 <motion.div 
                     className="widget"
@@ -490,14 +489,15 @@ function Statements() {
                     <div className="widget-head">
                         <h3>Stats</h3>
                     </div>
-                    <div className="stat-row">
-                        <div>Average Monthly Spend</div>
-                        <div>$1,897.32</div>
+                    <div className="widget-body">
+                        <div className="stat-row">
+                            <div>Average Monthly Spend</div>
+                            <div>$1,897.32</div>
+                        </div>
                     </div>
                 </motion.div>
             </div>
-            
-        )}
+        )} */}
     </div>
     )
 }

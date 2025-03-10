@@ -39,17 +39,32 @@
         .card-type { color: var(--text-3); }
     }
 
-    .stats-ctnr {
+    .acc-info-ctnr {
         width: 100%;
         display: flex;
         align-items: start;
         justify-content: space-between;
     }
 
-    .stat {
+    .acc-info {
         flex: 1;
         display: flex;
         flex-direction: column;
         align-items: start;
+    }
+
+    /* Statistics widget */
+    .stat-row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-1);
+    }
+    
+    .stat {
+        color: var(--accent);
+        font-weight: 600;
     }
 }

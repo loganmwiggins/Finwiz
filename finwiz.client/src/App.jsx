@@ -29,7 +29,7 @@ function App() {
                     <Routes>
                         {/* Routes inside Layout will have Nav */}
                         <Route element={<Layout />}>
-                            <Route path="/" element={<Overview />} />
+                            {/* <Route path="/" element={<Overview />} /> */}
                             <Route path="/overview" element={<Overview />} />
                             <Route path="/account/:accountId" element={<Account />} />
                             <Route path="/statements/:accountId" element={<Statements />} />
@@ -38,7 +38,7 @@ function App() {
                         </Route>
 
                         {/* Catch-all route for unknown paths */}
-                        <Route path="*" element={<Navigate to="/" />} />
+                        <Route path="*" element={<Navigate to="/overview" />} />
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>

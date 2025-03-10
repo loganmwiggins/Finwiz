@@ -195,7 +195,7 @@ function Nav() {
                                     className={location.pathname.includes("/statements") ? "active-btn" : ""}
                                     onClick={handleNavigateStatements}
                                 >
-                                    Statements & Activity
+                                    Statements
                                 </button>
                                 <button
                                     type="button"

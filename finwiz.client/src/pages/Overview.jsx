@@ -40,9 +40,9 @@ function Overview() {
             >
                 <div className="widget-head">
                     <h3>Accounts</h3>
-                    {/* <button type="button" className="btn btn-accent" onClick={handleNavigateAddAccount}>
+                    <button type="button" className="btn btn-accent" onClick={handleNavigateAddAccount}>
                         + New
-                    </button> */}
+                    </button>
                 </div>
                 {accounts.length > 0 ? (
                     <div className="accounts-ctnr">
@@ -89,9 +89,9 @@ function Overview() {
                                 </div>
                             </motion.div>
                         ))}
-                        <div className="add-account" onClick={handleNavigateAddAccount}>
+                        {/* <div className="add-account" onClick={handleNavigateAddAccount}>
                             + New Account
-                        </div>
+                        </div> */}
                     </div>
                 ) : (
                     <p>No accounts yet.</p>
