@@ -160,39 +160,41 @@ function Account() {
                         </div>
                     </div>
                     <div className="acc-info-ctnr">
-                        {currentAccount.creditLimit && (
+                        {/* APY */}
+                        {currentAccount.type === 1 && currentAccount.apy && (
+                            <div className="acc-info">
+                                <p>Annual Percentage Yield</p>
+                                <h1>{currentAccount.apy}%</h1>
+                            </div>
+                        )}
+                        {/* Credit Limit */}
+                        {currentAccount.type === 0 && currentAccount.creditLimit && (
                             <div className="acc-info">
                                 <p>Credit Limit</p>
                                 <h1>{formatCurrency(currentAccount.creditLimit, false)}</h1>
                             </div>
                         )}
+                        {/* Latest Statement */}
                         {latestStatement && (
                             <div className="acc-info">
                                 <p>Latest Statement</p>
                                 <h1>{formatCurrency(latestStatement.amount)}</h1>
                             </div>
                         )}
-                        
-                        <div className="acc-info">
-                            <p>Next Payment on</p>
-                            <h1>
-                                {currentAccount.paymentDate ? (
-                                    `${formatDate(currentAccount.paymentDate, false)}`
-                                ) : (
-                                    `N/A`
-                                )}
-                            </h1>
-                        </div>
-                        <div className="acc-info">
-                            <p>Due on</p>
-                            <h1>
-                                {currentAccount.dueDate ? (
-                                    `${formatDate(currentAccount.dueDate, false)}`
-                                ) : (
-                                    `N/A`
-                                )}
-                            </h1>
-                        </div>
+                        {/* Payment Date */}
+                        {currentAccount.paymentDate && (
+                            <div className="acc-info">
+                                <p>Next Payment on</p>
+                                <h1>{formatDate(currentAccount.paymentDate, false)}</h1>
+                            </div>
+                        )}
+                        {/* Due Date */}
+                        {currentAccount.dueDate && (
+                            <div className="acc-info">
+                                <p>Due on</p>
+                                <h1>{formatDate(currentAccount.dueDate, false)}</h1>
+                            </div>
+                        )}
                     </div>
                 </motion.div>
                 {statementList && statementList.length > 0 && (
