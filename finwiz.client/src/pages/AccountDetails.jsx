@@ -63,7 +63,9 @@ function AccountDetails() {
     // Handle cancel button
     const handleCancel = () => {
         showToast("Changes were not saved.", "warning");
-        navigate(`/account/${accountId}`)
+
+        if (accountId) navigate(`/account/${accountId}`);
+        else navigate("/overview");
     }
 
     // Handle input change

@@ -463,41 +463,14 @@ function Statements() {
                     </tbody>
                 </table>
             ) : (
-                <p>No statements yet.</p>
+                !isAdding && (
+                    <p>
+                        No statements yet.
+                        <span className="p-action" onClick={() => setIsAdding(true)}> Create a new statement.</span>
+                    </p>    
+                )
             )}
         </motion.div>
-
-        {/* {statementList && statementList.length > 0 && (
-            <div className="widget-row">
-                <motion.div 
-                    className="widget"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                    <div className="widget-head">
-                        <h3>Monthly Spending Trend</h3>
-                    </div>
-                    <Line data={processMonthlySpendingTrend()} />
-                </motion.div>
-                <motion.div 
-                    className="widget"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                    <div className="widget-head">
-                        <h3>Stats</h3>
-                    </div>
-                    <div className="widget-body">
-                        <div className="stat-row">
-                            <div>Average Monthly Spend</div>
-                            <div>$1,897.32</div>
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
-        )} */}
     </div>
     )
 }

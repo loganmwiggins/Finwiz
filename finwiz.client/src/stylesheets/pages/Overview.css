@@ -64,19 +64,7 @@
 .card-details {
     display: flex;
     p {
-        /* color: var(--accent); */
-        color: var(--text-5);
+        color: var(--accent-dark);
+        /* color: var(--text-5); */
     }
-}
-
-.add-account {
-    width: 100%;
-    color: var(--accent);
-    border: 2px dashed var(--accent);
-    border-radius: .5rem;
-    padding: 1rem;
-    cursor: pointer;
-}
-.add-account:hover {
-    background: var(--accent-light);
 }

@@ -160,16 +160,12 @@ function Account() {
                         </div>
                     </div>
                     <div className="acc-info-ctnr">
-                        <div className="acc-info">
-                            <p>Credit Limit</p>
-                            <h1>
-                                {currentAccount.creditLimit ? (
-                                    `${formatCurrency(currentAccount.creditLimit, false)}`
-                                ) : (
-                                    `N/A`
-                                )}
-                            </h1>
-                        </div>
+                        {currentAccount.creditLimit && (
+                            <div className="acc-info">
+                                <p>Credit Limit</p>
+                                <h1>{formatCurrency(currentAccount.creditLimit, false)}</h1>
+                            </div>
+                        )}
                         {latestStatement && (
                             <div className="acc-info">
                                 <p>Latest Statement</p>

@@ -74,16 +74,12 @@ function Overview() {
                                             <p className="type">{cardTypes[account.type]} Account</p>
                                         </div>
                                     </div>
-                                    <div className="card-head-right">
-                                        <p className="limit">
-                                            {account.creditLimit ? (
-                                                `${formatCurrency(account.creditLimit, false)}`
-                                            ) : (
-                                                `N/A`
-                                            )}
-                                        </p>
-                                        <p className="type">Monthly Limit</p>
-                                    </div>
+                                    {account.creditLimit && (
+                                        <div className="card-head-right">
+                                            <p className="limit">{formatCurrency(account.creditLimit, false)}</p>
+                                            <p className="type">Monthly Limit</p>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="card-details">
                                     <p>Next payment on {account.paymentDate ? (
@@ -95,9 +91,6 @@ function Overview() {
                                 </div>
                             </motion.div>
                         ))}
-                        {/* <div className="add-account" onClick={handleNavigateAddAccount}>
-                            + New Account
-                        </div> */}
                     </div>
                 ) : (
                     <p>No accounts yet.</p>

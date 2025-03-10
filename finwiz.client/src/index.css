@@ -80,3 +80,11 @@ html {
 }
 
 .icon-dynamic { filter: var(--filter-icon); }
+
+.p-action {
+    font-style: italic;
+    cursor: pointer;
+}
+.p-action:hover {
+    font-weight: 600;
+}
