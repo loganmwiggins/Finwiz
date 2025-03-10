@@ -20,6 +20,7 @@ function Account() {
     const [statementList, setStatementList] = useState(null);
     const [latestStatement, setLatestStatement] = useState(null);
     const [averageSpend, setAverageSpend] = useState(null);
+    const [totalSpend, setTotalSpend] = useState(null);
 
     // Fetch current account
     useEffect(() => {
@@ -71,9 +72,17 @@ function Account() {
             return total / statements.length;
         };
 
+        const getTotalStatementAmount = (statements) => {
+            if (!statements || statements.length === 0) return 0;
+        
+            const total = statements.reduce((sum, statement) => sum + statement.amount, 0);
+            return total;
+        };
+
         if (statementList) {
             setLatestStatement(getLatestStatement(statementList));
             setAverageSpend(getAverageStatementAmount(statementList));
+            setTotalSpend(getTotalStatementAmount(statementList));
         }
     }, [currentAccount, statementList]);
 
@@ -217,6 +226,12 @@ function Account() {
                                     <div className="stat-row">
                                         <div>Average Monthly Spend</div>
                                         <div className="stat">{formatCurrency(averageSpend)}</div>
+                                    </div>
+                                )}
+                                {totalSpend && (
+                                    <div className="stat-row">
+                                        <div>Total Lifetime Spend <span style={{color: 'var(--text-4)'}}>({statementList.length} statements)</span></div>
+                                        <div className="stat">{formatCurrency(totalSpend)}</div>
                                     </div>
                                 )}
                             </div>

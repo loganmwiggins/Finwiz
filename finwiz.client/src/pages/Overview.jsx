@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -6,14 +6,20 @@ import { AccountsContext } from '../context/AccountsContext';
 import { cardTypes } from '../utils/CardTypes';
 import { formatDate, findDaysUntil } from '../utils/DateFormatter';
 import { formatCurrency } from '../utils/CurrencyFormatter';
+import { allGreetings, getRandomElement } from '../utils/Greetings';
 import '../stylesheets/pages/Overview.css';
 
 function Overview() {
     const navigate = useNavigate();
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
+    const [greeting, setGreeting] = useState("");
 
     const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
     const handleNavigateAddAccount = () => navigate("/details");
+
+    useEffect(() => {
+        setGreeting(getRandomElement(allGreetings));
+    }, []);
 
     if (accountsLoading) {
         return (
@@ -28,7 +34,7 @@ function Overview() {
     return (
     <>
         <div className="page-header">
-            <h2>Welcome, Logan</h2>
+            <h2>{greeting}, Logan</h2>
         </div>
 
         <div className="widget-row">
