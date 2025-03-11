@@ -14,13 +14,22 @@ function Overview() {
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
     const [greeting, setGreeting] = useState("");
 
-    const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
-    const handleNavigateAddAccount = () => navigate("/details");
-
     useEffect(() => {
         setGreeting(getRandomElement(allGreetings));
     }, []);
 
+    const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
+    const handleNavigateAddAccount = () => navigate("/details");
+
+    const getTotalCreditLimit = (accounts) => {
+        return accounts.reduce((total, account) => {
+            return total + (account.creditLimit ?? 0); // Use 0 if creditLimit is null or undefined
+        }, 0);
+    };
+    
+
+
+    // AccountsContext returns
     if (accountsLoading) {
         return (
             <div className="loading-ctnr">
@@ -115,6 +124,15 @@ function Overview() {
                 >
                     <div className="widget-head">
                         <h3>Total Credit Line</h3>
+                    </div>
+                    <div className="credit-bar">
+                        <div className="credit-bar-30"></div>
+                    </div>
+                    <div className="bar-num-ctnr">
+                        <p>$0</p>
+                        <p style={{color: 'var(--text-1)'}}>Target: {formatCurrency(getTotalCreditLimit(accounts) / 3)}</p>
+                        <p></p>
+                        <p>{formatCurrency(getTotalCreditLimit(accounts), false)}</p>
                     </div>
                 </motion.div>
             </div>
