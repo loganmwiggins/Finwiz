@@ -41,7 +41,7 @@ function Overview() {
     if (accountsError) return <p>{accountsError}</p>;
 
     return (
-    <>
+    <div className="Overview">
         <div className="page-header">
             <h2>{greeting}, Logan</h2>
         </div>
@@ -56,7 +56,7 @@ function Overview() {
                 <div className="widget-head">
                     <h3>Accounts</h3>
                     <button type="button" className="btn btn-accent" onClick={handleNavigateAddAccount}>
-                        + New
+                        <img src="/assets/icons/plus.svg" draggable="false" />
                     </button>
                 </div>
                 {accounts.length > 0 ? (
@@ -138,7 +138,7 @@ function Overview() {
             </div>
             
         </div>
-    </>
+    </div>
     )
 }
 

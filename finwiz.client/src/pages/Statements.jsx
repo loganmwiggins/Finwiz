@@ -268,7 +268,7 @@ function Statements() {
                             transition={{ duration: 0.3 }}
                             whileTap={{ scale: 0.9 }}
                         >
-                            <span>+ New</span>
+                            <img src="/assets/icons/plus.svg" draggable="false" />
                         </motion.button>
                     )}
                 </AnimatePresence>

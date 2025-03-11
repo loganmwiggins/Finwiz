@@ -56,7 +56,10 @@ html {
     gap: 1rem;
 }
 
-.page-header { margin-bottom: 1rem; }
+.page-header {
+    margin-bottom: 1rem;
+    text-align: left;
+}
 
 .icon-dynamic { filter: var(--filter-icon); }
 
