@@ -88,16 +88,16 @@ function Account() {
     }, [currentAccount, statementList]);
 
     // Handle account notes pop-up
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (!event.target.closest(".card-type")) {
-                setShowNotes(false);
-            }
-        }
+    // useEffect(() => {
+    //     const handleClickOutside = (event) => {
+    //         if (!event.target.closest(".card-type")) {
+    //             setShowNotes(false);
+    //         }
+    //     }
     
-        document.addEventListener("click", handleClickOutside);
-        return () => document.removeEventListener("click", handleClickOutside);
-    }, []);
+    //     document.addEventListener("click", handleClickOutside);
+    //     return () => document.removeEventListener("click", handleClickOutside);
+    // }, []);
 
     // Process data for Chart.js
     const processMonthlySpendingTrend = () => {
@@ -167,19 +167,20 @@ function Account() {
                                 <div className="card-type">
                                     <span>{cardTypes[currentAccount.type]} Account</span>
                                     {currentAccount.notes && (
-                                        <img 
+                                        <motion.img 
                                             src="/assets/icons/comment-info.svg" 
                                             draggable="false" 
                                             onClick={() => setShowNotes(!showNotes)}
+                                            whileTap={{scale: 0.9}}
                                         />
                                     )}
                                     <AnimatePresence>
                                         {showNotes && (
                                             <motion.div
                                                 className="notes"
-                                                initial={{ opacity: 0, y: -10}}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -10 }}
+                                                initial={{ opacity: 0, x: -10}}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                exit={{ opacity: 0, x: -10 }}
                                                 transition={{ duration: 0.2, ease: "easeOut" }}
                                             >
                                                 {currentAccount.notes}
