@@ -37,7 +37,7 @@
         }
     }
     .account-card:hover {
-        img {
+        .card-head-left img {
             width: 8rem;
             transition: all .2s ease-in-out;
         }
@@ -54,20 +54,45 @@
             align-items: center;
             gap: 1rem;
             text-align: left;
+
+            img {
+                width: 6rem;
+                transition: all .2s ease-in-out;
+            }
         }
         .card-head-right { text-align: right; }
-        img {
-            width: 6rem;
-            transition: all .2s ease-in-out;
-        }
     }
     
-    .card-details {
+    .card-foot {
         display: flex;
+        align-items: center;
+        justify-content: space-between;
+
         p {
             color: var(--accent-dark);
             /* color: var(--text-5); */
         }
+        button {
+            background: none;
+            border: none;
+
+            img { width: 1.15rem; }
+        }
+    }
+
+    .account-menu-ctnr { position: relative; }
+
+    .account-menu {
+        display: flex;
+        gap: .5rem;
+        position: absolute;
+        right: 0;
+        padding: .5rem 1rem;
+        background: var(--bg-1);
+        border: 1px solid var(--border-2);
+        border-radius: 5px;
+        box-shadow: 0 0 6px var(--shadow-1);
+        z-index: 10;
     }
     
     /* Credit Line widget */

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { showToast } from '../utils/Toast';
 
 import { AccountsContext } from '../context/AccountsContext';
+import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
 import { formatDate, findDaysUntil } from '../utils/DateFormatter';
 import { formatCurrency } from '../utils/CurrencyFormatter';
@@ -13,19 +15,66 @@ function Overview() {
     const navigate = useNavigate();
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
     const [greeting, setGreeting] = useState("");
+    const [openMenuId, setOpenMenuId] = useState(null);
 
     useEffect(() => {
         setGreeting(getRandomElement(allGreetings));
     }, []);
 
-    const handleNavigateAccount = (accountId) => navigate(`/account/${accountId}`);
-    const handleNavigateAddAccount = () => navigate("/details");
+    // Handle toggling account actions
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest(".account-menu-ctnr")) {
+                setOpenMenuId(null);
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
+
+    const navigateAccount = (accountId) => navigate(`/account/${accountId}`);
+    const navigateAddAccount = () => navigate("/details");
+    const navigateEditAccount = (event, accountId) => { 
+        event.stopPropagation();
+        navigate(`/details/${accountId}`);
+    }
+
+    const toggleAccountMenu = (event, accountId) => {
+        event.stopPropagation();
+        setOpenMenuId(openMenuId === accountId ? null : accountId);
+    }
 
     const getTotalCreditLimit = (accounts) => {
         return accounts.reduce((total, account) => {
             return total + (account.creditLimit ?? 0); // Use 0 if creditLimit is null or undefined
         }, 0);
     };
+
+    const handleDeleteAccount = async (event, accountId) => {
+        event.stopPropagation();
+
+        if (!window.confirm("Are you sure you want to delete this account?")) return;
+    
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/Account/${accountId}`, {
+                method: "DELETE"
+            });
+    
+            if (response.ok) {
+                showToast("Account deleted successfully!", "success");
+    
+                // Update the statement list by removing the deleted statement
+                // setStatementList(prevList => prevList.filter(s => s.id !== statementId));
+            } 
+            else {
+                showToast("Failed to delete account", "error");
+            }
+        } catch (error) {
+            console.error("Error deleting account:", error);
+            showToast("An error occurred. Please try again.", "error");
+        }
+    }
     
 
 
@@ -55,7 +104,7 @@ function Overview() {
             >
                 <div className="widget-head">
                     <h3>Accounts</h3>
-                    <button type="button" className="btn btn-accent" onClick={handleNavigateAddAccount}>
+                    <button type="button" className="btn btn-accent" onClick={navigateAddAccount}>
                         <img src="/assets/icons/plus.svg" draggable="false" />
                     </button>
                 </div>
@@ -65,7 +114,7 @@ function Overview() {
                             <motion.div 
                                 key={account.id} 
                                 className="account-card" 
-                                onClick={() => handleNavigateAccount(account.id)}
+                                onClick={() => navigateAccount(account.id)}
 
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -90,13 +139,40 @@ function Overview() {
                                         </div>
                                     )}
                                 </div>
-                                <div className="card-details">
+                                <div className="card-foot">
                                     <p>Next payment on {account.paymentDate ? (
                                             `${formatDate(account.paymentDate, false)} (in ${findDaysUntil(account.paymentDate)} days)`
                                         ) : (
                                             `N/A`
                                         )}
                                     </p>
+                                    <div className="account-menu-ctnr">
+                                        {/* Ellipsis button */}
+                                        <button type="button" onClick={(event) => toggleAccountMenu(event, account.id)}>
+                                            <img src="/assets/icons/menu-dots.svg" draggable="false" />
+                                        </button>
+
+                                        {/* Animated dropdown menu */}
+                                        <AnimatePresence>
+                                            {openMenuId === account.id && (
+                                                <motion.div 
+                                                    className="account-menu"
+                                                    initial={{ opacity: 0, y: -10 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -10 }}
+                                                    transition={{ duration: 0.2, ease: "easeOut" }}
+                                                >
+                                                    <button type="button" onClick={(event) => navigateEditAccount(event, account.id)}>
+                                                        <img src="/assets/icons/pencil.svg" draggable="false" />
+                                                    </button>
+                                                    <button type="button" onClick={(event) => handleDeleteAccount(event, account.id)}>
+                                                        <img src="/assets/icons/trash.svg" draggable="false" />
+                                                    </button>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                    
                                 </div>
                             </motion.div>
                         ))}

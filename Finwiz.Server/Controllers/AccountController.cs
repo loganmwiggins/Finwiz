@@ -114,5 +114,19 @@ namespace Finwiz.Server.Controllers
                 return StatusCode(500, $"Error updating account: {ex.Message}");
             }
         }
+
+        [HttpDelete("{accountId}")]
+        public async Task<IActionResult> DeleteAccount(Guid accountId)
+        {
+            var account = await _db.Accounts.FindAsync(accountId);
+
+            if (account == null)
+                return NotFound("Account not found.");
+
+            _db.Accounts.Remove(account);
+            await _db.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
