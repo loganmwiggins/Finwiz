@@ -433,10 +433,10 @@ function Statements() {
                                         <td className="td-btn">
                                             
                                             <button type="button" onClick={() => setIsEditing(null)}>
-                                                <img src="/assets/icons/cancel.svg" draggable="false" />
+                                                <img src="/assets/icons/cancel.svg" className="icon-dynamic" draggable="false" />
                                             </button>
                                             <button type="button" onClick={handleSubmitEdit}>
-                                                <img src="/assets/icons/save.svg" draggable="false" />
+                                                <img src="/assets/icons/save.svg" className="icon-dynamic" draggable="false" />
                                             </button>
                                         </td>
                                     </>

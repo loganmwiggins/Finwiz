@@ -27,3 +27,9 @@ input:focus, select:focus {
 }
 
 .checkbox { max-width: fit-content; }
+
+/* Chrome, Safari, Edge, Opera (webkit) */
+::-webkit-calendar-picker-indicator {
+    filter: var(--filter-icon);
+    opacity: .75;
+}
