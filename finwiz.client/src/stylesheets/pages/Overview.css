@@ -28,6 +28,7 @@
         box-shadow: 0 0 .25rem var(--shadow-1);
         padding: .5rem 1rem;
         cursor: pointer;
+        transition: all .2s ease-in-out;
     
         .name { font-weight: 600; }
         .type { color: var(--text-4); }
@@ -37,10 +38,13 @@
         }
     }
     .account-card:hover {
-        .card-head-left img {
+        /* .card-head-left img {
             width: 8rem;
             transition: all .2s ease-in-out;
-        }
+        } */
+        transform: scale(1.005) !important;
+        box-shadow: 0 0 1.5rem var(--accent-light);
+        transition: all .2s ease-in-out;
     }
     
     .card-head {

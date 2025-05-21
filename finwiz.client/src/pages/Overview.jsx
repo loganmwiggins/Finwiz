@@ -182,7 +182,8 @@ function Overview() {
                 )}
             </motion.div>
             <div className="widget-col">
-                <motion.div 
+                {/* Quick Actions widget */}
+                {/* <motion.div 
                     className="widget"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -191,7 +192,9 @@ function Overview() {
                     <div className="widget-head">
                         <h3>Quick Actions</h3>
                     </div>
-                </motion.div>
+                </motion.div> */}
+
+                {/* Total Credit Line widget */}
                 <motion.div 
                     className="widget"
                     initial={{ opacity: 0, y: 20 }}

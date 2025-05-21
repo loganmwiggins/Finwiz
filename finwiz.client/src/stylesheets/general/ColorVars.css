@@ -24,7 +24,8 @@
     --shadow-4: rgba(0, 0, 0, .5);
 
     --accent: #1fa846;
-    --accent-light: rgba(31, 168, 70, .1);
+    --accent-light: rgba(31, 168, 70, .25);
+    --accent-lighter: rgba(31, 168, 70, .1);
     --accent-dark: #1b913c;
     --black: #111;
 
