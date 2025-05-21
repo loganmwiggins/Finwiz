@@ -136,7 +136,9 @@ function Statements() {
                 showToast("Statement created successfully!", "success");
 
                 // Optimistically update the statement list
-                setStatementList(prevList => [...prevList, data]);
+                setStatementList(prevList => 
+                    [...prevList, data].sort((a, b) => new Date(b.statementStart) - new Date(a.statementStart))
+                );
 
                 // Reset form and close modal
                 setNewStatementData({
@@ -196,9 +198,11 @@ function Statements() {
                 showToast("Statement updated successfully", "success");
             }
     
-            // Update the UI after a successful edit
+            // Optimistically update the statement list after a successful edit
             setStatementList((prev) =>
-                prev.map((s) => (s.id === editValues.id ? { ...s, ...editValues } : s))
+                prev
+                    .map((s) => (s.id === editValues.id ? { ...s, ...editValues } : s))
+                    .sort((a, b) => new Date(b.statementStart) - new Date(a.statementStart))
             );
     
             setIsEditing(null); // Exit edit mode
@@ -363,6 +367,7 @@ function Statements() {
                 )}
             </AnimatePresence>
             
+            {/* STATEMENTS TABLE */}
             {statementList && statementList.length > 0 ? (
                 <table>
                     <thead>
@@ -378,8 +383,14 @@ function Statements() {
                     </thead>
                     <tbody>
                         {statementList.map((s, index) => (
-                            <tr key={index}>
+                            <motion.tr 
+                                key={index}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, delay: 0.1 * index, ease: "easeOut" }}
+                            >
                                 {isEditing === s.id ? (
+                                    // Editing row
                                     <>
                                         <td></td>
                                         <td>
@@ -441,6 +452,7 @@ function Statements() {
                                         </td>
                                     </>
                                 ) : (
+                                    // Not editing
                                     <>
                                         <td>{statementList.length - index}</td>
                                         <td>{formatDate(s.statementStart)} → {formatDate(s.statementEnd)}</td>
@@ -458,7 +470,7 @@ function Statements() {
                                         </td>
                                     </>
                                 )}
-                            </tr>
+                            </motion.tr>
                         ))}
                     </tbody>
                 </table>

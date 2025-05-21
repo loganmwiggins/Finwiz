@@ -4,7 +4,7 @@ form input, input, select {
     background: var(--bg-1);
     color: var(--text-1);
     border: 1px solid var(--border-input);
-    border-radius: .25rem;
+    border-radius: .5rem;
     text-overflow: ellipsis;
 }
 input:focus, select:focus {
