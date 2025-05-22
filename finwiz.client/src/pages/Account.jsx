@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // Required for Chart.js v3+
 
+import SpendingTrendChart from '../components/widgets/SpendingTrendChart';
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
@@ -86,51 +85,6 @@ function Account() {
             setTotalSpend(getTotalStatementAmount(statementList));
         }
     }, [currentAccount, statementList]);
-
-    // Handle account notes pop-up
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //         if (!event.target.closest(".card-type")) {
-    //             setShowNotes(false);
-    //         }
-    //     }
-    
-    //     document.addEventListener("click", handleClickOutside);
-    //     return () => document.removeEventListener("click", handleClickOutside);
-    // }, []);
-
-    // Process data for Chart.js
-    const processMonthlySpendingTrend = () => {
-        if (!statementList.length) return { labels: [], datasets: [] };
-
-        const monthlyTotals = {};
-        statementList.forEach(statement => {
-            const date = new Date(statement.statementEnd);
-            const monthYear = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
-
-            if (!monthlyTotals[monthYear]) monthlyTotals[monthYear] = 0;
-            monthlyTotals[monthYear] += statement.amount;
-        });
-
-        const labels = Object.keys(monthlyTotals).sort(
-            (a, b) => new Date(a) - new Date(b)
-        );
-        const dataValues = labels.map(label => monthlyTotals[label]);
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'Monthly Spending',
-                    data: dataValues,
-                    borderColor: '#4CAF50',
-                    backgroundColor: 'rgba(76, 175, 80, 0.2)',
-                    fill: true,
-                    tension: 0.1,
-                },
-            ],
-        };
-    };
 
 
 
@@ -243,6 +197,7 @@ function Account() {
 
                 {statementList && statementList.length > 0 && (
                     <div className="widget-row">
+                        {/* Monthly Spending Trend widget */}
                         <motion.div 
                             className="widget"
                             initial={{ opacity: 0, y: 20 }}
@@ -250,10 +205,12 @@ function Account() {
                             transition={{ duration: 0.6, delay: 0.2 }}
                         >
                             <div className="widget-head">
-                                <h3>Monthly Spending Trend</h3>
+                                <h3>Spending Trend</h3>
                             </div>
-                            <Line data={processMonthlySpendingTrend()} />
+                            <SpendingTrendChart statements={statementList} />
                         </motion.div>
+
+                        {/* Statistic widget */}
                         <motion.div 
                             className="widget"
                             initial={{ opacity: 0, y: 20 }}
