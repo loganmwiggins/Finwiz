@@ -1,5 +1,5 @@
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // Ensure this is included for Chart.js to work
+import 'chart.js/auto';
 
 function SpendingTrendChart({ statements }) {
     const processSpendingTrend = () => {

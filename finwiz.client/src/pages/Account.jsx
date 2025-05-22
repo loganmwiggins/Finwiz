@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import SpendingTrendChart from '../components/widgets/SpendingTrendChart';
+import SpendingStatistics from '../components/widgets/SpendingStatistics';
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
@@ -18,8 +19,6 @@ function Account() {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [statementList, setStatementList] = useState(null);
     const [latestStatement, setLatestStatement] = useState(null);
-    const [averageSpend, setAverageSpend] = useState(null);
-    const [totalSpend, setTotalSpend] = useState(null);
     const [showNotes, setShowNotes] = useState(false);
 
     // Fetch current account
@@ -65,24 +64,8 @@ function Account() {
             , statements[0]);
         };
 
-        const getAverageStatementAmount = (statements) => {
-            if (!statements || statements.length === 0) return 0;
-        
-            const total = statements.reduce((sum, statement) => sum + statement.amount, 0);
-            return total / statements.length;
-        };
-
-        const getTotalStatementAmount = (statements) => {
-            if (!statements || statements.length === 0) return 0;
-        
-            const total = statements.reduce((sum, statement) => sum + statement.amount, 0);
-            return total;
-        };
-
         if (statementList) {
             setLatestStatement(getLatestStatement(statementList));
-            setAverageSpend(getAverageStatementAmount(statementList));
-            setTotalSpend(getTotalStatementAmount(statementList));
         }
     }, [currentAccount, statementList]);
 
@@ -218,21 +201,10 @@ function Account() {
                             transition={{ duration: 0.6, delay: 0.4 }}
                         >
                             <div className="widget-head">
-                                <h3>Stats</h3>
+                                <h3>Spending Stats</h3>
                             </div>
                             <div className="widget-body">
-                                {totalSpend && (
-                                    <div className="stat-row">
-                                        <div>Total Lifetime Spend <span className="p-4">({statementList.length} statements)</span></div>
-                                        <div className="stat">{formatCurrency(totalSpend)}</div>
-                                    </div>
-                                )}
-                                {averageSpend && (
-                                    <div className="stat-row">
-                                        <div>Average Monthly Spend</div>
-                                        <div className="stat">{formatCurrency(averageSpend)}</div>
-                                    </div>
-                                )}
+                                <SpendingStatistics statements={statementList} />
                             </div>
                         </motion.div>
                     </div>
