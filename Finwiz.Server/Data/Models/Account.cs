@@ -12,11 +12,17 @@
 
         public double? CreditLimit { get; set; }
 
-        public DateTime? StatementDate { get; set; }
+        //public DateTime? StatementDate { get; set; }
 
-        public DateTime? PaymentDate { get; set; }
+        //public DateTime? PaymentDate { get; set; }
 
-        public DateTime? DueDate { get; set; }
+        //public DateTime? DueDate { get; set; }
+
+        public int? StatementDay { get; set; }
+
+        public int? PaymentDay { get; set; }
+
+        public int? DueDay { get; set; }
 
         public required bool IsAutopayOn { get; set; } = true;
 

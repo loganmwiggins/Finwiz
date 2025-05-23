@@ -83,8 +83,9 @@
         justify-content: space-between;
         padding: 1rem 0;
         border-bottom: 1px solid var(--border-1);
+        cursor: default;
 
-        input, select { padding: .25rem .75rem;}
+        input, select { padding: .25rem .75rem; }
     }
     .stat-row:first-child { padding-top: 0; }
 

@@ -25,3 +25,30 @@ export const findDaysUntil = (targetDate) => {
 
     return diffInDays;
 }
+
+export const getNextDayDate = (dayOfMonth) => {
+    if (!dayOfMonth || dayOfMonth < 1 || dayOfMonth > 31) return null;
+
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth();
+
+    // Clamp the day to the number of days in this month
+    const daysInCurrentMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const safeDay = Math.min(dayOfMonth, daysInCurrentMonth);
+
+    const thisMonthDate = new Date(currentYear, currentMonth, safeDay);
+
+    if (thisMonthDate >= today) {
+        return thisMonthDate.toISOString(); // still upcoming this month
+    }
+
+    // Otherwise, calculate next month's date
+    const nextMonth = new Date(currentYear, currentMonth + 1, 1);
+    const daysInNextMonth = new Date(nextMonth.getFullYear(), nextMonth.getMonth() + 1, 0).getDate();
+    const nextSafeDay = Math.min(dayOfMonth, daysInNextMonth);
+
+    const nextMonthDate = new Date(nextMonth.getFullYear(), nextMonth.getMonth(), nextSafeDay);
+
+    return nextMonthDate.toISOString();
+};

@@ -20,9 +20,9 @@ function AccountDetails() {
         name: null,
         provider: null,
         creditLimit: null,
-        statementDate: null,
-        paymentDate: null,
-        dueDate: null,
+        statementDay: null,
+        paymentDay: null,
+        dueDay: null,
         isAutopayOn: false,
         annualFee: null,
         feeDate: null,
@@ -47,9 +47,9 @@ function AccountDetails() {
                 name: currentAccount.name || null,
                 provider: currentAccount.provider || null,
                 creditLimit: currentAccount.creditLimit || null,
-                statementDate: formatDateToInput(currentAccount.statementDate) || null,
-                paymentDate: formatDateToInput(currentAccount.paymentDate) || null,
-                dueDate: formatDateToInput(currentAccount.dueDate) || null,
+                statementDay: currentAccount.statementDay || null,
+                paymentDay: currentAccount.paymentDay || null,
+                dueDay: currentAccount.dueDay || null,
                 isAutopayOn: currentAccount.isAutopayOn || false,
                 annualFee: currentAccount.annualFee || null,
                 feeDate: formatDateToInput(currentAccount.feeDate) || null,
@@ -77,9 +77,9 @@ function AccountDetails() {
                 name: "",
                 provider: "",
                 creditLimit: "",
-                statementDate: "",
-                paymentDate: "",
-                dueDate: "",
+                statementDay: "",
+                paymentDay: "",
+                dueDay: "",
                 isAutopayOn: false,
                 annualFee: "",
                 feeDate: "",
@@ -249,36 +249,36 @@ function AccountDetails() {
                     </div>
 
                     <div className="input-row">
-                        {/* Statement Date */}
+                        {/* Statement Day */}
                         {accountData.type == 0 && (
                             <div className="input-w-label">
-                                <label>Statement Date</label>
+                                <label>Statement Day</label>
                                 <input
-                                    type="date"
-                                    name="statementDate"
-                                    value={accountData.statementDate}
+                                    type="number"
+                                    name="statementDay"
+                                    value={accountData.statementDay}
                                     onChange={handleChange}
                                 />
                             </div>
                         )}
-                        {/* Payment Date */}
+                        {/* Payment Day */}
                         <div className="input-w-label">
-                            <label>Payment Date</label>
+                            <label>Payment Day</label>
                             <input
-                                type="date"
-                                name="paymentDate"
-                                value={accountData.paymentDate}
+                                type="number"
+                                name="paymentDay"
+                                value={accountData.paymentDay}
                                 onChange={handleChange}
                             />
                         </div>
-                        {/* Due Date */}
+                        {/* Due Day */}
                         {accountData.type == 0 && (
                             <div className="input-w-label">
-                                <label>Due Date</label>
+                                <label>Due Day</label>
                                 <input
-                                    type="date"
-                                    name="dueDate"
-                                    value={accountData.dueDate}
+                                    type="number"
+                                    name="dueDay"
+                                    value={accountData.dueDay}
                                     onChange={handleChange}
                                 />
                             </div>

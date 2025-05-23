@@ -8,7 +8,7 @@ import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
-import { formatDate } from '../utils/DateFormatter';
+import { formatDate, getNextDayDate } from '../utils/DateFormatter';
 import { formatCurrency } from '../utils/CurrencyFormatter';
 import '../stylesheets/pages/Account.css';
 
@@ -107,6 +107,7 @@ function Account() {
                                         <motion.img 
                                             src="/assets/icons/comment-info.svg" 
                                             draggable="false" 
+                                            className="icon-dynamic"
                                             onClick={() => setShowNotes(!showNotes)}
                                             whileTap={{scale: 0.9}}
                                         />
@@ -161,18 +162,25 @@ function Account() {
                                 <h1>{formatCurrency(latestStatement.amount)}</h1>
                             </div>
                         )}
+                        {/* Statement Date */}
+                        {currentAccount.statementDay && (
+                            <div className="acc-info">
+                                <p>Next Statement Available</p>
+                                <h1>{formatDate(getNextDayDate(currentAccount.statementDay), false)}</h1>
+                            </div>
+                        )}
                         {/* Payment Date */}
-                        {currentAccount.paymentDate && (
+                        {currentAccount.paymentDay && (
                             <div className="acc-info">
                                 <p>Next Payment on</p>
-                                <h1>{formatDate(currentAccount.paymentDate, false)}</h1>
+                                <h1>{formatDate(getNextDayDate(currentAccount.paymentDay), false)}</h1>
                             </div>
                         )}
                         {/* Due Date */}
-                        {currentAccount.dueDate && (
+                        {currentAccount.dueDay && (
                             <div className="acc-info">
                                 <p>Due on</p>
-                                <h1>{formatDate(currentAccount.dueDate, false)}</h1>
+                                <h1>{formatDate(getNextDayDate(currentAccount.dueDay), false)}</h1>
                             </div>
                         )}
                     </div>

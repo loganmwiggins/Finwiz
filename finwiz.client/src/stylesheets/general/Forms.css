@@ -12,6 +12,8 @@ input:focus, select:focus {
     border-color: var(--accent);
 }
 
+select { cursor: pointer; }
+
 .input-row {
     width: 100%;
     display: flex;
