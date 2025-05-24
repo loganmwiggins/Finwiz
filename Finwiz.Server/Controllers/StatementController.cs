@@ -2,7 +2,6 @@
 using Finwiz.Server.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static Finwiz.Server.Data.DTOs.AccountDTOs;
 using static Finwiz.Server.Data.DTOs.StatementDTOs;
 
 namespace Finwiz.Server.Controllers

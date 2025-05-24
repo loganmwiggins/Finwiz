@@ -9,7 +9,7 @@ import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { showToast } from '../utils/Toast';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { formatCurrency } from '../utils/CurrencyFormatter';
-import { formatDate, formatDateToInput } from '../utils/DateFormatter';
+import { formatDate, formatDateToInput } from '../utils/DateHelper';
 import '../stylesheets/pages/Statements.css';
 
 function Statements() {

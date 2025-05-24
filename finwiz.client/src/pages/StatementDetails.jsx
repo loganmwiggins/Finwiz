@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
-import { formatDateToInput } from '../utils/DateFormatter';
+import { formatDateToInput } from '../utils/DateHelper';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { showToast } from '../utils/Toast';
 import '../stylesheets/pages/StatementDetails.css';

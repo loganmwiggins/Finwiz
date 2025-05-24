@@ -6,7 +6,7 @@ import { showToast } from '../utils/Toast';
 import { AccountsContext } from '../context/AccountsContext';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
-import { formatDate, findDaysUntil } from '../utils/DateFormatter';
+import { formatDate, findDaysUntil, getNextDayDate } from '../utils/DateHelper';
 import { formatCurrency } from '../utils/CurrencyFormatter';
 import { allGreetings, getRandomElement } from '../utils/Greetings';
 import '../stylesheets/pages/Overview.css';
@@ -140,12 +140,20 @@ function Overview() {
                                     )}
                                 </div>
                                 <div className="card-foot">
-                                    <p>Next payment on {account.paymentDate ? (
-                                            `${formatDate(account.paymentDate, false)} (in ${findDaysUntil(account.paymentDate)} days)`
-                                        ) : (
-                                            `N/A`
-                                        )}
-                                    </p>
+                                    {account.paymentDay ? (
+                                        <p>
+                                            Next payment on {formatDate(getNextDayDate(account.paymentDay), false)} (
+                                            {(() => {
+                                                const days = findDaysUntil(getNextDayDate(account.paymentDay));
+                                                if (days === 0) return 'Today';
+                                                if (days === 1) return 'in 1 day';
+                                                return `in ${days} days`;
+                                            })()}
+                                            )
+                                        </p>
+                                    ) : (
+                                        ""
+                                    )}
                                     <div className="account-menu-ctnr">
                                         {/* Ellipsis button */}
                                         <button type="button" onClick={(event) => toggleAccountMenu(event, account.id)}>

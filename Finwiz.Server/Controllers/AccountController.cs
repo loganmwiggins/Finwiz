@@ -57,9 +57,6 @@ namespace Finwiz.Server.Controllers
                 Provider = accountDTO.Provider,
                 Type = accountDTO.Type,
                 CreditLimit = accountDTO.CreditLimit,
-                //StatementDate = accountDTO.StatementDate,
-                //PaymentDate = accountDTO.PaymentDate,
-                //DueDate = accountDTO.DueDate,
                 StatementDay = accountDTO.StatementDay,
                 PaymentDay = accountDTO.PaymentDay,
                 DueDay = accountDTO.DueDay,
@@ -97,9 +94,6 @@ namespace Finwiz.Server.Controllers
             account.Name = updatedAccount.Name;
             account.Provider = updatedAccount.Provider;
             account.CreditLimit = updatedAccount.CreditLimit;
-            //account.StatementDate = updatedAccount.StatementDate;
-            //account.PaymentDate = updatedAccount.PaymentDate;
-            //account.DueDate = updatedAccount.DueDate;
             account.StatementDay = updatedAccount.StatementDay;
             account.PaymentDay = updatedAccount.PaymentDay;
             account.DueDay = updatedAccount.DueDay;

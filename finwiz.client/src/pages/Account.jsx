@@ -8,7 +8,7 @@ import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
-import { formatDate, getNextDayDate } from '../utils/DateFormatter';
+import { formatDate, getNextDayDate } from '../utils/DateHelper';
 import { formatCurrency } from '../utils/CurrencyFormatter';
 import '../stylesheets/pages/Account.css';
 
