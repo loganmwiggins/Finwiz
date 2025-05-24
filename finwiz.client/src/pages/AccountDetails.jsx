@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { showToast } from '../utils/Toast';
 
+import DayOfMonthDropdown from '../components/DayOfMonthDropdown';
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { formatDateToInput } from '../utils/DateHelper';
 import { API_BASE_URL } from '../utils/BaseUrl';
-import { showToast } from '../utils/Toast';
 import '../stylesheets/pages/AccountDetails.css';
 
 function AccountDetails() {
@@ -162,6 +163,8 @@ function AccountDetails() {
         }
     };
 
+
+
     // AccountsContext returns
     if (accountsLoading) {
         return (
@@ -251,37 +254,28 @@ function AccountDetails() {
                     <div className="input-row">
                         {/* Statement Day */}
                         {accountData.type == 0 && (
-                            <div className="input-w-label">
-                                <label>Statement Day</label>
-                                <input
-                                    type="number"
-                                    name="statementDay"
-                                    value={accountData.statementDay}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        )}
-                        {/* Payment Day */}
-                        <div className="input-w-label">
-                            <label>Payment Day</label>
-                            <input
-                                type="number"
-                                name="paymentDay"
-                                value={accountData.paymentDay}
+                            <DayOfMonthDropdown 
+                                name="statementDay"
+                                label="Statement Day"
+                                value={accountData.statementDay}
                                 onChange={handleChange}
                             />
-                        </div>
+                        )}
+                        {/* Payment Day */}
+                        <DayOfMonthDropdown 
+                            name="paymentDay"
+                            label="Payment Day"
+                            value={accountData.paymentDay}
+                            onChange={handleChange}
+                        />
                         {/* Due Day */}
                         {accountData.type == 0 && (
-                            <div className="input-w-label">
-                                <label>Due Day</label>
-                                <input
-                                    type="number"
-                                    name="dueDay"
-                                    value={accountData.dueDay}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                            <DayOfMonthDropdown 
+                                name="dueDay"
+                                label="Due Day"
+                                value={accountData.dueDay}
+                                onChange={handleChange}
+                            />
                         )}
                         {/* Annual Fee */}
                         {accountData.type == 0 && (

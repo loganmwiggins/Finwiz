@@ -1,0 +1,58 @@
+.DayOfMonthDropdown {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    .dropdown-label {
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .dropdown-input {
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    .dropdown-arrow { width: 1rem; }
+
+    .dropdown-grid {
+        position: absolute;
+        top: calc(100% + 0.3rem);
+        left: 0;
+        right: 0;
+        z-index: 10;
+        background: var(--bg-1);
+        border: 1px solid var(--border-input);
+        border-radius: .5rem;
+        padding: 0.5rem;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.3rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .dropdown-day {
+        padding: 0.4rem 0;
+        border: none;
+        background: var(--bg-3);
+        border-radius: .5rem;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .dropdown-day:hover { background: var(--bg-5); }
+
+    .dropdown-day.selected {
+        background-color: var(--accent);
+        color: white;
+        font-weight: bold;
+    }
+}
