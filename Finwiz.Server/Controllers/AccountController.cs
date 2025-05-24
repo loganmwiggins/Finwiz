@@ -62,7 +62,8 @@ namespace Finwiz.Server.Controllers
                 DueDay = accountDTO.DueDay,
                 IsAutopayOn = accountDTO.IsAutopayOn,
                 AnnualFee = accountDTO.AnnualFee,
-                FeeDate = accountDTO.FeeDate,
+                FeeMonth = accountDTO.FeeMonth,
+                FeeDay = accountDTO.FeeDay,
                 ImagePath = accountDTO.ImagePath,
                 Notes = accountDTO.Notes,
                 APY = accountDTO.APY
@@ -99,7 +100,8 @@ namespace Finwiz.Server.Controllers
             account.DueDay = updatedAccount.DueDay;
             account.IsAutopayOn = updatedAccount.IsAutopayOn;
             account.AnnualFee = updatedAccount.AnnualFee;
-            account.FeeDate = updatedAccount.FeeDate;
+            account.FeeMonth = updatedAccount.FeeMonth;
+            account.FeeDay = updatedAccount.FeeDay;
             account.ImagePath = updatedAccount.ImagePath;
             account.Notes = updatedAccount.Notes;
             account.APY = updatedAccount.APY;

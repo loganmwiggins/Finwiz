@@ -52,3 +52,27 @@ export const getNextDayDate = (dayOfMonth) => {
 
     return nextMonthDate.toISOString();
 };
+
+export const getNextFeeDate = (feeMonth, feeDay) => {
+    if (!feeMonth || !feeDay) return null;
+
+    const today = new Date();
+    const currentYear = today.getFullYear();
+
+    // Clamp the day to be valid for the given month this year
+    const daysInMonthThisYear = new Date(currentYear, feeMonth, 0).getDate(); // feeMonth is 1-based
+    const safeDayThisYear = Math.min(feeDay, daysInMonthThisYear);
+
+    const thisYearFeeDate = new Date(currentYear, feeMonth - 1, safeDayThisYear); // month is 0-based
+
+    if (thisYearFeeDate >= today) {
+        return thisYearFeeDate;
+    }
+
+    // Otherwise return next year’s fee date
+    const nextYear = currentYear + 1;
+    const daysInMonthNextYear = new Date(nextYear, feeMonth, 0).getDate();
+    const safeDayNextYear = Math.min(feeDay, daysInMonthNextYear);
+
+    return new Date(nextYear, feeMonth - 1, safeDayNextYear);
+};

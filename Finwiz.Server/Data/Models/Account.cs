@@ -22,7 +22,9 @@
 
         public double? AnnualFee { get; set; }
 
-        public DateTime? FeeDate { get; set; }
+        public int? FeeMonth { get; set; }
+
+        public int? FeeDay { get; set; }
 
         public string? ImagePath { get; set; }
 

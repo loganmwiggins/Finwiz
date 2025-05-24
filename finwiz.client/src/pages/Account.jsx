@@ -9,7 +9,7 @@ import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
-import { formatDate, getNextDayDate } from '../utils/DateHelper';
+import { findDaysUntil, formatDate, getNextDayDate, getNextFeeDate } from '../utils/DateHelper';
 import { formatCurrency } from '../utils/CurrencyFormatter';
 import '../stylesheets/pages/Account.css';
 
@@ -134,8 +134,10 @@ function Account() {
                             {currentAccount.annualFee ? (
                                 <>
                                     <p className="annual-fee">{formatCurrency(currentAccount.annualFee, false)}/year</p>
-                                    {currentAccount.feeDate && (
-                                        <p className="p-4">on {formatDate(currentAccount.feeDate, false)}</p>
+                                    {(currentAccount.feeMonth && currentAccount.feeDay) && (
+                                        <p className="p-4">
+                                            on {formatDate(getNextFeeDate(currentAccount.feeMonth, currentAccount.feeDay), false)}
+                                        </p>
                                     )}
                                 </>
                             ) : currentAccount.type !== 1 ? 

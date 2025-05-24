@@ -14,12 +14,6 @@ namespace Finwiz.Server.Data.DTOs
 
             public double? CreditLimit { get; set; }
 
-            //public DateTime? StatementDate { get; set; }
-
-            //public DateTime? PaymentDate { get; set; }
-
-            //public DateTime? DueDate { get; set; }
-
             public int? StatementDay { get; set; }
 
             public int? PaymentDay { get; set; }
@@ -30,7 +24,9 @@ namespace Finwiz.Server.Data.DTOs
 
             public double? AnnualFee { get; set; }
 
-            public DateTime? FeeDate { get; set; }
+            public int? FeeMonth { get; set; }
+
+            public int? FeeDay { get; set; }
 
             public string? ImagePath { get; set; }
 

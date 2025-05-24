@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { showToast } from '../utils/Toast';
 
 import DayOfMonthDropdown from '../components/DayOfMonthDropdown';
+import MonthDayPicker from '../components/MonthDayPicker';
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { formatDateToInput } from '../utils/DateHelper';
@@ -26,7 +27,8 @@ function AccountDetails() {
         dueDay: null,
         isAutopayOn: false,
         annualFee: null,
-        feeDate: null,
+        feeMonth: null,
+        feeDay: null,
         imagePath: null,
         notes: null,
         apy: null
@@ -53,7 +55,9 @@ function AccountDetails() {
                 dueDay: currentAccount.dueDay || null,
                 isAutopayOn: currentAccount.isAutopayOn || false,
                 annualFee: currentAccount.annualFee || null,
-                feeDate: formatDateToInput(currentAccount.feeDate) || null,
+                // feeDate: formatDateToInput(currentAccount.feeDate) || null,
+                feeMonth: currentAccount.feeMonth || null,
+                feeDay: currentAccount.feeDay || null,
                 imagePath: currentAccount.imagePath || null,
                 notes: currentAccount.notes || null,
                 apy: currentAccount.apy || null
@@ -292,7 +296,7 @@ function AccountDetails() {
                         )}
                         
                         {/* Fee Date */}
-                        {accountData.type == 0 && (
+                        {/* {accountData.type == 0 && (
                             <div className="input-w-label">
                                 <label>Fee Date</label>
                                 <input
@@ -302,7 +306,15 @@ function AccountDetails() {
                                     onChange={handleChange}
                                 />
                             </div>
-                        )}
+                        )} */}
+                        <MonthDayPicker
+                            label="Fee Date"
+                            monthName="feeMonth"
+                            dayName="feeDay"
+                            monthValue={accountData.feeMonth}
+                            dayValue={accountData.feeDay}
+                            onChange={handleChange}
+                        />
                         
                         {/* APY */}
                         {accountData.type == 1 && (

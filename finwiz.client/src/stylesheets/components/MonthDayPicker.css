@@ -1,0 +1,88 @@
+.MonthDayPicker {
+    position: relative;
+    width: 100%;
+    max-width: 250px;
+    font-family: inherit;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    .dropdown-label {
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .dropdown-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-size: .8rem;
+    }
+
+    .input-btn-row {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .dropdown-arrow {
+        width: 1rem;
+        cursor: pointer;
+    }
+
+    .dropdown-popup {
+        position: absolute;
+        top: calc(100% + 0.4rem);
+        left: 0;
+        right: 0;
+        z-index: 10;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+        label { text-transform: none; }
+    }
+
+    .month-grid, .day-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.3rem;
+        margin-top: 0.5rem;
+    }
+
+    .dropdown-option {
+        padding: 0.4rem 0;
+        border: none;
+        background-color: #f3f3f3;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+
+    .dropdown-option:hover {
+        background-color: #e0e0e0;
+    }
+
+    .dropdown-option.selected {
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+    }
+
+    .dropdown-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .back-btn {
+        background: none;
+        border: none;
+        color: #333;
+        cursor: pointer;
+        font-size: 0.85rem;
+        padding: 0;
+    }
+}
