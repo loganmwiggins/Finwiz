@@ -94,7 +94,7 @@
         padding: .5rem 1rem;
         background: var(--bg-1);
         border: 1px solid var(--border-2);
-        border-radius: 5px;
+        border-radius: .5rem;
         box-shadow: 0 0 6px var(--shadow-1);
         z-index: 10;
     }

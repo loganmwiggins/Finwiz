@@ -157,7 +157,7 @@ function Overview() {
                                     <div className="account-menu-ctnr">
                                         {/* Ellipsis button */}
                                         <button type="button" onClick={(event) => toggleAccountMenu(event, account.id)}>
-                                            <img src="/assets/icons/menu-dots.svg" draggable="false" />
+                                            <img src="/assets/icons/menu-dots.svg" className="icon" draggable="false" />
                                         </button>
 
                                         {/* Animated dropdown menu */}
@@ -171,10 +171,10 @@ function Overview() {
                                                     transition={{ duration: 0.2, ease: "easeOut" }}
                                                 >
                                                     <button type="button" onClick={(event) => navigateEditAccount(event, account.id)}>
-                                                        <img src="/assets/icons/pencil.svg" draggable="false" />
+                                                        <img src="/assets/icons/pencil.svg" className="icon" draggable="false" />
                                                     </button>
                                                     <button type="button" onClick={(event) => handleDeleteAccount(event, account.id)}>
-                                                        <img src="/assets/icons/trash.svg" draggable="false" />
+                                                        <img src="/assets/icons/trash.svg" className="icon" draggable="false" />
                                                     </button>
                                                 </motion.div>
                                             )}

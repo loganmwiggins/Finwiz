@@ -88,31 +88,45 @@ function Nav() {
                         <img src="/assets/icons/witch-hat.svg" draggable="false" />
                         <p>Finwiz</p>
                     </div>
-                    <div className="menu-ctnr">
+                    <div className="btn-row">
+                        {/* Home button */}
                         <motion.button
-                            type="button"
+                            title="Overview"
                             className="menu-btn"
-                            onClick={toggleMenuDropdown}
+                            onClick={() => navigate("/overview")}
                             whileTap={{scale: 0.9}}
                         >
-                            <img src="/assets/icons/menu-burger.svg" className="icon-dynamic" draggable="false" />
+                            <img src="/assets/icons/apps.svg" className="icon" draggable="false" />
                         </motion.button>
-                        <AnimatePresence>
-                            {menuDropdownOpen && (
-                                <motion.div
-                                    className="menu-dropdown"
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.2, ease: "easeOut" }}
-                                >
-                                    <button type="button" onClick={handleThemeChange}>
-                                        {theme === "light" ? "Dark Mode" : "Light Mode"}
-                                    </button>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+
+                        {/* Hamburger menu */}
+                        <div className="menu-ctnr">
+                            <motion.button
+                                type="button"
+                                className="menu-btn"
+                                onClick={toggleMenuDropdown}
+                                whileTap={{scale: 0.9}}
+                            >
+                                <img src="/assets/icons/menu-burger.svg" className="icon" draggable="false" />
+                            </motion.button>
+                            <AnimatePresence>
+                                {menuDropdownOpen && (
+                                    <motion.div
+                                        className="menu-dropdown"
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2, ease: "easeOut" }}
+                                    >
+                                        <button type="button" onClick={handleThemeChange}>
+                                            {theme === "light" ? "Dark Mode" : "Light Mode"}
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
             <div className="secondary-row">
