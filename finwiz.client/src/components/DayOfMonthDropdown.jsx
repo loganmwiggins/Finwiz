@@ -73,22 +73,25 @@ function DayOfMonthDropdown({ name, value, onChange, label = "Day of Month", req
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        className="dropdown-grid"
+                        className="day-dropdown"
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
                     >
-                        {days.map(day => (
-                            <button 
-                                key={day}
-                                type="button"
-                                className={`dropdown-day ${value === day ? 'selected' : ''}`}
-                                onClick={() => handleSelect(day)}
-                            >
-                                {day}
-                            </button>
-                        ))}
+                        <label>Day of Month</label>
+                        <div className="day-grid">
+                            {days.map(day => (
+                                <button 
+                                    key={day}
+                                    type="button"
+                                    className={`dropdown-day ${value === day ? 'selected' : ''}`}
+                                    onClick={() => handleSelect(day)}
+                                >
+                                    {day}
+                                </button>
+                            ))}
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

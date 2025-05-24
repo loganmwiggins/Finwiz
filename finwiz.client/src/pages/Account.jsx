@@ -134,7 +134,9 @@ function Account() {
                             {currentAccount.annualFee ? (
                                 <>
                                     <p className="annual-fee">{formatCurrency(currentAccount.annualFee, false)}/year</p>
-                                    <p className="p-4">on {currentAccount.feeDate && (formatDate(currentAccount.feeDate, false))}</p>
+                                    {currentAccount.feeDate && (
+                                        <p className="p-4">on {formatDate(currentAccount.feeDate, false)}</p>
+                                    )}
                                 </>
                             ) : currentAccount.type !== 1 ? 
                                 (<p className="p-5">No annual fee</p>) : ("")
