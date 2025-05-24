@@ -68,7 +68,6 @@ function DayOfMonthDropdown({ name, value, onChange, label = "Day of Month", req
                         transition={{ duration: 0.2, ease: "easeInOut" }}
                     />
                 </div>
-                
             </div>
 
             <AnimatePresence>

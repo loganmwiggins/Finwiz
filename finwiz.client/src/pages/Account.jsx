@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import SpendingTrendChart from '../components/widgets/SpendingTrendChart';
 import SpendingStatistics from '../components/widgets/SpendingStatistics';
+import AccountInfoBlock from '../components/AccountInfoBlock';
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
@@ -109,7 +110,7 @@ function Account() {
                                             draggable="false" 
                                             className="icon-dynamic"
                                             onClick={() => setShowNotes(!showNotes)}
-                                            whileTap={{scale: 0.9}}
+                                            whileTap={{ scale: 0.9 }}
                                         />
                                     )}
                                     <AnimatePresence>
@@ -143,45 +144,57 @@ function Account() {
                     <div className="acc-info-ctnr">
                         {/* APY */}
                         {currentAccount.type === 1 && currentAccount.apy && (
-                            <div className="acc-info">
-                                <p>Annual Percentage Yield</p>
-                                <h1>{currentAccount.apy}%</h1>
-                            </div>
+                            <AccountInfoBlock 
+                                key={currentAccount.apy}
+                                label="Annual Percentage Yield" 
+                                content={`${currentAccount.apy}%`}
+                                delay={0.1}
+                            />
                         )}
                         {/* Credit Limit */}
                         {currentAccount.type === 0 && currentAccount.creditLimit && (
-                            <div className="acc-info">
-                                <p>Credit Limit</p>
-                                <h1>{formatCurrency(currentAccount.creditLimit, false)}</h1>
-                            </div>
+                            <AccountInfoBlock 
+                                key={currentAccount.creditLimit}
+                                label="Credit Limit" 
+                                content={formatCurrency(currentAccount.creditLimit, false)}
+                                delay={0.1}
+                            />
                         )}
                         {/* Latest Statement */}
                         {latestStatement && (
-                            <div className="acc-info">
-                                <p>Latest Statement</p>
-                                <h1>{formatCurrency(latestStatement.amount)}</h1>
-                            </div>
+                            <AccountInfoBlock 
+                                key={latestStatement.amount}
+                                label="Latest Statement" 
+                                content={formatCurrency(latestStatement.amount)}
+                                delay={0.2}
+                            />
                         )}
                         {/* Statement Date */}
                         {currentAccount.statementDay && (
-                            <div className="acc-info">
-                                <p>Next Statement Available</p>
-                                <h1>{formatDate(getNextDayDate(currentAccount.statementDay), false)}</h1>
-                            </div>
+                            <AccountInfoBlock 
+                                key={currentAccount.statementDay}
+                                label="Next Statement Available" 
+                                content={formatDate(getNextDayDate(currentAccount.statementDay), false)}
+                                delay={0.3}
+                            />
                         )}
                         {/* Payment Date */}
                         {currentAccount.paymentDay && (
-                            <div className="acc-info">
-                                <p>Next Payment on</p>
-                                <h1>{formatDate(getNextDayDate(currentAccount.paymentDay), false)}</h1>
-                            </div>
+                            <AccountInfoBlock 
+                                key={currentAccount.paymentDay}
+                                label="Next Payment on" 
+                                content={formatDate(getNextDayDate(currentAccount.paymentDay), false)}
+                                delay={0.4}
+                            />
                         )}
                         {/* Due Date */}
                         {currentAccount.dueDay && (
-                            <div className="acc-info">
-                                <p>Due on</p>
-                                <h1>{formatDate(getNextDayDate(currentAccount.dueDay), false)}</h1>
-                            </div>
+                            <AccountInfoBlock 
+                                key={currentAccount.dueDay}
+                                label="Due on" 
+                                content={formatDate(getNextDayDate(currentAccount.dueDay), false)}
+                                delay={0.5}
+                            />
                         )}
                     </div>
                 </motion.div>
