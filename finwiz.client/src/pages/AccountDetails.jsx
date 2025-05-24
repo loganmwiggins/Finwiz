@@ -3,11 +3,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { showToast } from '../utils/Toast';
 
-import DayOfMonthDropdown from '../components/DayOfMonthDropdown';
 import MonthDayPicker from '../components/MonthDayPicker';
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
-import { formatDateToInput } from '../utils/DateHelper';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import '../stylesheets/pages/AccountDetails.css';
 
@@ -55,7 +53,6 @@ function AccountDetails() {
                 dueDay: currentAccount.dueDay || null,
                 isAutopayOn: currentAccount.isAutopayOn || false,
                 annualFee: currentAccount.annualFee || null,
-                // feeDate: formatDateToInput(currentAccount.feeDate) || null,
                 feeMonth: currentAccount.feeMonth || null,
                 feeDay: currentAccount.feeDay || null,
                 imagePath: currentAccount.imagePath || null,
@@ -134,7 +131,7 @@ function AccountDetails() {
 
             if (response.ok) {
                 if (currentAccount) {
-                    showToast("Account updated successfully!", "success");
+                    showToast("Account updated!", "success");
 
                     // Update the context state with the updated account (NOT WORKING)
                     setAccounts((prevAccounts) => 
@@ -258,26 +255,32 @@ function AccountDetails() {
                     <div className="input-row">
                         {/* Statement Day */}
                         {accountData.type == 0 && (
-                            <DayOfMonthDropdown 
-                                name="statementDay"
+                            <MonthDayPicker
                                 label="Statement Day"
-                                value={accountData.statementDay}
+                                askForMonth={false}
+                                askForDay={true}
+                                dayName="statementDay"
+                                dayValue={accountData.statementDay}
                                 onChange={handleChange}
                             />
                         )}
                         {/* Payment Day */}
-                        <DayOfMonthDropdown 
-                            name="paymentDay"
+                        <MonthDayPicker
                             label="Payment Day"
-                            value={accountData.paymentDay}
+                            askForMonth={false}
+                            askForDay={true}
+                            dayName="paymentDay"
+                            dayValue={accountData.paymentDay}
                             onChange={handleChange}
                         />
                         {/* Due Day */}
                         {accountData.type == 0 && (
-                            <DayOfMonthDropdown 
-                                name="dueDay"
+                            <MonthDayPicker
                                 label="Due Day"
-                                value={accountData.dueDay}
+                                askForMonth={false}
+                                askForDay={true}
+                                dayName="dueDay"
+                                dayValue={accountData.dueDay}
                                 onChange={handleChange}
                             />
                         )}
@@ -296,17 +299,6 @@ function AccountDetails() {
                         )}
                         
                         {/* Fee Date */}
-                        {/* {accountData.type == 0 && (
-                            <div className="input-w-label">
-                                <label>Fee Date</label>
-                                <input
-                                    type="date"
-                                    name="feeDate"
-                                    value={accountData.feeDate}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                        )} */}
                         <MonthDayPicker
                             label="Fee Date"
                             monthName="feeMonth"

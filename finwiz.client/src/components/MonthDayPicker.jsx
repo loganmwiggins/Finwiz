@@ -26,7 +26,7 @@ function MonthDayPicker({
     onChange
 }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [step, setStep] = useState("month");
+    const [step, setStep] = useState(askForMonth ? "month" : "day");
     const dropdownRef = useRef();
 
     const handleClickOutside = (e) => {
@@ -68,7 +68,7 @@ function MonthDayPicker({
             return `${monthNames[monthValue - 1].name} ${dayValue}`;
         }
         if (askForMonth && monthValue) return monthNames[monthValue - 1].name;
-        if (askForDay && dayValue) return `Day ${dayValue}`;
+        if (askForDay && dayValue) return `${dayValue}`;
         return "Select date";
     };
 
@@ -82,7 +82,12 @@ function MonthDayPicker({
             <label className="dropdown-label">{label}</label>
             <div
                 className="dropdown-input input"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => {
+                    setIsOpen((prev) => !prev);
+                    if (!isOpen) {
+                        setStep(askForMonth ? "month" : "day");
+                    }
+                }}
                 role="button"
                 tabIndex={0}
             >
@@ -134,9 +139,12 @@ function MonthDayPicker({
                         {step === "day" && askForDay && (
                             <>
                                 <div className="dropdown-header">
-                                    <button type="button" className="back-btn" onClick={() => setStep("month")}>
-                                        ← Back
-                                    </button>
+                                    {askForMonth && (
+                                        <button type="button" className="back-btn" onClick={() => setStep("month")}>
+                                            ← Back
+                                        </button>
+                                    )}
+                                    
                                     <label>Select Day</label>
                                 </div>
                                 <div className="day-grid">
