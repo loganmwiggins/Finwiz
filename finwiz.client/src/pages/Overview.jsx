@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { showToast } from '../utils/Toast';
 
+import SpendingTrendChart from '../components/widgets/SpendingTrendChart';
 import { AccountsContext } from '../context/AccountsContext';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
@@ -14,6 +15,7 @@ import '../stylesheets/pages/Overview.css';
 function Overview() {
     const navigate = useNavigate();
     const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
+    const [allStatements, setAllStatements] = useState([]);
     const [greeting, setGreeting] = useState("");
     const [openMenuId, setOpenMenuId] = useState(null);
 
@@ -32,6 +34,11 @@ function Overview() {
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
     }, []);
+
+    // Populate all statements
+    useEffect(() => {
+        setAllStatements(accounts.flatMap(account => account.statements || []));
+    }, [accounts]);
 
     const navigateAccount = (accountId) => navigate(`/account/${accountId}`);
     const navigateAddAccount = () => navigate("/details");
@@ -221,6 +228,21 @@ function Overview() {
                         <p></p>
                         <p>{formatCurrency(getTotalCreditLimit(accounts), false)}</p>
                     </div>
+                </motion.div>
+
+                {/* Monthly Spending Trend widget */}
+                <motion.div 
+                    className="widget"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                >
+                    <div className="widget-head">
+                        <h3>Spending Trend (All Accounts)</h3>
+                    </div>
+                    {allStatements && (
+                        <SpendingTrendChart statements={allStatements} />
+                    )}
                 </motion.div>
             </div>
             

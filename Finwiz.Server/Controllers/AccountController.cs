@@ -33,7 +33,9 @@ namespace Finwiz.Server.Controllers
         {
             try
             {
-                var accounts = await _db.Accounts.ToListAsync();
+                var accounts = await _db.Accounts
+                    .Include(a => a.Statements)
+                    .ToListAsync();
                 return Ok(accounts);
             }
             catch (Exception ex)
