@@ -49,10 +49,13 @@ select { cursor: pointer; }
     gap: .25rem;
 }
 
-.checkbox { max-width: fit-content; }
-
 /* Chrome, Safari, Edge, Opera (webkit) */
 ::-webkit-calendar-picker-indicator {
     filter: var(--filter-icon);
     opacity: .75;
+}
+
+/* MUI Switch overrides */
+.css-1ew8e45-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked {
+    color: var(--accent) !important;
 }

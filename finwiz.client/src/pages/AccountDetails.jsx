@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { showToast } from '../utils/Toast';
+import Switch from '@mui/material/Switch';
 
 import MonthDayPicker from '../components/MonthDayPicker';
 import { AccountsContext } from '../context/AccountsContext';
@@ -51,7 +52,7 @@ function AccountDetails() {
                 statementDay: currentAccount.statementDay || null,
                 paymentDay: currentAccount.paymentDay || null,
                 dueDay: currentAccount.dueDay || null,
-                isAutopayOn: currentAccount.isAutopayOn || false,
+                isAutopayOn: currentAccount.isAutopayOn,
                 annualFee: currentAccount.annualFee || null,
                 feeMonth: currentAccount.feeMonth || null,
                 feeDay: currentAccount.feeDay || null,
@@ -74,8 +75,10 @@ function AccountDetails() {
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
 
+        // Special reset logic ONLY when selecting account type
         if (name === "type") {
             setAccountData({
+                type: Number(value),
                 name: "",
                 provider: "",
                 creditLimit: "",
@@ -84,7 +87,8 @@ function AccountDetails() {
                 dueDay: "",
                 isAutopayOn: false,
                 annualFee: "",
-                feeDate: "",
+                feeMonth: "",
+                feeDay: "",
                 imagePath: "",
                 notes: "",
                 apy: ""
@@ -336,14 +340,13 @@ function AccountDetails() {
                             />
                         </div>
                         {/* Autopay? */}
-                        <div className="input-w-label checkbox">
+                        <div className="input-w-label mwfc">
                             <label>Autopay? *</label>
-                            <input 
-                                type="checkbox" 
-                                className="checkbox"
-                                name="isAutopayOn" 
-                                checked={accountData.isAutopayOn} 
-                                onChange={handleChange} 
+                            <Switch
+                                name="isAutopayOn"
+                                checked={accountData.isAutopayOn}
+                                onChange={handleChange}
+                                color="success"
                             />
                         </div>
                     </div>

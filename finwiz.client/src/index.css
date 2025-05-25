@@ -86,6 +86,8 @@ html {
 }
 .aic { align-items: center; }
 
+.mwfc { max-width: fit-content; }
+
 
 /* Loading spinner */
 .loading-ctnr {
