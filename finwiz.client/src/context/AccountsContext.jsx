@@ -7,6 +7,11 @@ export const AccountsContext = createContext();
 // Create a provider component
 export const AccountsProvider = ({ children }) => {
     const [accounts, setAccounts] = useState([]);
+    const [allStatements, setAllStatements] = useState([]);
+    const allAvailableYears = Array.from(
+        new Set(allStatements.map(s => new Date(s.statementEnd).getFullYear()))
+    ).sort();
+
     const [accountsLoading, setAccountsLoading] = useState(true);
     const [accountsError, setAccountsError] = useState(null);
 
@@ -28,8 +33,13 @@ export const AccountsProvider = ({ children }) => {
         fetchAccounts();
     }, []); // This will run only once when the component mounts
 
+    // Populate all statements
+    useEffect(() => {
+        setAllStatements(accounts.flatMap(account => account.statements || []));
+    }, [accounts]);
+
     return (
-        <AccountsContext.Provider value={{ accounts, accountsLoading, accountsError, setAccounts }}>
+        <AccountsContext.Provider value={{ accounts, allStatements, allAvailableYears, accountsLoading, accountsError, setAccounts }}>
             {children}
         </AccountsContext.Provider>
     );

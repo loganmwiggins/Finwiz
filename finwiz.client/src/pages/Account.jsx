@@ -9,7 +9,7 @@ import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
 import { API_BASE_URL } from '../utils/BaseUrl';
 import { cardTypes } from '../utils/CardTypes';
-import { findDaysUntil, formatDate, getNextDayDate, getNextFeeDate } from '../utils/DateHelper';
+import { formatDate, getNextDayDate, getNextFeeDate } from '../utils/DateHelper';
 import { formatCurrency } from '../utils/CurrencyFormatter';
 import '../stylesheets/pages/Account.css';
 
@@ -21,6 +21,8 @@ function Account() {
     const [statementList, setStatementList] = useState(null);
     const [latestStatement, setLatestStatement] = useState(null);
     const [showNotes, setShowNotes] = useState(false);
+    const [timePeriod, setTimePeriod] = useState("all");
+    const [availableYears, setAvailableYears] = useState(null);
 
     // Fetch current account
     useEffect(() => {
@@ -67,6 +69,9 @@ function Account() {
 
         if (statementList) {
             setLatestStatement(getLatestStatement(statementList));
+            setAvailableYears(Array.from(
+                new Set(statementList.map(s => new Date(s.statementEnd).getFullYear()))
+            ).sort());
         }
     }, [currentAccount, statementList]);
 
@@ -214,8 +219,18 @@ function Account() {
                         >
                             <div className="widget-head">
                                 <h3>Spending Trend</h3>
+                                <select value={timePeriod} onChange={(e) => setTimePeriod(e.target.value)}>
+                                    <option value="all">All Time</option>
+                                    <option value="past6">Past 6 Months</option>
+                                    <option value="past12">Past 12 Months</option>\
+                                    {availableYears && (
+                                        availableYears.map(year => (
+                                            <option key={year} value={year}>{year}</option>
+                                        ))
+                                    )}
+                                </select>
                             </div>
-                            <SpendingTrendChart statements={statementList} />
+                            <SpendingTrendChart statements={statementList} timePeriod={timePeriod} />
                         </motion.div>
 
                         {/* Statistic widget */}

@@ -14,10 +14,10 @@ import '../stylesheets/pages/Overview.css';
 
 function Overview() {
     const navigate = useNavigate();
-    const { accounts, accountsLoading, accountsError } = useContext(AccountsContext);
-    const [allStatements, setAllStatements] = useState([]);
+    const { accounts, accountsLoading, accountsError, allAvailableYears } = useContext(AccountsContext);
     const [greeting, setGreeting] = useState("");
     const [openMenuId, setOpenMenuId] = useState(null);
+    const [timePeriod, setTimePeriod] = useState("all");
 
     useEffect(() => {
         setGreeting(getRandomElement(allGreetings));
@@ -34,11 +34,6 @@ function Overview() {
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
     }, []);
-
-    // Populate all statements
-    useEffect(() => {
-        setAllStatements(accounts.flatMap(account => account.statements || []));
-    }, [accounts]);
 
     const navigateAccount = (accountId) => navigate(`/account/${accountId}`);
     const navigateAddAccount = () => navigate("/details");
@@ -239,8 +234,16 @@ function Overview() {
                 >
                     <div className="widget-head">
                         <h3>Spending Trend</h3>
+                        <select value={timePeriod} onChange={(e) => setTimePeriod(e.target.value)}>
+                            <option value="all">All Time</option>
+                            <option value="past6">Past 6 Months</option>
+                            <option value="past12">Past 12 Months</option>
+                            {allAvailableYears.map(year => (
+                                <option key={year} value={year}>{year}</option>
+                            ))}
+                        </select>
                     </div>
-                    <SpendingTrendChart accounts={accounts} />
+                    <SpendingTrendChart accounts={accounts} timePeriod={timePeriod} />
                 </motion.div>
             </div>
             

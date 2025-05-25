@@ -1,4 +1,5 @@
 import { Line } from 'react-chartjs-2';
+import 'chart.js/auto'; // Ensure this is included for Chart.js to work
 
 const colorPalette = [
     '#2196F3', // Blue
@@ -13,7 +14,33 @@ const colorPalette = [
     '#795548'  // Brown
 ];
 
-function SpendingTrendChart({ accounts = null, statements = null }) {
+function SpendingTrendChart({ accounts = null, statements = null, timePeriod = "all" }) {
+    // Time period filter logic
+    const filterLabelsByTimePeriod = (labels) => {
+        const now = new Date();
+
+        if (timePeriod === "past6") {
+            const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1); // includes current month
+            return labels.filter(label => new Date(label) >= sixMonthsAgo);
+        }
+
+        if (timePeriod === "past12") {
+            const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 11, 1); // includes current month
+            return labels.filter(label => new Date(label) >= twelveMonthsAgo);
+        }
+
+        // Year-based filter (e.g., "2023", "2024")
+        if (!isNaN(timePeriod)) {
+            return labels.filter(label => {
+                const date = new Date(label);
+                return date.getFullYear().toString() === timePeriod;
+            });
+        }
+
+        return labels; // "all"
+    };
+
+    // Processing chart data logic
     const processChartData = () => {
         const monthlyTotals = {};
         const datasets = [];
@@ -41,7 +68,7 @@ function SpendingTrendChart({ accounts = null, statements = null }) {
                 });
             });
 
-            labels = Object.keys(monthlyTotals).sort((a, b) => new Date(a) - new Date(b));
+            labels = filterLabelsByTimePeriod(Object.keys(monthlyTotals).sort((a, b) => new Date(a) - new Date(b)));
 
             datasets.push({
                 label: 'All Accounts',
@@ -77,7 +104,7 @@ function SpendingTrendChart({ accounts = null, statements = null }) {
                 monthlyTotals[monthYear] += statement.amount;
             });
 
-            labels = Object.keys(monthlyTotals).sort((a, b) => new Date(a) - new Date(b));
+            labels = filterLabelsByTimePeriod(Object.keys(monthlyTotals).sort((a, b) => new Date(a) - new Date(b)));
 
             datasets.push({
                 label: 'Spending',
