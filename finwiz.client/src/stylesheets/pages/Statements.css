@@ -11,10 +11,6 @@
         border-radius: .5rem;
         padding: 1rem;
     
-        .input-w-label {
-            flex: 1;
-            input, select { width: 100%; }
-        }
         .inputs-ctnr {
             width: 100%;
             display: flex;

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // Required for Chart.js v3+
+import Switch from '@mui/material/Switch';
 
 import { AccountsContext } from '../context/AccountsContext';
 import { getCurrentAccount } from '../utils/CurrentAccountFinder';
@@ -133,7 +132,7 @@ function Statements() {
             const data = await response.json();
 
             if (response.ok) {
-                showToast("Statement created successfully!", "success");
+                showToast("Statement created!", "success");
 
                 // Optimistically update the statement list
                 setStatementList(prevList => 
@@ -195,7 +194,7 @@ function Statements() {
                 throw new Error("Failed to update statement");
             }
             else {
-                showToast("Statement updated successfully", "success");
+                showToast("Statement updated!", "success");
             }
     
             // Optimistically update the statement list after a successful edit
@@ -223,7 +222,7 @@ function Statements() {
             });
     
             if (response.ok) {
-                showToast("Statement deleted successfully!", "success");
+                showToast("Statement deleted!", "success");
     
                 // Update the statement list by removing the deleted statement
                 setStatementList(prevList => prevList.filter(s => s.id !== statementId));
@@ -346,14 +345,13 @@ function Statements() {
                                 />
                             </div>
                             {/* Is Paid? */}
-                            <div className="input-w-label checkbox">
+                            <div className="input-w-label mwfc">
                                 <label>Paid? *</label>
-                                <input 
-                                    type="checkbox" 
-                                    className="checkbox"
-                                    name="isPaid" 
-                                    value={newStatementData.isPaid}
+                                <Switch
+                                    name="isPaid"
+                                    checked={newStatementData.isPaid}
                                     onChange={handleChangeCreate}
+                                    color="success"
                                 />
                             </div>
                         </div>
@@ -432,13 +430,13 @@ function Statements() {
                                             />
                                         </td>
                                         <td>
-                                            <input 
-                                                type="checkbox" 
-                                                name="isPaid" 
-                                                checked={editValues.isPaid} 
+                                            <Switch
+                                                name="isPaid"
+                                                checked={editValues.isPaid}
                                                 onChange={(e) => 
                                                     setEditValues((prev) => ({ ...prev, isPaid: e.target.checked }))
                                                 }
+                                                color="success"
                                             />
                                         </td>
                                         <td className="td-btn">

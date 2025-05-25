@@ -4,14 +4,6 @@
     align-items: start;
     gap: 1.5rem;
 
-    .input-w-label { flex: 1; }
-
-    .input-w-label input[type="text"],
-    .input-w-label input[type="number"],
-    .input-w-label input[type="date"],
-    .input-w-label select {
-        width: 100%;
-    }
     .inputs-ctnr {
         display: flex;
         align-items: center;
