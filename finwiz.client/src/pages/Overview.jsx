@@ -238,11 +238,9 @@ function Overview() {
                     transition={{ duration: 0.6, delay: 0.6 }}
                 >
                     <div className="widget-head">
-                        <h3>Spending Trend (All Accounts)</h3>
+                        <h3>Spending Trend</h3>
                     </div>
-                    {allStatements && (
-                        <SpendingTrendChart statements={allStatements} />
-                    )}
+                    <SpendingTrendChart accounts={accounts} />
                 </motion.div>
             </div>
             
