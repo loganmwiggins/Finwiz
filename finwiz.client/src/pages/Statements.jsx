@@ -102,7 +102,7 @@ function Statements() {
             const data = await response.json();
 
             if (response.ok) {
-                showToast("Statement created!", "success");
+                showToast("Statement added!", "success");
 
                 // Optimistically update the statement list
                 setStatementList(prevList => 
@@ -354,12 +354,7 @@ function Statements() {
                         </thead>
                         <tbody>
                             {statementList.map((s, index) => (
-                                <motion.tr 
-                                    key={index}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.4, delay: 0.1 * index, ease: "easeOut" }}
-                                >
+                                <tr key={index}>
                                     {isEditing === s.id ? (
                                         // Editing row
                                         <>
@@ -444,7 +439,7 @@ function Statements() {
                                             </td>
                                         </>
                                     )}
-                                </motion.tr>
+                                </tr>
                             ))}
                         </tbody>
                     </table>

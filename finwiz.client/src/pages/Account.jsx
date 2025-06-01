@@ -154,7 +154,7 @@ function Account() {
                         {/* APY */}
                         {currentAccount.type === 1 && currentAccount.apy && (
                             <AccountInfoBlock 
-                                key={currentAccount.apy}
+                                // key={currentAccount.apy}
                                 label="Annual Percentage Yield" 
                                 content={`${currentAccount.apy}%`}
                                 delay={0.1}
@@ -163,16 +163,16 @@ function Account() {
                         {/* Credit Limit */}
                         {currentAccount.type === 0 && currentAccount.creditLimit && (
                             <AccountInfoBlock 
-                                key={currentAccount.creditLimit}
+                                // key={currentAccount.creditLimit}
                                 label="Credit Limit" 
                                 content={formatCurrency(currentAccount.creditLimit, false)}
                                 delay={0.1}
                             />
                         )}
                         {/* Latest Statement */}
-                        {latestStatement && (
+                        {statementList?.length > 0 && latestStatement && (
                             <AccountInfoBlock 
-                                key={latestStatement.amount}
+                                // key={latestStatement.amount}
                                 label="Latest Statement" 
                                 content={formatCurrency(latestStatement.amount)}
                                 delay={0.2}
@@ -181,7 +181,7 @@ function Account() {
                         {/* Statement Date */}
                         {currentAccount.statementDay && (
                             <AccountInfoBlock 
-                                key={currentAccount.statementDay}
+                                // key={currentAccount.statementDay}
                                 label="Next Statement Available" 
                                 content={formatDate(getNextDayDate(currentAccount.statementDay), false)}
                                 delay={0.3}
@@ -190,7 +190,7 @@ function Account() {
                         {/* Payment Date */}
                         {currentAccount.paymentDay && (
                             <AccountInfoBlock 
-                                key={currentAccount.paymentDay}
+                                // key={currentAccount.paymentDay}
                                 label="Next Payment on" 
                                 content={formatDate(getNextDayDate(currentAccount.paymentDay), false)}
                                 delay={0.4}
@@ -199,7 +199,7 @@ function Account() {
                         {/* Due Date */}
                         {currentAccount.dueDay && (
                             <AccountInfoBlock 
-                                key={currentAccount.dueDay}
+                                // key={currentAccount.dueDay}
                                 label="Due on" 
                                 content={formatDate(getNextDayDate(currentAccount.dueDay), false)}
                                 delay={0.5}

@@ -89,14 +89,24 @@ function Nav() {
                         <p>Finwiz</p>
                     </div>
                     <div className="btn-row">
-                        {/* Home button */}
+                        {/* Accounts button */}
                         <motion.button
-                            title="Overview"
+                            title="My Accounts"
                             className="menu-btn"
                             onClick={() => navigate("/overview")}
                             whileTap={{scale: 0.9}}
                         >
                             <img src="/assets/icons/wallet.svg" className="icon" draggable="false" />
+                        </motion.button>
+
+                        {/* Expenses button */}
+                        <motion.button
+                            title="My Expenses"
+                            className="menu-btn"
+                            onClick={() => alert("Expenses not yet available.")}
+                            whileTap={{scale: 0.9}}
+                        >
+                            <img src="/assets/icons/moneybag.svg" className="icon" draggable="false" />
                         </motion.button>
 
                         {/* Hamburger menu */}
