@@ -138,7 +138,7 @@ function Account() {
                         <div className="head-right">
                             {currentAccount.annualFee ? (
                                 <>
-                                    <p className="annual-fee">{formatCurrency(currentAccount.annualFee, false)}/year</p>
+                                    <p className="annual-fee" style={{ color: currentAccount.colorHex }}>{formatCurrency(currentAccount.annualFee, false)}/year</p>
                                     {(currentAccount.feeMonth && currentAccount.feeDay) && (
                                         <p className="p-4">
                                             on {formatDate(getNextFeeDate(currentAccount.feeMonth, currentAccount.feeDay), false)}
@@ -230,7 +230,7 @@ function Account() {
                                     )}
                                 </select>
                             </div>
-                            <SpendingTrendChart statements={statementList} timePeriod={timePeriod} />
+                            <SpendingTrendChart statements={statementList} timePeriod={timePeriod} colorHex={currentAccount.colorHex} />
                         </motion.div>
 
                         {/* Statistic widget */}
@@ -244,7 +244,7 @@ function Account() {
                                 <h3>Spending Stats</h3>
                             </div>
                             <div className="widget-body">
-                                <SpendingStatistics statements={statementList} />
+                                <SpendingStatistics statements={statementList} colorHex={currentAccount.colorHex} />
                             </div>
                         </motion.div>
                     </div>

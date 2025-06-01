@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { formatCurrency } from '../../utils/CurrencyFormatter';
 
-function SpendingStatistics({ statements }) {
+function SpendingStatistics({ statements, colorHex }) {
     const [velocityRange, setVelocityRange] = useState(3); // default to 3 months
 
     if (!statements || statements.length === 0) return <p>No spending data available.</p>;
@@ -30,12 +30,12 @@ function SpendingStatistics({ statements }) {
         <>
             <div className="stat-row">
                 <div>Total Lifetime Spend <span className="p-4">({statements.length} statements)</span></div>
-                <div className="stat">{formatCurrency(totalSpend)}</div>
+                <div className="stat" style={{ color: colorHex }}>{formatCurrency(totalSpend)}</div>
             </div>
 
             <div className="stat-row">
                 <div>Average Monthly Spend</div>
-                <div className="stat">{formatCurrency(averageSpend)}</div>
+                <div className="stat" style={{ color: colorHex }}>{formatCurrency(averageSpend)}</div>
             </div>
 
             <div className="stat-row">
@@ -50,17 +50,17 @@ function SpendingStatistics({ statements }) {
                         <option value={12}>Last 12 months</option>
                     </select>
                 </div>
-                <div className="stat">{formatCurrency(velocity)}</div>
+                <div className="stat" style={{ color: colorHex }}>{formatCurrency(velocity)}</div>
             </div>
 
             <div className="stat-row">
                 <div>Lowest Monthly Spend <span className="p-4">({formatMonthYear(minStatement.statementEnd)})</span></div>
-                <div className="stat">{formatCurrency(minStatement.amount)}</div>
+                <div className="stat" style={{ color: colorHex }}>{formatCurrency(minStatement.amount)}</div>
             </div>
 
             <div className="stat-row">
                 <div>Highest Monthly Spend <span className="p-4">({formatMonthYear(maxStatement.statementEnd)})</span></div>
-                <div className="stat">{formatCurrency(maxStatement.amount)}</div>
+                <div className="stat" style={{ color: colorHex }}>{formatCurrency(maxStatement.amount)}</div>
             </div>
         </>
     );

@@ -143,7 +143,7 @@ function Overview() {
                                 </div>
                                 <div className="card-foot">
                                     {account.paymentDay ? (
-                                        <p>
+                                        <p style={{ color: account.colorHex }}>
                                             Next payment on {formatDate(getNextDayDate(account.paymentDay), false)} (
                                             {(() => {
                                                 const days = findDaysUntil(getNextDayDate(account.paymentDay));

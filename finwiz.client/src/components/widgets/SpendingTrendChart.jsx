@@ -1,35 +1,34 @@
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // Ensure this is included for Chart.js to work
+import 'chart.js/auto'; // Required for Chart.js
 
-const colorPalette = [
-    '#2196F3', // Blue
-    '#FF9800', // Orange
-    '#9C27B0', // Purple
-    '#E91E63', // Pink
-    '#00BCD4', // Cyan
-    '#4CAF50', // Green
-    '#F44336', // Red
-    '#3F51B5', // Indigo
-    '#FFC107', // Amber
-    '#795548'  // Brown
-];
+function hexToRgba(hex, alpha = 0.2) {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, (m, r, g, b) =>
+        r + r + g + g + b + b
+    );
 
-function SpendingTrendChart({ accounts = null, statements = null, timePeriod = "all" }) {
-    // Time period filter logic
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function SpendingTrendChart({ accounts = null, statements = null, timePeriod = "all", colorHex = "#4CAF50" }) {
     const filterLabelsByTimePeriod = (labels) => {
         const now = new Date();
 
         if (timePeriod === "past6") {
-            const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1); // includes current month
+            const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
             return labels.filter(label => new Date(label) >= sixMonthsAgo);
         }
 
         if (timePeriod === "past12") {
-            const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 11, 1); // includes current month
+            const twelveMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 11, 1);
             return labels.filter(label => new Date(label) >= twelveMonthsAgo);
         }
 
-        // Year-based filter (e.g., "2023", "2024")
         if (!isNaN(timePeriod)) {
             return labels.filter(label => {
                 const date = new Date(label);
@@ -37,20 +36,18 @@ function SpendingTrendChart({ accounts = null, statements = null, timePeriod = "
             });
         }
 
-        return labels; // "all"
+        return labels;
     };
 
-    // Processing chart data logic
     const processChartData = () => {
         const monthlyTotals = {};
         const datasets = [];
         let labels = [];
 
         if (accounts && Array.isArray(accounts)) {
-            // Multi-account mode
             const accountDataMap = {};
 
-            accounts.forEach((account, index) => {
+            accounts.forEach((account) => {
                 const accountId = account.id;
                 accountDataMap[accountId] = {};
 
@@ -58,11 +55,9 @@ function SpendingTrendChart({ accounts = null, statements = null, timePeriod = "
                     const date = new Date(statement.statementEnd);
                     const monthYear = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
 
-                    // Total across all
                     if (!monthlyTotals[monthYear]) monthlyTotals[monthYear] = 0;
                     monthlyTotals[monthYear] += statement.amount;
 
-                    // Per-account
                     if (!accountDataMap[accountId][monthYear]) accountDataMap[accountId][monthYear] = 0;
                     accountDataMap[accountId][monthYear] += statement.amount;
                 });
@@ -73,29 +68,28 @@ function SpendingTrendChart({ accounts = null, statements = null, timePeriod = "
             datasets.push({
                 label: 'All Accounts',
                 data: labels.map(label => monthlyTotals[label] || 0),
-                borderColor: '#4CAF50',
-                backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                borderColor: '#1fa846',
+                backgroundColor: 'rgba(31, 168, 70, 0.2)',
                 fill: true,
                 tension: 0.1,
-                hidden: false // visible by default
+                hidden: false
             });
 
-            accounts.forEach((account, index) => {
-                const color = colorPalette[index % colorPalette.length];
+            accounts.forEach((account) => {
+                const acctColor = account.colorHex || '#2196F3';
                 datasets.push({
                     label: `${account.provider} ${account.name}`,
                     data: labels.map(label => accountDataMap[account.id]?.[label] || 0),
-                    borderColor: color,
-                    backgroundColor: `${color}33`, // light transparent fill
+                    borderColor: acctColor,
+                    backgroundColor: hexToRgba(acctColor, 0.2),
                     fill: false,
                     tension: 0.1,
-                    hidden: true // hidden by default
+                    hidden: true
                 });
             });
         } 
         
         else if (statements && Array.isArray(statements)) {
-            // Single account mode
             statements.forEach(statement => {
                 const date = new Date(statement.statementEnd);
                 const monthYear = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
@@ -109,8 +103,8 @@ function SpendingTrendChart({ accounts = null, statements = null, timePeriod = "
             datasets.push({
                 label: 'Spending',
                 data: labels.map(label => monthlyTotals[label] || 0),
-                borderColor: '#4CAF50',
-                backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                borderColor: colorHex,
+                backgroundColor: hexToRgba(colorHex, 0.2),
                 fill: true,
                 tension: 0.1
             });
