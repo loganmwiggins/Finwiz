@@ -96,7 +96,7 @@ function Nav() {
                             onClick={() => navigate("/overview")}
                             whileTap={{scale: 0.9}}
                         >
-                            <img src="/assets/icons/apps.svg" className="icon" draggable="false" />
+                            <img src="/assets/icons/wallet.svg" className="icon" draggable="false" />
                         </motion.button>
 
                         {/* Hamburger menu */}
