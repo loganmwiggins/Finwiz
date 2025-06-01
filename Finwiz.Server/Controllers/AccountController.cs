@@ -68,7 +68,8 @@ namespace Finwiz.Server.Controllers
                 FeeDay = accountDTO.FeeDay,
                 ImagePath = accountDTO.ImagePath,
                 Notes = accountDTO.Notes,
-                APY = accountDTO.APY
+                APY = accountDTO.APY,
+                ColorHex = accountDTO.ColorHex
             };
 
             _db.Accounts.Add(newAccount);
@@ -107,6 +108,7 @@ namespace Finwiz.Server.Controllers
             account.ImagePath = updatedAccount.ImagePath;
             account.Notes = updatedAccount.Notes;
             account.APY = updatedAccount.APY;
+            account.ColorHex = updatedAccount.ColorHex;
 
             try
             {

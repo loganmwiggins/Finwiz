@@ -30,7 +30,9 @@
 
         public string? Notes { get; set; }
 
-        public double? APY {  get; set; }
+        public double? APY { get; set; }
+
+        public string? ColorHex { get; set; }
 
         // Navigation property
         public virtual ICollection<Statement> Statements { get; set; } = new List<Statement>();

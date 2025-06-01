@@ -1,8 +1,9 @@
 import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { showToast } from '../utils/Toast';
 import Switch from '@mui/material/Switch';
+import { HexColorPicker } from 'react-colorful';
 
 import MonthDayPicker from '../components/MonthDayPicker';
 import { AccountsContext } from '../context/AccountsContext';
@@ -30,8 +31,10 @@ function AccountDetails() {
         feeDay: null,
         imagePath: null,
         notes: null,
-        apy: null
+        apy: null,
+        colorHex: "#1fa846"
     });
+    const [showColorPicker, setShowColorPicker] = useState(false);
 
     // Retrieve current account
     useEffect(() => {
@@ -58,10 +61,23 @@ function AccountDetails() {
                 feeDay: currentAccount.feeDay || null,
                 imagePath: currentAccount.imagePath || null,
                 notes: currentAccount.notes || null,
-                apy: currentAccount.apy || null
+                apy: currentAccount.apy || null,
+                colorHex: currentAccount.colorHex || "#1fa846"
             });
         }
     }, [currentAccount]);
+
+    // Close color picker when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest(".color-picker-ctnr")) {
+                setShowColorPicker(false);
+            }
+        };
+
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
 
     // Handle cancel button
     const handleCancel = () => {
@@ -101,6 +117,11 @@ function AccountDetails() {
         }));
     };
 
+    // Handle change color with picker
+    const handleColorChange = (newColor) => {
+        setAccountData(prev => ({ ...prev, colorHex: newColor }));
+    };
+
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent page reload
@@ -121,7 +142,7 @@ function AccountDetails() {
         sanitizedData.type = Number(sanitizedData.type);
 
         try {
-            // console.log("SENDING DATA:", sanitizedData);
+            console.log("SENDING DATA:", sanitizedData);
 
             const response = await fetch(endpoint, {
                 method: method,
@@ -182,185 +203,216 @@ function AccountDetails() {
     if (accountsError) return <p>{accountsError}</p>;
 
     return (
-    <div className="page-ctnr AccountDetails">
-        <motion.div 
-            className="widget"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-        >
-            <h3>{currentAccount ? "Account Details" : "New Account"}</h3>
+        <div className="page-ctnr AccountDetails">
+            <motion.div 
+                className="widget"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+            >
+                <h3>{currentAccount ? "Account Details" : "New Account"}</h3>
 
-            <form onSubmit={handleSubmit} className="account-form">
-                <div className="inputs-ctnr">
-                    <div className="input-row">
-                        {/* Type */}
-                        <div className="input-w-label">
-                            <label>Type *</label>
-                            <select
-                                name="type" 
-                                value={accountData.type} 
-                                onChange={handleChange}
-                            >
-                                <option value={0}>Credit</option>
-                                <option value={1}>Savings</option>
-                            </select>
-                        </div>
-                        {/* Provider */}
-                        <div className="input-w-label">
-                            <label>Provider *</label>
-                            <input
-                                type="text"
-                                name="provider"
-                                placeholder="(e.g., Chase, Discover, Amex)" // FIX: Change placeholders based on account type
-                                value={accountData.provider}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        {/* Name */}
-                        <div className="input-w-label">
-                            <label>Name *</label>
-                            <input
-                                type="text"
-                                name="name"
-                                placeholder="(e.g., Freedom Unlimited, Gold Card)"
-                                value={accountData.name}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        {/* Image URL */}
-                        <div className="input-w-label">
-                            <label>Image URL</label>
-                            <input
-                                type="text"
-                                name="imagePath"
-                                placeholder="URL"
-                                value={accountData.imagePath}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {/* Credit Limit */}
-                        {accountData.type == 0 && (
+                <form onSubmit={handleSubmit} className="account-form">
+                    <div className="inputs-ctnr">
+                        <div className="input-row">
+                            {/* Type */}
                             <div className="input-w-label">
-                                <label>Credit Limit</label>
+                                <label>Type *</label>
+                                <select
+                                    name="type" 
+                                    value={accountData.type} 
+                                    onChange={handleChange}
+                                >
+                                    <option value={0}>Credit</option>
+                                    <option value={1}>Savings</option>
+                                </select>
+                            </div>
+                            {/* Provider */}
+                            <div className="input-w-label">
+                                <label>Provider *</label>
                                 <input
-                                    type="number"
-                                    name="creditLimit"
-                                    placeholder="$"
-                                    value={accountData.creditLimit}
+                                    type="text"
+                                    name="provider"
+                                    placeholder="(e.g., Chase, Discover, Amex)" // FIX: Change placeholders based on account type
+                                    value={accountData.provider}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            {/* Name */}
+                            <div className="input-w-label">
+                                <label>Name *</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    placeholder="(e.g., Freedom Unlimited, Gold Card)"
+                                    value={accountData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            {/* Image URL */}
+                            <div className="input-w-label">
+                                <label>Image URL</label>
+                                <input
+                                    type="text"
+                                    name="imagePath"
+                                    placeholder="URL"
+                                    value={accountData.imagePath}
                                     onChange={handleChange}
                                 />
                             </div>
-                        )} 
-                    </div>
+                            {/* Credit Limit */}
+                            {accountData.type == 0 && (
+                                <div className="input-w-label">
+                                    <label>Credit Limit</label>
+                                    <input
+                                        type="number"
+                                        name="creditLimit"
+                                        placeholder="$"
+                                        value={accountData.creditLimit}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            )} 
+                        </div>
 
-                    <div className="input-row">
-                        {/* Statement Day */}
-                        {accountData.type == 0 && (
+                        <div className="input-row">
+                            {/* Statement Day */}
+                            {accountData.type == 0 && (
+                                <MonthDayPicker
+                                    label="Statement Day"
+                                    askForMonth={false}
+                                    askForDay={true}
+                                    dayName="statementDay"
+                                    dayValue={accountData.statementDay}
+                                    onChange={handleChange}
+                                />
+                            )}
+                            {/* Payment Day */}
                             <MonthDayPicker
-                                label="Statement Day"
+                                label="Payment Day"
                                 askForMonth={false}
                                 askForDay={true}
-                                dayName="statementDay"
-                                dayValue={accountData.statementDay}
+                                dayName="paymentDay"
+                                dayValue={accountData.paymentDay}
                                 onChange={handleChange}
                             />
-                        )}
-                        {/* Payment Day */}
-                        <MonthDayPicker
-                            label="Payment Day"
-                            askForMonth={false}
-                            askForDay={true}
-                            dayName="paymentDay"
-                            dayValue={accountData.paymentDay}
-                            onChange={handleChange}
-                        />
-                        {/* Due Day */}
-                        {accountData.type == 0 && (
+                            {/* Due Day */}
+                            {accountData.type == 0 && (
+                                <MonthDayPicker
+                                    label="Due Day"
+                                    askForMonth={false}
+                                    askForDay={true}
+                                    dayName="dueDay"
+                                    dayValue={accountData.dueDay}
+                                    onChange={handleChange}
+                                />
+                            )}
+                            {/* Annual Fee */}
+                            {accountData.type == 0 && (
+                                <div className="input-w-label">
+                                    <label>Annual Fee</label>
+                                    <input
+                                        type="number"
+                                        name="annualFee"
+                                        placeholder="$"
+                                        value={accountData.annualFee}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            )}
+                            
+                            {/* Fee Date */}
                             <MonthDayPicker
-                                label="Due Day"
-                                askForMonth={false}
-                                askForDay={true}
-                                dayName="dueDay"
-                                dayValue={accountData.dueDay}
+                                label="Fee Date"
+                                monthName="feeMonth"
+                                dayName="feeDay"
+                                monthValue={accountData.feeMonth}
+                                dayValue={accountData.feeDay}
                                 onChange={handleChange}
                             />
-                        )}
-                        {/* Annual Fee */}
-                        {accountData.type == 0 && (
+                            
+                            {/* APY */}
+                            {accountData.type == 1 && (
+                                <div className="input-w-label">
+                                    <label>APY</label>
+                                    <input
+                                        type="number"
+                                        name="apy"
+                                        placeholder="Annual Percentage Yield"
+                                        value={accountData.apy}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        <div className="input-row">
+                            {/* Notes */}
                             <div className="input-w-label">
-                                <label>Annual Fee</label>
-                                <input
-                                    type="number"
-                                    name="annualFee"
-                                    placeholder="$"
-                                    value={accountData.annualFee}
+                                <label>Notes</label>
+                                <input 
+                                    type="text"
+                                    name="notes"
+                                    placeholder="(e.g., 'Use for groceries and restaurants')"
+                                    value={accountData.notes}
                                     onChange={handleChange}
                                 />
                             </div>
-                        )}
-                        
-                        {/* Fee Date */}
-                        <MonthDayPicker
-                            label="Fee Date"
-                            monthName="feeMonth"
-                            dayName="feeDay"
-                            monthValue={accountData.feeMonth}
-                            dayValue={accountData.feeDay}
-                            onChange={handleChange}
-                        />
-                        
-                        {/* APY */}
-                        {accountData.type == 1 && (
-                            <div className="input-w-label">
-                                <label>APY</label>
-                                <input
-                                    type="number"
-                                    name="apy"
-                                    placeholder="Annual Percentage Yield"
-                                    value={accountData.apy}
+
+                            {/* Autopay? */}
+                            <div className="input-w-label mwfc">
+                                <label>Autopay? *</label>
+                                <Switch
+                                    name="isAutopayOn"
+                                    checked={accountData.isAutopayOn}
                                     onChange={handleChange}
+                                    color="success"
                                 />
                             </div>
-                        )}
+
+                            {/* Color */}
+                            <div className="input-w-label mwfc">
+                                <label>Color</label>
+                                <div className="color-picker-ctnr">
+                                    <motion.button
+                                        type="button"
+                                        className="color-btn"
+                                        style={{ background: accountData.colorHex }}
+                                        onClick={() => setShowColorPicker(!showColorPicker)}
+                                        whileTap={{ scale: 0.8  }}
+                                    ></motion.button>
+
+                                    <AnimatePresence>
+                                        {showColorPicker && (
+                                            <motion.div
+                                                className="color-picker"
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                transition={{ duration: 0.2, ease: "easeOut" }}
+                                            >
+                                                <div className="rgb-txt">{accountData.colorHex}</div>
+                                                <HexColorPicker color={accountData.colorHex} onChange={handleColorChange} />
+                                                <button type="button" className="btn btn-outline" onClick={() => handleColorChange("#1fa846")}>Reset to Default</button>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="input-row">
-                        {/* Notes */}
-                        <div className="input-w-label">
-                            <label>Notes</label>
-                            <input 
-                                type="text"
-                                name="notes"
-                                placeholder="(e.g., 'Use for groceries and restaurants')"
-                                value={accountData.notes}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        {/* Autopay? */}
-                        <div className="input-w-label mwfc">
-                            <label>Autopay? *</label>
-                            <Switch
-                                name="isAutopayOn"
-                                checked={accountData.isAutopayOn}
-                                onChange={handleChange}
-                                color="success"
-                            />
-                        </div>
+                    {/* Buttons */}
+                    <div className="btn-row">
+                        <button type="button" className="btn btn-outline" onClick={handleCancel}>Cancel</button>
+                        <button type="submit" className="btn btn-accent">Save</button>
                     </div>
-                </div>
-
-                {/* Buttons */}
-                <div className="btn-row">
-                    <button type="button" className="btn btn-outline" onClick={handleCancel}>Cancel</button>
-                    <button type="submit" className="btn btn-accent">Save</button>
-                </div>
-            </form>
-        </motion.div>
-    </div>
-    )
+                </form>
+            </motion.div>
+        </div>
+    );
 }
 
 export default AccountDetails;

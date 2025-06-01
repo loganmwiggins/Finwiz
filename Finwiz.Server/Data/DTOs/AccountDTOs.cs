@@ -33,6 +33,8 @@ namespace Finwiz.Server.Data.DTOs
             public string? Notes { get; set; }
 
             public double? APY { get; set; }
+
+            public string? ColorHex { get; set; }
         }
     }
 }
